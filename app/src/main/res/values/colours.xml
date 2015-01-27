@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- General -->
+    <color name="medium_green">#008000</color>
+    <color name="dismissed_colour">#999999</color>
+    <color name="rmb_background">#EAEAE2</color>
+    <color name="active_nation">#CCCD00</color>
+    <color name="region_link">#803000</color>
+    <color name="background_colour">@android:color/white</color>
+
+    <!-- Freedom value bubble -->
+    <color name="freedom_value_bubble_highest_start">#2CFF00</color>
+    <color name="freedom_value_bubble_highest_end">#167F00</color>
+    <color name="freedom_value_bubble_high_start">#5FDF00</color>
+    <color name="freedom_value_bubble_high_end">#2F6F00</color>
+    <color name="freedom_value_bubble_medium_start">#AF8F00</color>
+    <color name="freedom_value_bubble_medium_end">#574700</color>
+    <color name="freedom_value_bubble_lower_start">#FF2C00</color>
+    <color name="freedom_value_bubble_lower_end">#739393</color>
+    <color name="freedom_value_bubble_lowest_start">#FF0600</color>
+    <color name="freedom_value_bubble_lowest_end">#7F0300</color>
+
+    <!-- Light grey -->
+    <color name="faded">#AAA</color>
+
+    <!-- Nation -->
+    <color name="nation_basics_shadow">#fefefe</color>
+    <color name="nation_basics_shadow_land">#ffffff</color>
+    <color name="freedom_value_shadow_colour">#eee</color>
+
+    <!-- Side menu -->
+    <color name="side_menu_colour">#EAEAE2</color>
+    <color name="menu_item_text_colour">#222</color>
+    <color name="menu_item_divider">#777</color>
+    <color name="menu_item_selected">#DADAD2</color>
+
+    <!-- ViewPager header -->
+    <color name="list_heading_background">#EAEAE2</color>
+</resources>

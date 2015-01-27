@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_add_region_to_dossier"
+        android:title="@string/menu_add_region_to_dossier"
+        android:orderInCategory="1"
+        android:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_menu_add" />
+    <item android:id="@+id/menu_move_to_region"
+          android:title="@string/menu_move_to_region"
+          android:orderInCategory="2"
+          android:showAsAction="ifRoom"
+          android:icon="@android:drawable/ic_menu_set_as" />
+    <item android:id="@+id/menu_post"
+        android:title="@string/menu_post"
+        android:orderInCategory="3"
+        android:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_menu_edit" />
+    <item android:id="@+id/menu_refresh"
+        android:title="@string/menu_refresh"
+        android:orderInCategory="99"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_menu_refresh" />
+</menu>

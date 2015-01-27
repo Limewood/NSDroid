@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppTheme" parent="Theme.Sherlock.Light.DarkActionBar">
+        <item name="android:listViewStyle">@style/CommonList</item>
+        <item name="android:textViewStyle">@style/CommonTextView</item>
+		<item name="android:background">@android:color/transparent</item>
+    </style>
+    <style name="Common">
+        <item name="android:textColorLink">@color/medium_green</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <style name="CommonTextView" parent="@android:style/Widget.TextView">
+        <item name="android:textColorLink">@color/medium_green</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <style name="Event" parent="Common">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="HappeningsTitle" parent="Common">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/ns_legend</item>
+    </style>
+    <style name="FreedomsCell" parent="Common">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="FreedomsLabel" parent="Common">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="FreedomsValue" parent="FreedomsCell">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">20</item>
+        <item name="android:shadowColor">@color/freedom_value_shadow_colour</item>
+    </style>
+    <style name="WFE" parent="Common">
+        
+    </style>
+    <style name="CommonList">
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+    </style>
+    <style name="DossierText" parent="Common">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="RMBPost" parent="Event">
+    </style>
+
+    <style name="NationBasics">
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:shadowColor">@color/nation_basics_shadow</item>
+        <item name="android:shadowRadius">25</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="NationBasicsLand">
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:shadowColor">@color/nation_basics_shadow_land</item>
+        <item name="android:shadowRadius">25</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:padding">3dp</item>
+    </style>
+
+    <style name="MottoQuote">
+        <item name="android:textSize">90sp</item>
+        <item name="android:textColor">#BABAB0</item>
+    </style>
+
+    <style name="PagerTabStripText">
+        <item name="android:textSize">@dimen/list_heading_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

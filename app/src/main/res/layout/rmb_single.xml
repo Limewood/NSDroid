@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rmb_background" >
+
+    <LinearLayout
+        android:id="@+id/rmb_title"
+        android:background="@drawable/ns_legend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/rmb_region_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="7dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/black"
+            android:fontFamily="Droid Sans"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/rmb_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/previous_page"
+            android:src="@drawable/rmb_previous"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_gravity="center_vertical"
+            android:clickable="true" />
+
+        <ImageView
+            android:id="@+id/rmb_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/go_to_page"
+            android:src="@drawable/rmb_page"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_gravity="center_vertical"
+            android:clickable="true" />
+
+        <ImageView
+            android:id="@+id/rmb_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/next_page"
+            android:src="@drawable/rmb_next"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_gravity="center_vertical"
+            android:clickable="true" />
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/rmb"
+        android:name="com.limewoodmedia.nsdroid.fragments.RMBFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rmb_title"
+        android:padding="5dp"
+        tools:layout="@layout/rmb" />
+
+</RelativeLayout>

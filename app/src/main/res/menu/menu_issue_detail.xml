@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_dismiss"
+        android:title="@string/menu_dismiss"
+        android:orderInCategory="1"
+        android:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_menu_delete" />
+    <item android:id="@+id/menu_refresh"
+        android:title="@string/menu_refresh"
+        android:orderInCategory="99"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_menu_refresh" />
+</menu>

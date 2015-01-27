@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="7dp" >
+    
+    <View
+       	android:id="@+id/divider"
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+    	android:layout_marginBottom="3dp"
+	    android:background="@android:color/darker_gray"/>
+    
+    <LinearLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:id="@+id/nation_delete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/dossier_remove"
+            android:src="@android:drawable/ic_menu_close_clear_cancel" />
+	    
+	    <TextView
+	        android:id="@+id/nation_name"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="10"
+	        style="@style/DossierText" />
+        
+	    <TextView
+	        android:id="@+id/nation_active"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="6"
+	        style="@style/DossierText" />
+	    
+	    <ImageView
+	        android:id="@+id/nation_more"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="2"
+	        android:adjustViewBounds="true"
+	        android:contentDescription="@string/dossier_more"
+	        android:src="@android:drawable/arrow_down_float" />
+	    
+	</LinearLayout>
+	
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+	    android:paddingTop="7dp"
+	    android:paddingBottom="7dp"
+	    android:layout_marginLeft="7dp"
+	    android:layout_marginRight="7dp"
+        android:orientation="vertical"
+        android:layout_below="@id/top_layout"
+        android:visibility="gone" >
+	    
+	    <TextView
+	        android:id="@+id/nation_category"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:textSize="16sp"
+	        android:textStyle="bold"
+	        style="@style/DossierText" />
+        
+	    <TextView
+	        android:id="@+id/nation_region"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:textSize="16sp"
+	        android:textStyle="bold"
+	        style="@style/DossierText" />
+        
+    </LinearLayout>
+
+</RelativeLayout>

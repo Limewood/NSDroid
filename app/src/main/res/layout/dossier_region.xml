@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="7dp" >
+    
+    <View
+       	android:id="@+id/divider"
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+    	android:layout_marginBottom="3dp"
+	    android:background="@android:color/darker_gray"/>
+    
+    <LinearLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:id="@+id/region_delete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/dossier_remove"
+            android:src="@android:drawable/ic_menu_close_clear_cancel" />
+        
+	    <TextView
+	        android:id="@+id/region_name"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="9"
+	        style="@style/DossierText" />
+	       
+	    <TextView
+	        android:id="@+id/region_nations"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        style="@style/DossierText" />
+	    
+	</LinearLayout>
+	    
+	<TextView
+        android:id="@+id/region_wad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:padding="7dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@id/top_layout"
+        style="@style/DossierText" />
+
+</RelativeLayout>

@@ -1,0 +1,73 @@
+<!--
+  ~ Copyright (c) 2015. Joakim Lindskog & Limewood Media
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in
+  ~ all copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  ~ THE SOFTWARE.
+  -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/side_menu_colour"
+    tools:context=".NavigationDrawerFragment"
+    android:scrollbarDefaultDelayBeforeFade="500"
+    android:scrollbarFadeDuration="50"
+    android:fadeScrollbars="true">
+
+    <LinearLayout
+        android:id="@+id/menu_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/side_menu_colour"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/menu_item_padding_bottom">
+
+        <include layout="@layout/nav_menu_item"
+                 android:id="@+id/menu_start" />
+
+        <include layout="@layout/nav_menu_item"
+                 android:id="@+id/menu_nation" />
+
+        <include layout="@layout/nav_submenu_item"
+            android:id="@+id/submenu_issues" />
+
+        <include layout="@layout/nav_submenu_item"
+            android:id="@+id/submenu_dossier" />
+
+        <include layout="@layout/nav_menu_item"
+                 android:id="@+id/menu_region" />
+
+        <include layout="@layout/nav_submenu_item"
+            android:id="@+id/submenu_rmb" />
+
+        <include layout="@layout/nav_submenu_item"
+            android:id="@+id/submenu_embassies" />
+
+        <!--<include layout="@layout/nav_menu_item"
+                 android:id="@+id/menu_world" />
+
+        <include layout="@layout/nav_menu_item"
+                 android:id="@+id/menu_wa" />-->
+
+        <include layout="@layout/nav_menu_item"
+                 android:id="@+id/menu_settings" />
+
+        </LinearLayout>
+
+    </ScrollView>

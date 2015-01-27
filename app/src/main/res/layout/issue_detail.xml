@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <!--  This is the main content -->
+    <ScrollView
+        android:id="@+id/issue_scroll_view"
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:background="@drawable/issue_frame"
+    	android:layout_marginTop="15dp"
+        android:paddingBottom="9dp">
+            
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="3dp"
+            android:paddingLeft="9dp"
+            android:paddingRight="9dp">
+			
+            <!-- Issue text title -->
+			<TextView
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:textSize="15sp"
+			    android:textColor="@color/medium_green"
+			    android:text="@string/the_issue" />
+            
+			<!-- Issue text -->
+			<TextView
+   				android:id="@+id/issue_text"
+   				android:layout_width="match_parent"
+   				android:layout_height="wrap_content"
+   				android:textSize="16sp"
+   				android:layout_marginBottom="7dp" />
+			
+			<!-- Government position -->
+			<TextView
+			    android:id="@+id/issue_position"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:textSize="16sp"
+			    android:textStyle="bold"
+			    android:layout_marginTop="5dp"
+			    android:layout_marginBottom="5dp" />
+						
+			<!-- Debate title -->
+			<TextView
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:textSize="15sp"
+			    android:textColor="@color/medium_green"
+			    android:text="@string/the_debate" />
+      
+			<!-- Debate options -->
+			<LinearLayout
+			    android:id="@+id/issue_choices_area"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="vertical"
+			    android:layout_marginTop="5dp">
+			    
+			    <!-- Choices are added here -->
+			    
+			</LinearLayout>
+            
+        </LinearLayout>
+            
+    </ScrollView>
+			    
+	<include
+	    layout="@layout/loading"
+	    android:layout_centerInParent="true" />
+
+    <!--  This is the title label -->
+    <TextView
+        android:id="@+id/issue_detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/HappeningsTitle"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="9dp"
+        android:textColor="@android:color/black" />
+</RelativeLayout>

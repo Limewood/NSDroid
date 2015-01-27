@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Preference names -->
+    <string name="preference_locale" translatable="false">locale_preference</string>
+    <string name="preference_rmb_update_interval" translatable="false">rmb_update_interval</string>
+    <string name="preference_nations" translatable="false">nations</string>
+</resources>

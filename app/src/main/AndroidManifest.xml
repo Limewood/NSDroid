@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.limewoodmedia.nsdroid"
+    android:versionCode="19"
+    android:versionName="1.5.2" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="21" />
+    
+    <supports-screens
+		android:smallScreens="true"
+		android:normalScreens="true"
+		android:largeScreens="true"
+		android:xlargeScreens="true"
+		android:anyDensity="true" />
+        
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".NSApplication"
+        android:icon="@drawable/app_icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:allowBackup="true" >
+        
+        <!-- Activities -->
+        <activity
+            android:name=".activities.NSDroid"
+            android:label="@string/title_activity_nsdroid"
+        	android:theme="@style/AppTheme"
+        	android:configChanges="locale" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".activities.Nation"
+            android:label="@string/nation"
+            android:exported="false"
+        	android:theme="@style/AppTheme" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="com.limewoodMedia.nsdroid.nation"/>
+            </intent-filter>
+        </activity>
+        
+        <activity
+ 			android:name=".activities.Region"
+            android:label="@string/region"
+            android:exported="false"
+        	android:theme="@style/AppTheme" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="com.limewoodMedia.nsdroid.region"/>
+                <data android:scheme="com.limewoodMedia.nsdroid.region.rmb"/>
+                <data android:scheme="com.limewoodMedia.nsdroid.region.embassies"/>
+            </intent-filter>
+        </activity>
+        
+        <activity
+ 			android:name=".activities.Welcome"
+            android:label="@string/welcome"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+        	android:theme="@style/AppTheme">
+        </activity>
+        
+        <activity
+ 			android:name=".activities.RMB"
+            android:label="@string/rmb"
+            android:exported="false"
+        	android:theme="@style/AppTheme" >
+        </activity>
+        
+        <activity
+ 			android:name=".activities.Issues"
+            android:label="@string/issues"
+        	android:theme="@style/AppTheme" >
+        </activity>
+        
+        <activity
+ 			android:name=".activities.IssueDetail"
+            android:label="@string/issue_detail"
+            android:exported="false"
+        	android:theme="@style/AppTheme" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="com.limewoodMedia.nsdroid.issue"/>
+            </intent-filter>
+        </activity>
+        
+        <activity
+ 			android:name=".activities.Embassies"
+            android:label="@string/embassies"
+            android:exported="false"
+        	android:theme="@style/AppTheme" >
+        </activity>
+        
+        <activity
+ 			android:name=".activities.Dossier"
+            android:label="@string/dossier"
+        	android:theme="@style/AppTheme" >
+        </activity>
+        
+        <activity
+            android:name=".activities.Preferences"
+            android:label="@string/preferences_title"
+        	android:theme="@style/AppTheme" >
+        </activity>
+        
+        <activity
+            android:name=".activities.NationsList"
+            android:label="@string/nations_list_title"
+        	android:theme="@style/AppTheme" >
+        </activity>
+        
+        <!-- Receivers -->
+        <receiver
+            android:name=".receivers.UpdateReceiver" />
+        
+        <!-- Services -->
+        <service
+            android:name=".services.UpdateService" />
+    </application>
+
+</manifest>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--  This is the main content -->
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:orientation="vertical"
+    	android:background="@drawable/ns_frame"
+    	android:layout_marginTop="15dp">
+
+        <ListView
+	    	android:id="@+id/regional_happenings_list"
+	    	android:layout_width="match_parent"
+	    	android:layout_height="match_parent" />
+		    
+        <include
+            layout="@layout/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+    <!--  This is the title label -->
+    <TextView
+        android:id="@+id/regional_happenings_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/HappeningsTitle"
+        android:text="@string/regional_happenings"
+        android:layout_marginLeft="15dp"
+        android:textColor="@android:color/black" />
+
+</RelativeLayout>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NSDroid</string>
+    <string name="nation_flag">Bandera nacional</string>
+    <string name="region_flag">Bandera regional</string>
+    <string name="unknown_nation">Nación desconocida</string>
+    <string name="unknown_region">Región desconocida</string>
+    <string name="rate_limit_reached">¡El límite de peticiones se ha alcanzado! Por favor, espera e inténtalo de nuevo.</string>
+    <string name="general_error">Ha ocurrido un error. Por favor, ponte en contacto con el desarrollador.</string>
+    <string name="io_error">Ha ocurrido un error. Por favor, comprueba tu conexión a la red.</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancelar</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="world_assembly">World Assembly</string>
+    <string name="loading">Cargando&#8230;</string>
+    <string name="wa_delegate">Delegado WA</string>
+    <string name="wa_member">Miembro WA</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="undefined_region">Región no definida</string>
+    <!-- Variable 1 is the quantity (5, 38 etc.), variable 2 is the unit (days, minutes etc.) -->
+    <string name="time_passed">Hace %1$d %2$s</string>
+    <!-- Variable 1 is the number of days, 2 is "day" (taken from quantity string) -->
+    <!-- 3 is the number of hours and 4 is "hours" (taken from quantity string) -->
+	<string name="time_passed_days_hours">Hace %1$d %2$s y %3$d %4$s</string>
+    
+    <!-- Welcome activity -->
+    <string name="welcome">¡Bienvenido a NSDroid!</string>
+    <string name="check_nation">Comprobar</string>
+    <string name="nation_hint">Tu nación</string>
+    <string name="welcome_title">Selecciona tu nación</string>
+    <string name="welcome_text">¡Bienvenido a NSDroid!\n
+        Por favor, introduce el nombre de tu nación abajo para configurar la aplicación.</string>
+    <string name="select_nation">¡Esta es mi nación!</string>
+    
+    <!-- Overview activity -->
+    <string name="title_activity_nsdroid">NSDroid</string>
+    <string name="recent_happenings">Eventos recientes</string>
+    <string name="latest_rmb_post">Último comentario del RMB</string>
+    
+    <!-- Regional happenings fragment -->
+    <string name="regional_happenings">Acontecimientos regionales</string>
+    
+    <!-- Nation activity -->
+    <string name="nation">Nación</string>
+    <string name="influence">Influencia</string>
+    <string name="loading_nation">Viajando por la región&#8230;</string>
+    <string name="category">Categoría</string>
+	<string name="civil_rights">Derechos civiles</string>
+	<string name="economy">Economía</string>
+	<string name="political_freedoms">Libertades políticas</string>
+    
+    <!-- Region activity -->
+    <string name="wfe">World Factbook Entry</string>
+    <string name="region">Región</string>
+    <string name="wad">Delegado WA:</string>
+    <string name="founder">Fundador:</string>
+    <string name="no_wad">Ninguno</string>
+    <string name="loading_region">Viajando por el mundo&#8230;</string>
+    
+    <!-- RMB activity -->
+    <string name="rmb">Regional Message Board</string>
+    <string name="rmb_abbr">RMB</string>
+    <string name="message_error">No se pudo publicar el comentario. Por favor, comprueba tu contraseña y tu conexión a Internet.</string>
+    <string name="message_posted">¡Tu mensaje se ha publicado!</string>
+    <string name="message_here">Escribe tu mensaje aquí</string>
+    <string name="close">Cerrar</string>
+    <string name="lodge">Publicar</string>
+    <string name="loading_rmb">Accediendo a la cháchara&#8230;</string>
+    <string name="rmb_post_no_text">Eso no es muy interesante, ¿no?</string>
+    <string name="loading_on_rmb_post">Difundiendo propaganda&#8230;</string>
+    <string name="previous_page">Página anterior</string>
+    <string name="go_to_page">Ir a la página</string>
+    <string name="next_page">Página siguiente</string>
+    <string name="rmb_go_to_page_title">Ver comentarios antiguos</string>
+    <string name="rmb_go_to_page_message">Página (0 = última página)</string>
+    
+    <!-- Issues list -->
+    <string name="issues_header">%1$s decide</string>
+    <string name="issues_title">Asuntos para %1$s:</string>
+    <string name="issues_dismiss_all_title">Ignorar todos los asuntos</string>
+    <string name="issues_dismiss_all_text">¿Realmente quieres ignorar todos los asuntos?</string>
+    <string name="issues">Asuntos</string>
+    <string name="issue_pending">[pendiente de legislación]</string>
+    <string name="issue_dismissed">[ignorado]</string>
+    <string name="could_not_get_issues">No se pudo acceder a los asuntos, por favor, comprueba to conexión a la red y tu contraseña.</string>
+    <string name="no_issues">De momento no tienes asuntos</string>
+    <string name="loading_issues">Contactando con tercos sabelotodos&#8230;</string>
+    
+    <!-- Issue detail -->
+    <string name="issue_detail">Asunto</string>
+    <string name="the_issue">El asunto</string>
+    <string name="the_debate">El debate</string>
+    <string name="issue_choose_title">Elegir opción</string>
+    <string name="issue_choose_text">¿Quieres elegir la opción %1$d?</string>
+    <string name="issue_dismiss_title">Ignorar asunto</string>
+    <string name="issue_dismiss_text">¿Quieres ignorar este asunto?</string>
+    <string name="issue_position_choice">El gobierno ha indicado su intención de seguir las recomendaciones de la Opción %1$d.</string>
+    <string name="issue_position_dismiss">El gobierno se está preparando para ignorar este asunto.</string>
+    <string name="issue_position_undecided">El gobierno tiene que adoptar una postura en relación a este asunto.</string>
+    <string name="loading_issue">Momento de emoción&#8230;</string>
+    
+    <!-- Embassies -->
+    <string name="embassies">Embajadas</string>
+    <string name="embassies_title">Embajadas en %1$s</string>
+    <string name="loading_embassies">Evitando incidente interregional&#8230;</string>
+    <string name="embassy_invited">invitación</string>
+    <string name="embassy_pending">pendiente</string>
+    <string name="embassy_requested">solicitada</string>
+    <string name="embassy_denied">denegada</string>
+    <string name="embassy_closing">clausurando</string>
+    
+    <!-- Dossier -->
+    <string name="dossier">Informes</string>
+	<string name="loading_dossier">Conectando con servicios de inteligencia&#8230;</string>
+	<string name="ex_nation">Nación extinta</string>
+	<string name="dossier_nations_header">Naciones</string>
+	<string name="dossier_regions_header">Regiones</string>
+	<string name="dossier_more">Más</string>
+	<string name="nation_added_to_dossier">Se ha creado un informe de la nación</string>
+	<string name="region_added_to_dossier">Se ha creado un informe de la región</string>
+	<string name="nation_removed_from_dossier">Se ha destruido el informe de esta nación</string>
+	<string name="region_removed_from_dossier">Se ha destruido el informe de esta región</string>
+	<string name="dossier_remove_nation_title">Destruir el informe de esta nación</string>
+	<string name="dossier_remove_nation_message">¿Estás seguro de que quieres destruir el informe de %1$s?</string>
+	<string name="dossier_remove_region_title">Destruir el informe de esta región</string>
+	<string name="dossier_remove_region_message">¿Estás seguro de que quieres destruir el informe de %1$s?</string>
+	<string name="dossier_remove">Destruir</string>
+    
+    <!-- Preferences -->
+    <string name="preferences_title">Preferencias</string>
+    <string name="preferences_summary">Aquí puedes configurar algunas preferencias</string>
+    <string name="rmb_update_interval">Intervalo de actualización de RMB</string>
+    <string name="rmb_update_interval_title">Intervalo de actualización de RMB</string>
+    <string name="rmb_update_interval_summary_minutes">Actualizar el RMB cada %1$s minutos</string>
+    <string name="rmb_update_interval_summary_never">Nunca actualizar el RMB automáticamente</string>
+    <string name="locale_choice">Seleccionar idioma</string>
+	<string name="locale_choice_title">Seleccionar idioma de interfaz</string>
+	<string name="locale_needs_restart_title">Se requiere reiniciar</string>
+	<string name="locale_needs_restart_message">La aplicación necesita reiniciarse para cambiar el idioma.</string>
+	<string name="restart">Reiniciar</string>
+	<string name="current_nation">Nación actual (haga clic para reiniciar (?))</string>
+    
+    <!-- Notifications -->
+    <string name="notification_title">¡Hay una actualización disponible!</string>
+    <string name="notification_text">Los datos se han actualizado, por favor, ve a la actividad relevante en NSDroid.</string>
+    <string name="notification_title_rmb">Nuevos comentarios en el RMB</string>
+    <string name="notification_text_rmb">¡El RMB de tu región tiene comentarios nuevos!</string>
+    
+    <!-- Log in -->
+    <string name="enter_password_title">Contraseña requerida</string>
+    <string name="enter_password_text">Por favor, introduce tu contraseña para usar esta característica.</string>
+    <string name="enter_password_error">Contraseña incorrecta, por favor, inténtalo de nuevo.</string>
+    
+    <!-- Menu -->
+    <string name="menu_refresh">Actualizar</string>
+    <string name="menu_nation">Nación</string>
+    <string name="menu_region">Región</string>
+    <string name="menu_settings">Ajustes</string>
+    <string name="menu_rmb">RMB</string>
+    <string name="menu_post">Publicar en el RMB</string>
+    <string name="menu_issues">Asuntos</string>
+    <string name="menu_dismiss_all">Ignorar todos los asuntos</string>
+    <string name="menu_dismiss">Ignorar asunto</string>
+    <string name="menu_embassies">Embajadas</string>
+    <string name="menu_dossier">Informes</string>
+	<string name="menu_add_nation_to_dossier">Crear informe</string>
+	<string name="menu_add_region_to_dossier">Crear informe</string>
+
+    <plurals name="days">
+        <item quantity="one">día</item>
+        <item quantity="other">días</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">hora</item>
+        <item quantity="other">horas</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">minuto</item>
+        <item quantity="other">minutos</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one">segundo</item>
+        <item quantity="other">segundos</item>
+    </plurals>
+    <plurals name="rmb_update_interval_summary_hours">
+        <item quantity="one">Actualizar el RMB cada %1$d hora</item>
+        <item quantity="other">Actualizar el RMB cada %1$d horas</item>
+    </plurals>
+    <string name="add_nation_hint">Nombre Nación</string>
+    <string name="add_nation_info">Escriba el nombre de la nación que desea añadir en el campo de texto de abajo.</string>
+    <string name="add_nation_title">Añadir nueva nación</string>
+    <string name="add_new_nation">Añadir nación</string>
+    <string name="endorsements_title">Avales</string>
+    <string name="menu_add_nation">Añadir nación</string>
+    <string name="menu_endorse_nation">Aprobar nación</string>
+    <string name="menu_move_to_region">Mover a la región</string>
+    <string name="moved_to_region">Se trasladó a la región %s</string>
+    <string name="moved_to_region_failed">No se pudo mover a la región %s. Puede ser protegido por contraseña.</string>
+    <string name="nation_already_added">Nación ya añadido!</string>
+    <string name="nation_banner">Bandera Nación</string>
+    <string name="nation_endorsed">Avalado</string>
+    <string name="nation_endorsed_msg">Nación aprobó!</string>
+    <string name="nation_not_endorsed">No aprobada</string>
+    <string name="nations">Naciones (%1$s)</string>
+    <string name="nations_current">Actual: %1$s</string>
+    <string name="nations_list_remove_message">¿Quieres eliminar esta nación de la aplicación?</string>
+    <string name="nations_list_remove_title">Retire nación</string>
+    <string name="nations_list_switch_message">¿Quieres cambiar a esta nación?</string>
+    <string name="nations_list_switch_title">Cambiar país</string>
+    <string name="nations_list_title">Naciones</string>
+    <string name="no_nations">No hay naciones</string>
+    <string name="region_password_text">Por favor, introduzca la contraseña de la región a vivir aquí.</string>
+    <string name="region_password_title">Requiere contraseña regional</string>
+    <string name="remove_nation_failed">No se pudo eliminar nación</string>
+    <string name="menu_unendorse_nation">Inaprobar nación</string>
+    <string name="nation_unendorsed_msg">Nación inaprobó!</string>
+    <string name="menu_start">Empiezo</string>
+    <string name="navigation_drawer_open">Abrir el menú principal</string>
+    <string name="navigation_drawer_close">Cerrar el menú principal</string>
+    <string name="wfe_title">WFE</string>
+    <string name="rmb_title">RMB</string>
+</resources>

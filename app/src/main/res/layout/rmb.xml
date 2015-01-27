@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/dimmer"
+        android:foreground="@drawable/dimmer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/rmb_messages"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/rmb_frame"
+                android:divider="@android:color/transparent"
+                android:transcriptMode="alwaysScroll"
+                android:stackFromBottom="true" />
+
+            <RelativeLayout
+                android:id="@+id/rmb_post_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginRight="3dp"
+                android:layout_marginLeft="3dp">
+
+                <EditText
+                    android:id="@+id/rmb_post_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/message_here"
+                    android:textSize="16sp"
+                    android:minLines="3"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:background="@drawable/rmb_cell"
+                    android:gravity="top|left"
+                    android:fontFamily="Droid Sans"
+                    android:layout_marginTop="5dp" />
+
+                <Button
+                    android:id="@+id/rmb_post_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/rmb_post_message"
+                    android:text="@string/close" />
+
+                <Button
+                    android:id="@+id/rmb_post_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/rmb_post_message"
+                    android:text="@string/lodge" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <include
+        layout="@layout/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+</RelativeLayout>

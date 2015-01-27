@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/embassies_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        android:spinnerMode="dropdown"
+        android:entries="@array/embassies_filter" />
+
+    <ListView
+        android:id="@+id/embassies_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rmb_frame"
+        android:dividerHeight="5dp"
+        android:layout_below="@id/embassies_filter"
+        android:divider="@android:color/transparent" />
+
+    <include
+        layout="@layout/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+</RelativeLayout>

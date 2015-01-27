@@ -1,0 +1,102 @@
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.NSDroid"
+    android:clickable="true">
+
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/rmb_background">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" >
+
+            <FrameLayout
+                android:id="@+id/center_point"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerInParent="true" />
+
+            <fragment
+                android:id="@+id/national_happenings"
+                android:name="com.limewoodmedia.nsdroid.fragments.NationalHappenings"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@id/center_point"
+                android:layout_marginBottom="1dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp" />
+
+            <fragment
+                android:id="@+id/regional_happenings"
+                android:name="com.limewoodmedia.nsdroid.fragments.RegionalHappenings"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/center_point"
+                android:layout_marginBottom="1dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.2"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="2dp">
+
+            <TextView
+                android:id="@+id/latest_rmb_post_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                style="@style/Common"
+                android:text="@string/latest_rmb_post"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="5dp" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/rmb_frame"
+                android:scrollbars="vertical"
+                android:fillViewport="true"
+                android:layout_below="@id/latest_rmb_post_header">
+
+                <include
+                    layout="@layout/rmb_post" />
+
+            </ScrollView>
+
+            <include
+                android:id="@+id/loading_post"
+                layout="@layout/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingTop="18dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <fragment android:id="@+id/navigation_drawer"
+        android:layout_width="@dimen/navigation_drawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:name="com.limewoodmedia.nsdroid.fragments.NavigationDrawerFragment"
+        tools:layout="@layout/fragment_navigation_drawer" />
+
+</android.support.v4.widget.DrawerLayout>

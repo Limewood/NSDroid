@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<ListPreference
+		android:dialogTitle="@string/rmb_update_interval"
+		android:entries="@array/rmb_update_intervals"
+		android:entryValues="@array/rmb_update_intervals_values"
+		android:key="@string/preference_rmb_update_interval"
+		android:summary="@string/rmb_update_interval_summary_never"
+		android:defaultValue="-1"
+		android:title="@string/rmb_update_interval_title"/>
+	
+	<ListPreference
+	    android:dialogTitle="@string/locale_choice"
+	    android:entries="@array/locale_choices"
+	    android:entryValues="@array/locale_choices_values"
+	    android:key="@string/preference_locale"
+	    android:defaultValue="en"
+	    android:title="@string/locale_choice_title"/>
+	
+	<Preference
+	    android:key="@string/preference_nations"
+	    android:title="@string/nations"/>
+
+</PreferenceScreen>

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NSDroid</string>
+    <string name="nation_flag">Nation flag</string>
+    <string name="region_flag">Region flag</string>
+    <string name="unknown_nation">Unknown nation</string>
+    <string name="unknown_region">Unknown region</string>
+    <string name="rate_limit_reached">Rate limit reached! Please wait and try again.</string>
+    <string name="general_error">An error has occurred, please contact the developer.</string>
+    <string name="io_error">An error occurred - please check your network connection.</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="world_assembly">World Assembly</string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="wa_delegate">WA Delegate</string>
+    <string name="wa_member">WA Member</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="undefined_region">Undefined region</string>
+    <!-- Variable 1 is the quantity (5, 38 etc.), variable 2 is the unit (days, minutes etc.) -->
+    <string name="time_passed">%1$d %2$s ago</string>
+    <!-- Variable 1 is the number of days, 2 is "day" (taken from quantity string) -->
+    <!-- 3 is the number of hours and 4 is "hours" (taken from quantity string) -->
+    <string name="time_passed_days_hours">%1$d %2$s %3$d %4$s ago</string>
+    
+    <!-- Welcome activity -->
+    <string name="welcome">Welcome to NSDroid!</string>
+    <string name="check_nation">Check</string>
+    <string name="nation_hint">Your nation</string>
+    <string name="welcome_title">Select your nation</string>
+    <string name="welcome_text">Welcome to NSDroid!\n
+        Please enter your nation\'s name below to set up the application.</string>
+    <string name="select_nation">This is my nation!</string>
+    <string name="add_new_nation">Add nation</string>
+    <string name="add_nation_title">Add new nation</string>
+    <string name="add_nation_info">Enter the name of the nation you want to add in the text field below.</string>
+    <string name="add_nation_hint">Nation name</string>
+    <string name="nation_already_added">Nation already added!</string>
+    
+    <!-- Overview activity -->
+    <string name="title_activity_nsdroid">NSDroid</string>
+    <string name="recent_happenings">Recent events</string>
+    <string name="latest_rmb_post">Latest RMB post</string>
+    
+    <!-- Regional happenings fragment -->
+    <string name="regional_happenings">Regional happenings</string>
+    
+    <!-- Nation activity -->
+    <string name="nation">Nation</string>
+    <string name="influence">Influence</string>
+    <string name="loading_nation">Travelling the region&#8230;</string>
+    <string name="category">Category</string>
+    <string name="civil_rights">Civil Rights</string>
+    <string name="economy">Economy</string>
+    <string name="political_freedoms">Political Freedoms</string>
+    <string name="nation_banner">Nation banner</string>
+    <string name="pretitle" translatable="false">The %s of</string>
+    <string name="nation_endorsed">Endorsed</string>
+    <string name="nation_not_endorsed">Not endorsed</string>
+    <string name="nation_endorsed_msg">Nation endorsed!</string>
+    <string name="nation_unendorsed_msg">Nation unendorsed!</string>
+    <string name="endorsements_title">Endorsements</string>
+    
+    <!-- Region activity -->
+    <string name="wfe">World Factbook Entry</string>
+    <string name="region">Region</string>
+    <string name="wad">WA Delegate:</string>
+    <string name="founder">Founder:</string>
+    <string name="no_wad">None</string>
+    <string name="loading_region">Travelling the world&#8230;</string>
+    <string name="moved_to_region">Moved to region %s</string>
+    <string name="moved_to_region_failed">Failed to move to region %s. It may be password-protected.</string>
+    <string name="region_password_title">Regional password required</string>
+    <string name="region_password_text">Please enter the region\'s password to move here.</string>
+    <string name="wfe_title">WFE</string>
+
+    <!-- RMB -->
+    <string name="rmb">Regional Message Board</string>
+    <string name="rmb_abbr">RMB</string>
+    <string name="rmb_title">RMB</string>
+    <string name="message_error">Could not post message. Please check your password and Internet connection.</string>
+    <string name="message_posted">Your message has been lodged!</string>
+    <string name="message_here">Write your message here</string>
+    <string name="close">Close</string>
+    <string name="lodge">Lodge</string>
+    <string name="loading_rmb">Fetching banter&#8230;</string>
+    <string name="rmb_post_no_text">That wasn\'t very interesting, now was it?</string>
+    <string name="loading_on_rmb_post">Spreading propaganda&#8230;</string>
+    <string name="previous_page">Previous page</string>
+    <string name="go_to_page">Go to page</string>
+    <string name="next_page">Next page</string>
+    <string name="rmb_go_to_page_title">Set offset page</string>
+    <string name="rmb_go_to_page_message">Set the offset page to use (0 = last page)</string>
+    
+    <!-- Issues list -->
+    <string name="issues_header">%1$s decides</string>
+    <string name="issues_title">Issues for %1$s:</string>
+    <string name="issues_dismiss_all_title">Dismiss all issues</string>
+    <string name="issues_dismiss_all_text">Do you really want to dismiss all your issues?</string>
+    <string name="issues">Issues</string>
+    <string name="issue_pending">[legislation pending]</string>
+    <string name="issue_dismissed">[dismissed]</string>
+    <string name="could_not_get_issues">Couldn\'t fetch issues, please check your network connection and password.</string>
+    <string name="no_issues">You have no issues currently</string>
+    <string name="loading_issues">Fetching opinionated besser-wissers&#8230;</string>
+    
+    <!-- Issue detail -->
+    <string name="issue_detail">Issue</string>
+    <string name="the_issue">The issue</string>
+    <string name="the_debate">The debate</string>
+    <string name="issue_choose_title">Choose option</string>
+    <string name="issue_choose_text">Do you want to choose option %1$d?</string>
+    <string name="issue_dismiss_title">Dismiss issue</string>
+    <string name="issue_dismiss_text">Do you want to dismiss this issue?</string>
+    <string name="issue_position_choice">The government has indicated its intention to follow the recommendations of Option %1$d.</string>
+    <string name="issue_position_dismiss">The government is preparing to dismiss this issue.</string>
+    <string name="issue_position_undecided">The government has yet to formalize a position on this issue.</string>
+    <string name="loading_issue">Summoning indecision&#8230;</string>
+    
+    <!-- Embassies -->
+    <string name="embassies">embassies</string>
+    <string name="embassies_title">Embassies</string>
+    <string name="loading_embassies">Avoiding interregional incident&#8230;</string>
+    <string name="embassy_invited">invitation</string>
+    <string name="embassy_pending">pending</string>
+    <string name="embassy_requested">requested</string>
+    <string name="embassy_denied">denied</string>
+    <string name="embassy_closing">closing</string>
+    
+    <!-- Dossier -->
+    <string name="dossier">Dossier</string>
+    <string name="loading_dossier">Gathering intel&#8230;</string>
+    <string name="ex_nation">Ex-nation</string>
+    <string name="dossier_nations_header">Nations</string>
+    <string name="dossier_regions_header">Regions</string>
+    <string name="dossier_more">More</string>
+    <string name="nation_added_to_dossier">Nation added to dossier</string>
+    <string name="region_added_to_dossier">Region added to dossier</string>
+    <string name="nation_removed_from_dossier">Nation removed from dossier</string>
+    <string name="region_removed_from_dossier">Region removed from dossier</string>
+    <string name="dossier_remove_nation_title">Remove nation from dossier</string>
+    <string name="dossier_remove_nation_message">Are you sure you want to remove %1$s from your dossier?</string>
+    <string name="dossier_remove_region_title">Remove region from dossier</string>
+    <string name="dossier_remove_region_message">Are you sure you want to remove %1$s from your dossier?</string>
+    <string name="dossier_remove">Remove</string>
+    
+    <!-- Nations list -->
+    <string name="nations_list_title">Nations</string>
+    <string name="no_nations">No nations</string>
+    <string name="nations_list_switch_title">Switch nation</string>
+    <string name="nations_list_switch_message">Do you want to switch to this nation?</string>
+    <string name="nations_list_remove_title">Remove nation</string>
+    <string name="nations_list_remove_message">Do you want to remove this nation from the app?</string>
+    <string name="remove_nation_failed">Could not remove nation</string>
+    
+    <!-- Notifications -->
+    <string name="notification_title">An update is available</string>
+    <string name="notification_text">Data has been updated, please see the relevant activity in NSDroid.</string>
+    <string name="notification_title_rmb">New RMB posts</string>
+    <string name="notification_text_rmb">Your region\'s RMB has new posts!</string>
+    
+    <!-- Log in -->
+    <string name="enter_password_title">Password required</string>
+    <string name="enter_password_text">Please enter your password to use this feature.</string>
+    <string name="enter_password_error">Incorrect password, please try again.</string>
+    
+    <!-- Main menu -->
+    <string name="menu_start">Overview</string>
+    <string name="menu_nation">Nation</string>
+    <string name="menu_region">Region</string>
+    <string name="menu_settings">Settings</string>
+
+    <!-- Common menu strings -->
+    <string name="menu_refresh">Refresh</string>
+    <string name="navigation_drawer_open">Open main menu</string>
+    <string name="navigation_drawer_close">Close main menu</string>
+
+    <!-- Nation menu -->
+    <string name="menu_issues">Issues</string>
+    <string name="menu_dossier">Dossier</string>
+    <string name="menu_add_nation_to_dossier">Add to dossier</string>
+    <string name="menu_add_nation">Add nation</string>
+    <string name="menu_endorse_nation">Endorse nation</string>
+    <string name="menu_unendorse_nation">Unendorse nation</string>
+
+    <!-- Issues menu -->
+    <string name="menu_dismiss_all">Dismiss all issues</string>
+    <string name="menu_dismiss">Dismiss issue</string>
+
+    <!-- Region menu -->
+    <string name="menu_rmb">RMB</string>
+    <string name="menu_post">Post to RMB</string>
+    <string name="menu_move_to_region">Move to region</string>
+    <string name="menu_add_region_to_dossier">Add to dossier</string>
+    <string name="menu_embassies">Embassies</string>
+
+    <!-- Preferences -->
+    <string name="preferences_title">Preferences</string>
+    <string name="preferences_summary">Here you can set some preferences</string>
+    <string name="rmb_update_interval">RMB update interval</string>
+    <string name="rmb_update_interval_title">RMB update interval</string>
+    <string name="rmb_update_interval_summary_minutes">Update the RMB every %1$s minutes</string>
+    <string name="rmb_update_interval_summary_never">Never update the RMB automatically</string>
+    <string name="locale_choice">Set language</string>
+    <string name="locale_choice_title">Set interface language</string>
+    <string name="locale_needs_restart_title">Restart required</string>
+    <string name="locale_needs_restart_message">The application needs to be restarted to change language.</string>
+    <string name="restart">Restart</string>
+    <string name="nations">Nations (%1$s)</string>
+    <string name="nations_current">Current: %1$s</string>
+    
+    <plurals name="days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">hour</item>
+        <item quantity="other">hours</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">minute</item>
+        <item quantity="other">minutes</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one">second</item>
+        <item quantity="other">seconds</item>
+    </plurals>
+    <plurals name="rmb_update_interval_summary_hours">
+        <item quantity="one">Update the RMB every %1$d hour</item>
+        <item quantity="other">Update the RMB every %1$d hours</item>
+    </plurals>
+    <string name="current_nation">Current nation</string>
+    
+    <!-- Testing strings -->
+    <string name="test_nation_name" translatable="false">Laevendell</string>
+    <string name="test_nation_pretitle" translatable="false">The Green Communes of</string>
+    <string name="test_nation_category" translatable="false">Left-wing Utopia</string>
+    <string name="test_nation_motto" translatable="false">What\'s mine is yours as well.</string>
+    <string name="test_superb" translatable="false">Superb</string>
+    <string name="test_frightening" translatable="false">Frightening</string>
+    <string name="test_corrupted" translatable="false">Corrupted</string>
+    <string name="test_diplomat" translatable="false">Diplomat</string>
+</resources>

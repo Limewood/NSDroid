@@ -1,0 +1,123 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:paddingLeft="7dp"
+	android:paddingRight="7dp"
+	android:paddingBottom="7dp"
+	android:paddingTop="3dp">
+
+    <!--  This is the main content -->
+    <ScrollView
+        android:id="@+id/welcome_frame"
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:orientation="vertical"
+    	android:background="@drawable/ns_frame"
+    	android:layout_marginTop="15dp"
+	    android:scrollbars="vertical">
+
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical">
+	        
+	        <TextView
+		        android:id="@+id/welcome_info"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/welcome_text"
+		        android:textSize="18sp"
+		        android:layout_margin="7dp" />
+	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal" >
+		        <EditText
+		            android:id="@+id/welcome_nation"
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+		            android:inputType="textCapSentences"
+		            android:hint="@string/nation_hint"
+		            android:background="@drawable/ns_cell"
+		            android:layout_marginRight="7dp"
+		            android:paddingLeft="9dp" />
+	            
+	            <Button
+		            android:id="@+id/button_check"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/check_nation" />
+	        </LinearLayout>
+	        
+	        <ImageView
+	            android:id="@+id/welcome_flag"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="gone"
+	            android:contentDescription="@string/nation_flag"
+	            android:layout_gravity="center_horizontal"
+        		android:layout_marginTop="7dp" />
+	        
+	        <TextView
+		        android:id="@+id/welcome_name"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:fontFamily="Droid Sans"
+		        android:textSize="23sp"
+		        android:textStyle="bold"
+		        android:gravity="center"
+	            android:visibility="gone" />
+		    
+		    <TextView
+		        android:id="@+id/welcome_motto"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:fontFamily="Droid Sans"
+		        android:textSize="19sp"
+		        android:textStyle="italic"
+		        android:gravity="center"
+	            android:visibility="gone" />
+		    
+		    <TextView
+		        android:id="@+id/welcome_region"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:fontFamily="Droid Sans"
+		        android:textSize="18sp"
+		        android:textStyle="bold"
+		        android:gravity="center"
+	            android:visibility="gone" />
+		    
+	        <Button
+	            android:id="@+id/button_select"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/select_nation"
+	            android:layout_marginTop="10dp"
+	            android:visibility="gone"
+	            android:layout_gravity="center_horizontal"
+	            android:textSize="17sp"
+	            android:textStyle="bold" />
+	    
+	        <include
+	            layout="@layout/loading"
+	            android:gravity="center_horizontal"
+	            android:layout_marginTop="7dp" />
+	        
+		</LinearLayout>
+
+    </ScrollView>
+
+    <!--  This is the title label -->
+    <TextView
+        android:id="@+id/welcome_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+           android:text="@string/welcome_title"
+        style="@style/HappeningsTitle"
+        android:layout_marginLeft="15dp"
+        android:textColor="@android:color/black" />
+
+</RelativeLayout>

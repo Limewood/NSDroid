@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Embassies -->
+    <string-array name="embassies_filter">
+        <item>Mostrar todas las embajadas</item>
+        <item>Mostrar cambios</item>
+        <item>Mostrar embajadas establecidas</item>
+        <item>Mostrar invitación</item>
+        <item>Mostrar embajadas pendientes</item>
+        <item>Mostrar embajadas solicitadas</item>
+        <item>Mostrar embajadas denegadas</item>
+        <item>Mostrar embajadas en clausura</item>
+    </string-array>
+    
+    <!-- RMB update preference -->
+    <string-array name="rmb_update_intervals">
+        <item>Nunca</item>
+        <item>10 minutos</item>
+        <item>20 minutos</item>
+        <item>30 minutos</item>
+        <item>1 hora</item>
+        <item>3 horas</item>
+        <item>6 horas</item>
+        <item>12 horas</item>
+        <item>24 horas</item>
+    </string-array>
+    
+    <string-array name="rmb_update_intervals_values">
+        <item>-1</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>720</item>
+        <item>1440</item>
+    </string-array>
+    
+    <!-- Language preference -->
+	<string-array name="locale_choices">
+	    <item>Inglés</item>
+	    <item>Español</item>
+	</string-array>
+</resources>
