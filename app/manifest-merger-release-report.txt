@@ -127,73 +127,61 @@ ADDED from AndroidManifest.xml:66:9
 		ADDED from AndroidManifest.xml:69:13
 	android:name
 		ADDED from AndroidManifest.xml:67:5
-activity#com.limewoodmedia.nsdroid.activities.RMB
+activity#com.limewoodmedia.nsdroid.activities.Issues
 ADDED from AndroidManifest.xml:74:9
 	android:label
 		ADDED from AndroidManifest.xml:76:13
 	android:theme
-		ADDED from AndroidManifest.xml:78:10
-	android:exported
-		ADDED from AndroidManifest.xml:77:13
+		ADDED from AndroidManifest.xml:77:10
 	android:name
 		ADDED from AndroidManifest.xml:75:5
-activity#com.limewoodmedia.nsdroid.activities.Issues
-ADDED from AndroidManifest.xml:81:9
+activity#com.limewoodmedia.nsdroid.activities.IssueDetail
+ADDED from AndroidManifest.xml:80:9
 	android:label
-		ADDED from AndroidManifest.xml:83:13
+		ADDED from AndroidManifest.xml:82:13
 	android:theme
 		ADDED from AndroidManifest.xml:84:10
-	android:name
-		ADDED from AndroidManifest.xml:82:5
-activity#com.limewoodmedia.nsdroid.activities.IssueDetail
-ADDED from AndroidManifest.xml:87:9
-	android:label
-		ADDED from AndroidManifest.xml:89:13
-	android:theme
-		ADDED from AndroidManifest.xml:91:10
 	android:exported
-		ADDED from AndroidManifest.xml:90:13
+		ADDED from AndroidManifest.xml:83:13
 	android:name
-		ADDED from AndroidManifest.xml:88:5
-activity#com.limewoodmedia.nsdroid.activities.Embassies
-ADDED from AndroidManifest.xml:99:9
-	android:label
-		ADDED from AndroidManifest.xml:101:13
-	android:theme
-		ADDED from AndroidManifest.xml:103:10
-	android:exported
-		ADDED from AndroidManifest.xml:102:13
-	android:name
-		ADDED from AndroidManifest.xml:100:5
+		ADDED from AndroidManifest.xml:81:5
 activity#com.limewoodmedia.nsdroid.activities.Dossier
-ADDED from AndroidManifest.xml:106:9
+ADDED from AndroidManifest.xml:92:9
 	android:label
-		ADDED from AndroidManifest.xml:108:13
+		ADDED from AndroidManifest.xml:94:13
 	android:theme
-		ADDED from AndroidManifest.xml:109:10
+		ADDED from AndroidManifest.xml:95:10
 	android:name
-		ADDED from AndroidManifest.xml:107:5
+		ADDED from AndroidManifest.xml:93:5
 activity#com.limewoodmedia.nsdroid.activities.Preferences
-ADDED from AndroidManifest.xml:112:9
+ADDED from AndroidManifest.xml:98:9
 	android:label
-		ADDED from AndroidManifest.xml:114:13
+		ADDED from AndroidManifest.xml:100:13
 	android:theme
-		ADDED from AndroidManifest.xml:115:10
+		ADDED from AndroidManifest.xml:101:10
 	android:name
-		ADDED from AndroidManifest.xml:113:13
+		ADDED from AndroidManifest.xml:99:13
 activity#com.limewoodmedia.nsdroid.activities.NationsList
-ADDED from AndroidManifest.xml:118:9
+ADDED from AndroidManifest.xml:104:9
 	android:label
-		ADDED from AndroidManifest.xml:120:13
+		ADDED from AndroidManifest.xml:106:13
 	android:theme
-		ADDED from AndroidManifest.xml:121:10
+		ADDED from AndroidManifest.xml:107:10
 	android:name
-		ADDED from AndroidManifest.xml:119:13
+		ADDED from AndroidManifest.xml:105:13
+activity#com.limewoodmedia.nsdroid.activities.WorldAssembly
+ADDED from AndroidManifest.xml:110:9
+	android:label
+		ADDED from AndroidManifest.xml:112:13
+	android:theme
+		ADDED from AndroidManifest.xml:113:13
+	android:name
+		ADDED from AndroidManifest.xml:111:13
 receiver#com.limewoodmedia.nsdroid.receivers.UpdateReceiver
-ADDED from AndroidManifest.xml:125:9
+ADDED from AndroidManifest.xml:117:9
 	android:name
-		ADDED from AndroidManifest.xml:126:13
+		ADDED from AndroidManifest.xml:118:13
 service#com.limewoodmedia.nsdroid.services.UpdateService
-ADDED from AndroidManifest.xml:129:9
+ADDED from AndroidManifest.xml:121:9
 	android:name
-		ADDED from AndroidManifest.xml:130:13
+		ADDED from AndroidManifest.xml:122:13

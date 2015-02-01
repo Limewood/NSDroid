@@ -52,16 +52,19 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import com.limewoodMedia.nsapi.INSAPI;
 import com.limewoodMedia.nsapi.NSAPI;
+import com.limewoodMedia.nsapi.enums.WACouncil;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
 import com.limewoodMedia.nsapi.holders.NationData;
 import com.limewoodMedia.nsapi.holders.RegionData;
+import com.limewoodMedia.nsapi.holders.WAData;
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.holders.DossierData;
 import com.limewoodmedia.nsdroid.holders.Issue;
 import com.limewoodmedia.nsdroid.holders.NationDataParcelable;
 import com.limewoodmedia.nsdroid.holders.RegionDataParcelable;
+import com.limewoodmedia.nsdroid.holders.WADataParcelable;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -156,6 +159,22 @@ public class API {
 
         return new RegionDataParcelable(nsapi.getRegionInfo(region, shards));
 	}
+
+    /**
+     * Fetches WA info
+     * @param council which council to get info from
+     * @param shards fetching options (shards)
+     * @return an NSData object with the info
+     * @throws XmlPullParserException if there was a problem with the xml parser
+     * @throws IOException if there was a network problem
+     * @throws UnknownRegionException if the region could not be found
+     * @throws RateLimitReachedException if the rate limit was reached
+     */
+    public synchronized WADataParcelable getWAInfo(WACouncil council, WAData.Shards...shards)
+            throws RateLimitReachedException, UnknownRegionException {
+
+        return new WADataParcelable(nsapi.getWAInfo(council, shards));
+    }
 	
 	public synchronized RegionDataParcelable getHomeRegionInfo(Context context, RegionData.Shards...shards)
 			throws RateLimitReachedException, UnknownRegionException {

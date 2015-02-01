@@ -28,12 +28,15 @@ import java.util.Map;
 
 import com.limewoodMedia.nsapi.enums.IArguments;
 import com.limewoodMedia.nsapi.enums.IShards;
+import com.limewoodMedia.nsapi.enums.WACouncil;
 
 /**
  * Data object for holding World Assembly data
  * @author joakim
  */
 public class WAData {
+    public static final String ROOT_TAG = "wa";
+
 	/**
 	 * Shards for World Assembly data
 	 */
@@ -44,8 +47,10 @@ public class WAData {
 		MEMBERS("members"),
 		HAPPENINGS("happenings"),
 		MEMBER_LOG("memberlog"),
-		LAST_RESOLUTION("lastresolution");
-		// Missing resolution, votetrack, dellog, delvotes
+		LAST_RESOLUTION("lastresolution"),
+        RESOLUTION("resolution"),
+        VOTETRACK("votetrack"); // Must be used with resolution
+		// TODO Missing dellog, delvotes
 		
 		private String name;
 		private String tag;
@@ -99,7 +104,18 @@ public class WAData {
 		
 		public static enum SubTags {
 			HAPPENINGS_EVENT("event"),
-			MEMBER_LOG_EVENT("event");
+			MEMBER_LOG_EVENT("event"),
+            RESOLUTION_CATEGORY("category"),
+            RESOLUTION_CREATED("created"),
+            RESOLUTION_DESC("desc"),
+            RESOLUTION_NAME("name"),
+            RESOLUTION_OPTION("option"),
+            RESOLUTION_PROPOSED_BY("proposed_by"),
+            RESOLUTION_TOTAL_VOTES_FOR("total_votes_for"),
+            RESOLUTION_TOTAL_VOTES_AGAINST("total_votes_against"),
+            RESOLUTION_VOTE_TRACK_FOR("vote_track_for"),
+            RESOLUTION_VOTE_TRACK_AGAINST("vote_track_against"),
+            RESOLUTION_VOTE_TRACK_N("n");
 
 			private String tag;
 
@@ -120,6 +136,8 @@ public class WAData {
 	public List<WAHappening> happenings;
 	public List<WAMemberLogHappening> memberLog;
 	public String lastResolution;
+    public WACouncil council;
+    public Resolution resolution;
 	
 	@Override
 	public String toString() {

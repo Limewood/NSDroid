@@ -36,4 +36,8 @@
 
     <!-- ViewPager header -->
     <color name="list_heading_background">#EAEAE2</color>
+
+    <!-- World Assembly -->
+    <color name="sc_against">#AAA91347</color>
+    <color name="ga_for">#AA1373FF</color>
 </resources>

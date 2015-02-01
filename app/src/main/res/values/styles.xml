@@ -101,4 +101,7 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="CouncilTitle" parent="HappeningsTitle">
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>

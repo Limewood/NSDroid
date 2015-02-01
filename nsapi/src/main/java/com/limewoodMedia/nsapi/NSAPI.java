@@ -40,6 +40,7 @@ import com.limewoodMedia.nsapi.holders.NationHappening;
 import com.limewoodMedia.nsapi.holders.RMBMessage;
 import com.limewoodMedia.nsapi.holders.RegionData;
 import com.limewoodMedia.nsapi.holders.RegionHappening;
+import com.limewoodMedia.nsapi.holders.Resolution;
 import com.limewoodMedia.nsapi.holders.WAData;
 import com.limewoodMedia.nsapi.holders.WAHappening;
 import com.limewoodMedia.nsapi.holders.WAMemberLogHappening;
@@ -915,6 +916,21 @@ public class NSAPI implements INSAPI {
 		if (!makeCall()) {
 			throw new RateLimitReachedException();
 		}
+        // Check for resolution shard if votetrack is requested
+        boolean needsResolution = false;
+        for(WAData.Shards s : shards) {
+            if(s == WAData.Shards.RESOLUTION) {
+                needsResolution = false;
+                break;
+            } else if(s == WAData.Shards.VOTETRACK) {
+                needsResolution = true;
+            }
+        }
+        if(needsResolution) {
+            // Add resolution shard
+            shards = Arrays.copyOf(shards, shards.length+1);
+            shards[shards.length-1] = WAData.Shards.RESOLUTION;
+        }
 		NSData data = null;
 		try {
 			data = getInfo("?wa="+council.getId(), shards);
@@ -945,10 +961,12 @@ public class NSAPI implements INSAPI {
 						wa.memberLog = parseWAMemberLog(xpp);
 					}
 					else if (tagName.equals(WAData.Shards.LAST_RESOLUTION.getTag())) {
-						// TODO FIXME This tag can contain invalid xml!
-//						wa.lastResolution = xpp.nextText();
+						wa.lastResolution = xpp.nextText();
 					}
-					else {
+                    else if(tagName.equals(WAData.Shards.RESOLUTION.getTag())) {
+                        wa.resolution = parseResolution(xpp);
+                    }
+					else if(!tagName.equals(WAData.ROOT_TAG)) {
 						System.err.println("Unknown WA tag: " + tagName);
 					}
 					break;
@@ -1029,6 +1047,75 @@ public class NSAPI implements INSAPI {
 			}
 		return happenings;
 	}
+
+    private Resolution parseResolution(XmlPullParser xpp)
+            throws NumberFormatException, XmlPullParserException, IOException {
+        String tagName = null;
+        Resolution resolution = new Resolution();
+        loop: while (xpp.next() != XmlPullParser.END_DOCUMENT)
+            switch (xpp.getEventType()) {
+                case XmlPullParser.START_TAG:
+                    tagName = xpp.getName().toLowerCase();
+                    if (tagName.equals(WAData.Shards.SubTags.RESOLUTION_CATEGORY.getTag())) {
+                        resolution.category = xpp.nextText();
+                    }
+                    else if(tagName.equals(WAData.Shards.SubTags.RESOLUTION_CREATED.getTag())) {
+                        resolution.created = Long.parseLong(xpp.nextText());
+                    }
+                    else if(tagName.equals(WAData.Shards.SubTags.RESOLUTION_NAME.getTag())) {
+                        resolution.name = xpp.nextText();
+                    }
+                    else if(tagName.equals(WAData.Shards.SubTags.RESOLUTION_DESC.getTag())) {
+                        resolution.desc = xpp.nextText();
+                    }
+                    else if(tagName.equals(WAData.Shards.SubTags.RESOLUTION_OPTION.getTag())) {
+                        resolution.option = xpp.nextText();
+                    }
+                    else if(tagName.equals(WAData.Shards.SubTags.RESOLUTION_PROPOSED_BY.getTag())) {
+                        resolution.proposedBy = xpp.nextText();
+                    }
+                    else if(tagName.equals(WAData.Shards.SubTags.RESOLUTION_TOTAL_VOTES_AGAINST.getTag())) {
+                        resolution.votes.againstVotes = Integer.parseInt(xpp.nextText());
+                    }
+                    else if(tagName.equals(WAData.Shards.SubTags.RESOLUTION_TOTAL_VOTES_FOR.getTag())) {
+                        resolution.votes.forVotes = Integer.parseInt(xpp.nextText());
+                    }
+                    else if(tagName.equals(WAData.Shards.SubTags.RESOLUTION_VOTE_TRACK_AGAINST.getTag())) {
+                        resolution.voteTrack.againstVotes = parseVoteTrack(xpp, WAData.Shards.SubTags.RESOLUTION_VOTE_TRACK_AGAINST);
+                    }
+                    else if(tagName.equals(WAData.Shards.SubTags.RESOLUTION_VOTE_TRACK_FOR.getTag())) {
+                        resolution.voteTrack.forVotes = parseVoteTrack(xpp, WAData.Shards.SubTags.RESOLUTION_VOTE_TRACK_FOR);
+                    }
+                    break;
+                case XmlPullParser.END_TAG:
+                    tagName = xpp.getName().toLowerCase();
+                    if (tagName.equals(WAData.Shards.RESOLUTION.getTag())) {
+                        break loop;
+                    }
+            }
+        return resolution;
+    }
+
+    private Integer[] parseVoteTrack(XmlPullParser xpp, WAData.Shards.SubTags tag)
+            throws NumberFormatException, XmlPullParserException, IOException {
+        String tagName = null;
+        List<Integer> votes = new ArrayList<Integer>();
+        loop: while (xpp.next() != XmlPullParser.END_DOCUMENT)
+            switch (xpp.getEventType()) {
+                case XmlPullParser.START_TAG:
+                    tagName = xpp.getName().toLowerCase();
+                    if (tagName.equals(WAData.Shards.SubTags.RESOLUTION_VOTE_TRACK_N.getTag())) {
+                        votes.add(Integer.parseInt(xpp.nextText()));
+                    }
+                    break;
+                case XmlPullParser.END_TAG:
+                    tagName = xpp.getName().toLowerCase();
+                    if (tagName.equals(tag.getTag())) {
+                        break loop;
+                    }
+            }
+        return votes.toArray(new Integer[votes.size()]);
+    }
 
 	/**
 	 * Fetches data from the NationStates Shards API

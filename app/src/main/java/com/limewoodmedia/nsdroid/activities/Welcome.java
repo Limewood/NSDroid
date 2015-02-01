@@ -27,6 +27,7 @@ import static com.limewoodMedia.nsapi.holders.NationData.Shards.*;
 import java.io.IOException;
 import java.net.URL;
 
+import com.actionbarsherlock.app.SherlockActivity;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
 import com.limewoodMedia.nsapi.holders.NationData;
@@ -56,7 +57,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Welcome extends Activity implements OnClickListener {
+public class Welcome extends SherlockActivity implements OnClickListener {
 	@SuppressWarnings("unused")
 	private static final String TAG = Welcome.class.getName();
 	

@@ -35,6 +35,7 @@ import com.limewoodmedia.nsdroid.activities.NSDroid;
 import com.limewoodmedia.nsdroid.activities.Nation;
 import com.limewoodmedia.nsdroid.activities.Preferences;
 import com.limewoodmedia.nsdroid.activities.Region;
+import com.limewoodmedia.nsdroid.activities.WorldAssembly;
 import com.limewoodmedia.nsdroid.fragments.NavigationDrawerFragment;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -150,7 +151,11 @@ public class Utils {
                     context.startActivity(intent);
                 }
                 break;
-            case R.id.menu_settings:
+//            case R.id.menu_wa: // World Assembly
+//                intent = new Intent(context, WorldAssembly.class);
+//                context.startActivity(intent);
+//                break;
+            case R.id.menu_settings: // Preferences
                 intent = new Intent(context, Preferences.class);
                 context.startActivity(intent);
                 break;

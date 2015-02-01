@@ -113,6 +113,7 @@ public class NavigationDrawerFragment extends SherlockFragment {
 				new MenuItemHolder(R.id.menu_region, R.drawable.icon_region, R.string.menu_region),
                 new MenuItemHolder(R.id.submenu_rmb, R.drawable.icon_rmb, R.string.menu_rmb),
                 new MenuItemHolder(R.id.submenu_embassies, R.drawable.icon_embassies, R.string.menu_embassies),
+//                new MenuItemHolder(R.id.menu_wa, R.drawable.icon_wa, R.string.menu_wa),
 				new MenuItemHolder(R.id.menu_settings, R.drawable.icon_settings, R.string.menu_settings)
 		};
 		View view;
