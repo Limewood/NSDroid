@@ -22,26 +22,20 @@
 
 package com.limewoodmedia.nsdroid;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.util.DisplayMetrics;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.limewoodmedia.nsdroid.activities.Dossier;
-import com.limewoodmedia.nsdroid.activities.Embassies;
 import com.limewoodmedia.nsdroid.activities.Issues;
 import com.limewoodmedia.nsdroid.activities.NSDroid;
 import com.limewoodmedia.nsdroid.activities.Nation;
 import com.limewoodmedia.nsdroid.activities.Preferences;
-import com.limewoodmedia.nsdroid.activities.RMB;
 import com.limewoodmedia.nsdroid.activities.Region;
 import com.limewoodmedia.nsdroid.fragments.NavigationDrawerFragment;
-import com.limewoodmedia.nsdroid.fragments.PreferencesFragment;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;

@@ -266,11 +266,8 @@ public class Region extends SherlockFragmentActivity implements NavigationDrawer
     	layout.setVisibility(View.GONE);
     	final LoadingView loadingView = (LoadingView) wfe.findViewById(R.id.loading);
     	LoadingHelper.startLoading(loadingView, R.string.loading_region, this);
-        if(offsetPage > 0) { // Don't update automatically if we're reading back in history
-            shouldUpdate = false;
-        } else {
-            shouldUpdate = homeRegion;
-        }
+        // Don't update automatically if we're reading back in history
+        shouldUpdate = offsetPage == 0 && homeRegion;
         rmbInner.onBeforeLoad();
         embassiesInner.onBeforeLoad();
     	errorMessage = getResources().getString(R.string.general_error);

@@ -71,8 +71,14 @@
             <LinearLayout
                 android:id="@+id/economy_chart"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="@dimen/pie_chart_height"
                 android:orientation="horizontal" />
+
+            <TextView
+                android:id="@+id/economy_legend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/NationChartLegend"/>
 
         </LinearLayout>
 

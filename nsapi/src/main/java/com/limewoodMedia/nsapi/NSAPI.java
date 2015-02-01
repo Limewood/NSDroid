@@ -721,6 +721,7 @@ public class NSAPI implements INSAPI {
 	private List<RMBMessage> parseRMBMessages(XmlPullParser xpp)
 		throws NumberFormatException, XmlPullParserException, IOException {
 		String tagName = null;
+        long id = -1L;
 		long ts = -1L;
 		String nation = null;
 		String text = null;
@@ -730,6 +731,8 @@ public class NSAPI implements INSAPI {
 			case XmlPullParser.START_TAG:
 				tagName = xpp.getName().toLowerCase();
 				if (tagName.equals(RegionData.Shards.SubTags.MESSAGES_POST.getTag())) {
+                    // Get id
+                    id = Long.parseLong(xpp.getAttributeValue(null, RegionData.Shards.Attributes.RMB_POST_ID.getName()));
 					// Get timestamp
 					xpp.nextTag();
 					ts = Long.parseLong(xpp.nextText());
@@ -739,7 +742,7 @@ public class NSAPI implements INSAPI {
 					// Get text
 					xpp.nextTag();
 					text = xpp.nextText();
-					messages.add(new RMBMessage(ts, nation, text));
+					messages.add(new RMBMessage(id, ts, nation, text));
 				}
 				break;
 			case XmlPullParser.END_TAG:

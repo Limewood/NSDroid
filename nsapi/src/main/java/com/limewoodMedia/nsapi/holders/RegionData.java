@@ -127,6 +127,20 @@ public class RegionData {
 				return this.name;
 			}
 		}
+
+        public static enum Attributes {
+            RMB_POST_ID("id");
+
+            private String name;
+
+            private Attributes(String name) {
+                this.name = name;
+            }
+
+            public String getName() {
+                return this.name;
+            }
+        }
 	}
 	
 	public String name;

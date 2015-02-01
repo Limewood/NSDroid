@@ -70,14 +70,7 @@
             android:noHistory="true"
         	android:theme="@style/AppTheme">
         </activity>
-        
-        <activity
- 			android:name=".activities.RMB"
-            android:label="@string/rmb"
-            android:exported="false"
-        	android:theme="@style/AppTheme" >
-        </activity>
-        
+
         <activity
  			android:name=".activities.Issues"
             android:label="@string/issues"
@@ -95,14 +88,7 @@
                 <data android:scheme="com.limewoodMedia.nsdroid.issue"/>
             </intent-filter>
         </activity>
-        
-        <activity
- 			android:name=".activities.Embassies"
-            android:label="@string/embassies"
-            android:exported="false"
-        	android:theme="@style/AppTheme" >
-        </activity>
-        
+
         <activity
  			android:name=".activities.Dossier"
             android:label="@string/dossier"

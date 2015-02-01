@@ -76,7 +76,7 @@ public class RegionDataParcelable extends RegionData implements Parcelable {
 				num = in.readInt();
 				data.messages = new ArrayList<RMBMessage>(num);
 				for(int i=0; i<num; i++) {
-					data.messages.add(new RMBMessage(in.readLong(), in.readString(), in.readString()));
+					data.messages.add(new RMBMessage(in.readLong(), in.readLong(), in.readString(), in.readString()));
 				}
 				data.numNations = in.readInt();
 				num = in.readInt();
@@ -136,6 +136,7 @@ public class RegionDataParcelable extends RegionData implements Parcelable {
 			dest.writeInt(messages.size());
 			// Write messages
 			for(RMBMessage m : messages) {
+                dest.writeLong(m.id);
 				dest.writeLong(m.timestamp);
 				dest.writeString(m.nation);
 				dest.writeString(m.message);

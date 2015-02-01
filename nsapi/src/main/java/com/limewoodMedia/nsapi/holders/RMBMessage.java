@@ -28,11 +28,13 @@ package com.limewoodMedia.nsapi.holders;
  *
  */
 public class RMBMessage {
+    public long id;
 	public long timestamp;
 	public String nation;
 	public String message;
 
-	public RMBMessage(long timestamp, String nation, String message) {
+	public RMBMessage(long id, long timestamp, String nation, String message) {
+        this.id = id;
 		this.timestamp = timestamp;
 		this.nation = nation;
 		this.message = message;
@@ -40,6 +42,6 @@ public class RMBMessage {
 	
 	@Override
 	public String toString() {
-		return "\t\t("+timestamp+") "+nation+": "+message;
+		return "\t\t("+id+";"+timestamp+") "+nation+": "+message;
 	}
 }

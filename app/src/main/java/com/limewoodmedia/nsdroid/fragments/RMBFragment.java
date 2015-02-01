@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.internal.widget.IcsAdapterView;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
 import com.limewoodMedia.nsapi.holders.RMBMessage;
@@ -52,10 +53,14 @@ import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.text.method.TextKeyListener;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -67,7 +72,6 @@ import android.widget.Toast;
 public class RMBFragment extends SherlockFragment implements OnClickListener {
 	@SuppressWarnings("unused")
 	private static final String TAG = RMBFragment.class.getName();
-	private static final String DELETED_MESSAGE = "Message deleted by author";
 	
 	private View root;
 	private ListView list;
@@ -109,6 +113,7 @@ public class RMBFragment extends SherlockFragment implements OnClickListener {
 		postSend.setOnClickListener(this);
 
         posts = new ArrayList<RMBMessage>();
+        final String deletedMessage = getString(R.string.message_deleted_by_author);
 		listAdapter = new ArrayAdapter<RMBMessage>(context, 0, posts) {
         	@Override
         	public View getView(int position, View convertView, ViewGroup parent) {
@@ -117,10 +122,10 @@ public class RMBFragment extends SherlockFragment implements OnClickListener {
         		RMBMessage post = getItem(position);
         		
         		if(convertView == null) {
-        			if(post.message.compareTo(DELETED_MESSAGE) == 0) {
+        			if(post.message.compareTo(deletedMessage) == 0) {
         				// This is a deleted message
             			view = inflater.inflate(R.layout.rmb_post_deleted, null);
-            			view.setTag(DELETED_MESSAGE);
+            			view.setTag(deletedMessage);
         			} else {
             			view = inflater.inflate(R.layout.rmb_post, null);
             			nation = (TextView) view.findViewById(R.id.rmb_poster);
@@ -130,17 +135,17 @@ public class RMBFragment extends SherlockFragment implements OnClickListener {
         			msg.setMovementMethod(LinkMovementMethod.getInstance());
         		}
         		else {
-        			if((post.message.compareTo(DELETED_MESSAGE) == 0
-        					&& convertView.getTag() == DELETED_MESSAGE)
-        					|| (post.message.compareTo(DELETED_MESSAGE) != 0
-        					&& convertView.getTag() != DELETED_MESSAGE)) {
+        			if((post.message.compareTo(deletedMessage) == 0
+        					&& convertView.getTag() == deletedMessage)
+        					|| (post.message.compareTo(deletedMessage) != 0
+        					&& convertView.getTag() != deletedMessage)) {
         				view = convertView;
             			msg = (TextView) view.findViewById(R.id.rmb_message);
         			} else {
-        				if(post.message.compareTo(DELETED_MESSAGE) == 0) {
+        				if(post.message.compareTo(deletedMessage) == 0) {
             				// This is a deleted message
                 			view = inflater.inflate(R.layout.rmb_post_deleted, null);
-                			view.setTag(DELETED_MESSAGE);
+                			view.setTag(deletedMessage);
             			} else {
                 			view = inflater.inflate(R.layout.rmb_post, null);
                 			nation = (TextView) view.findViewById(R.id.rmb_poster);
@@ -151,7 +156,7 @@ public class RMBFragment extends SherlockFragment implements OnClickListener {
         			}
         			nation = (TextView) view.findViewById(R.id.rmb_poster);
         		}
-    			if(view.getTag() == DELETED_MESSAGE) {
+    			if(view.getTag() == deletedMessage) {
             		msg.setText(Html.fromHtml("Post self-deleted by <a href='com.limewoodMedia.nsdroid.nation://"+post.nation+"'>"+
             				TagParser.idToName(post.nation)+"</a>."));
     			} else {
@@ -167,6 +172,7 @@ public class RMBFragment extends SherlockFragment implements OnClickListener {
         	}
         };
         list.setAdapter(listAdapter);
+        registerForContextMenu(list);
 		
 		return root;
 	}
@@ -245,7 +251,7 @@ public class RMBFragment extends SherlockFragment implements OnClickListener {
 					} else {
 						Toast.makeText(context, R.string.message_error, Toast.LENGTH_SHORT).show();
 					}
-				};
+				}
         	}.execute();
 			break;
 		}
@@ -321,7 +327,7 @@ public class RMBFragment extends SherlockFragment implements OnClickListener {
 				}
 				
 				return false;
-        	};
+        	}
         	
         	protected void onPostExecute(Boolean result) {
         		LoadingHelper.stopLoading(loadingView);
@@ -338,8 +344,34 @@ public class RMBFragment extends SherlockFragment implements OnClickListener {
         	}
         }.execute();
     }
-	
-	private class RMBReceiver extends BroadcastReceiver {
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getSherlockActivity().getMenuInflater();
+        inflater.inflate(R.menu.context_menu_rmb, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        if(info == null) {
+            return super.onContextItemSelected(item);
+        }
+        switch(item.getItemId()) {
+            case R.id.context_menu_quote:
+                // Quote RMB post
+                RMBMessage post = listAdapter.getItem(info.position);
+                messageBox.setText(messageBox.getText()+"[quote="+post.nation+";"+post.id+"]"+post.message+"[/quote]\n");
+                postArea.setVisibility(View.VISIBLE);
+                messageBox.requestFocus();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private class RMBReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// Update RMB

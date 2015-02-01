@@ -29,8 +29,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import com.limewoodmedia.nsdroid.R;
-import com.limewoodmedia.nsdroid.activities.RMB;
+import com.limewoodmedia.nsdroid.activities.Region;
 import com.limewoodmedia.nsdroid.receivers.UpdateReceiver;
 
 public class NotificationsHelper {
@@ -41,7 +40,7 @@ public class NotificationsHelper {
 		AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Calendar cal = Calendar.getInstance();
         Intent intent = new Intent(context, UpdateReceiver.class).
-        putExtra("class", RMB.class.getName()).
+        putExtra("class", Region.class.getName()).
         putExtra("update", "RMB").
         putExtra("API", "region").
         putExtra("shard", "messages").

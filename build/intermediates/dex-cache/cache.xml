@@ -47,7 +47,7 @@
         jar="/home/joakim/android-studio/NSDroid/nsapi/build/libs/nsapi.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="41740ee683f88f49bd4672f95abf3ecc10353205">
+        sha1="cb3524511ec34ba70eacec466c2a72ed405054b1">
         <dex dex="/home/joakim/android-studio/NSDroid/app/build/intermediates/pre-dexed/debug/nsapi-66ad685b14a97f8091466b83f34959d5713bf825.jar" />
     </item>
     <item

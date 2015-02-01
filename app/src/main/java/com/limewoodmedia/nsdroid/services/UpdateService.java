@@ -8,7 +8,7 @@ import com.limewoodmedia.nsdroid.API;
 import com.limewoodmedia.nsdroid.NationInfo;
 import com.limewoodmedia.nsdroid.NotificationsHelper;
 import com.limewoodmedia.nsdroid.activities.NSDroid;
-import com.limewoodmedia.nsdroid.activities.RMB;
+import com.limewoodmedia.nsdroid.activities.Region;
 import com.limewoodmedia.nsdroid.holders.RMBMessageParcelable;
 
 import android.app.IntentService;
@@ -56,11 +56,11 @@ public class UpdateService extends IntentService {
         boolean showNotification = false;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         // Check a shard for updates
-        if(intent.getStringExtra("API").compareToIgnoreCase("region") == 0) {
+        if(intent.getStringExtra("API").equalsIgnoreCase("region")) {
         	// Check region shards
         	RegionData rData;
-        	if(intent.getStringExtra("region").compareToIgnoreCase("-1") == 0) {
-	        	if(intent.getStringExtra("shard").compareToIgnoreCase("messages") == 0) {
+        	if(intent.getStringExtra("region").equalsIgnoreCase("-1")) {
+	        	if(intent.getStringExtra("shard").equalsIgnoreCase("messages")) {
 	        		// Check for new messages
 	        		NationData nData = API.getInstance(this).getNationInfo(
 	        				NationInfo.getInstance(this).getName(), NationData.Shards.REGION);
@@ -74,7 +74,7 @@ public class UpdateService extends IntentService {
 		        				&& lastNation.compareToIgnoreCase(msg.message) != 0) {
 		        			// There are new messages
 		        			Log.d(TAG, "New messages!");
-		        			if(RMB.shouldUpdate || NSDroid.shouldUpdate) { // Send broadcast to update RMB directly
+		        			if(Region.shouldUpdate || NSDroid.shouldUpdate) { // Send broadcast to update RMB directly
 		        				Intent i = new Intent(NotificationsHelper.RMB_UPDATE_ACTION);
 		        				RMBMessageParcelable[] parcel = new RMBMessageParcelable[rData.messages.size()];
 		        				int t=0;

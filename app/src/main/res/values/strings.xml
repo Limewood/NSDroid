@@ -106,6 +106,8 @@
     <string name="next_page">Next page</string>
     <string name="rmb_go_to_page_title">Set offset page</string>
     <string name="rmb_go_to_page_message">Set the offset page to use (0 = last page)</string>
+    <string name="message_deleted_by_author">Message deleted by author</string>
+    <string name="rmb_context_menu_quote">Quote post</string>
     
     <!-- Issues list -->
     <string name="issues_header">%1$s decides</string>
