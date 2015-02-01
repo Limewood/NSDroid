@@ -84,4 +84,16 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="NationGraphsTitle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="NationGraphsText">
+        <item name="android:textSize">19sp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:visibility">gone</item><!-- TODO Show graph texts -->
+    </style>
+
 </resources>

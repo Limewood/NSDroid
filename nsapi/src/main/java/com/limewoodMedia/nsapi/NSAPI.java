@@ -23,6 +23,7 @@
 package com.limewoodMedia.nsapi;
 
 import com.limewoodMedia.nsapi.enums.CauseOfDeath;
+import com.limewoodMedia.nsapi.enums.Department;
 import com.limewoodMedia.nsapi.enums.IArguments;
 import com.limewoodMedia.nsapi.enums.IShards;
 import com.limewoodMedia.nsapi.enums.WACouncil;
@@ -31,7 +32,6 @@ import com.limewoodMedia.nsapi.enums.WAVote;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
-import com.limewoodMedia.nsapi.holders.Budget;
 import com.limewoodMedia.nsapi.holders.Embassy;
 import com.limewoodMedia.nsapi.holders.NSData;
 import com.limewoodMedia.nsapi.holders.NationData;
@@ -49,6 +49,7 @@ import com.limewoodMedia.nsapi.holders.WorldData;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -332,7 +333,7 @@ public class NSAPI implements INSAPI {
 					}
 					else if (tagName.equals(NationData.Shards.PUBLIC_SECTOR.getTag())) {
 						String str = xpp.nextText();
-						nation.publicSector = Integer.parseInt(str.substring(0, str.length() - 1));
+						nation.publicSector = Float.parseFloat(str);
 					}
 					else if (tagName.equals(NationData.Shards.DEATHS.getTag())) {
 						nation.deaths = parseDeaths(xpp);
@@ -357,7 +358,16 @@ public class NSAPI implements INSAPI {
 					else if (tagName.equals(NationData.Shards.BANNERS.getTag())) {
 						nation.banners = parseBanners(xpp);
 					}
-					else {
+                    else if (tagName.equals(NationData.Shards.DEMONYM.getTag())) {
+                        nation.demonym = xpp.nextText();
+                    }
+                    else if (tagName.equals(NationData.Shards.DEMONYM2.getTag())) {
+                        nation.demonym2 = xpp.nextText();
+                    }
+                    else if (tagName.equals(NationData.Shards.DEMONYM2_PLURAL.getTag())) {
+                        nation.demonym2Plural = xpp.nextText();
+                    }
+					else if (!tagName.equals(NationData.ROOT_TAG)) {
 						System.err.println("Unknown nation tag: " + tagName);
 					}
 					break;
@@ -506,69 +516,40 @@ public class NSAPI implements INSAPI {
 		return happenings;
 	}
 
-	private Budget parseBudget(XmlPullParser xpp)
+	private Map<Department, Float> parseBudget(XmlPullParser xpp)
 		throws XmlPullParserException, IOException {
-		String tagName = null;
-		String str = null;
-		int value = -1;
-		Budget budget = new Budget();
-		loop: while (xpp.next() != XmlPullParser.END_DOCUMENT)
-			switch (xpp.getEventType()) {
-			case XmlPullParser.START_TAG:
-				tagName = xpp.getName().toLowerCase();
-				str = xpp.nextText();
-				// Get value without %-sign
-				value = Integer.parseInt(str.substring(0, str.length() - 1));
-				if (tagName.equals(NationData.Shards.SubTags.BUDGET_ENVIRONMENT.getTag())) {
-					budget.environment = value;
-				}
-				else if (tagName.equals(NationData.Shards.SubTags.BUDGET_SOCIAL_EQUALITY.getTag())) {
-					budget.socialEquality = value;
-				}
-				else if (tagName.equals(NationData.Shards.SubTags.BUDGET_EDUCATION.getTag())) {
-					budget.education = value;
-				}
-				else if (tagName.equals(NationData.Shards.SubTags.BUDGET_LAW_AND_ORDER.getTag())) {
-					budget.lawAndOrder = value;
-				}
-				else if (tagName.equals(NationData.Shards.SubTags.BUDGET_ADMINISTRATION.getTag())) {
-					budget.administration = value;
-				}
-				else if (tagName.equals(NationData.Shards.SubTags.BUDGET_WELFARE.getTag())) {
-					budget.welfare = value;
-				}
-				else if (tagName.equals(NationData.Shards.SubTags.BUDGET_SPIRITUALITY.getTag())) {
-					budget.spirituality = value;
-				}
-				else if (tagName.equals(NationData.Shards.SubTags.BUDGET_DEFENCE.getTag())) {
-					budget.defence = value;
-				}
-				else if (tagName.equals(NationData.Shards.SubTags.BUDGET_PUBLIC_TRANSPORT.getTag())) {
-					budget.publicTransport = value;
-				}
-				else if (tagName.equals(NationData.Shards.SubTags.BUDGET_HEALTHCARE.getTag())) {
-					budget.healthCare = value;
-				}
-				else if (tagName.equals(NationData.Shards.SubTags.BUDGET_COMMERCE.getTag())) {
-					budget.commerce = value;
-				}
-				break;
-			case XmlPullParser.END_TAG:
-				tagName = xpp.getName().toLowerCase();
-				if (tagName.equals(NationData.Shards.GOVERNMENT_BUDGET.getTag())) {
-					break loop;
-				}
-			}
+        String tagName = null;
+        String str = null;
+        float value = -1;
+        HashMap<Department, Float> budget = new HashMap<Department, Float>();
+        Department department = null;
+        loop: while (xpp.next() != XmlPullParser.END_DOCUMENT)
+            switch (xpp.getEventType()) {
+                case XmlPullParser.START_TAG:
+                    tagName = xpp.getName().toLowerCase();
+                    if ((department = Department.parseTag(tagName)) != null) {
+                        str = xpp.nextText();
+                        value = Float.parseFloat(str);
+                        budget.put(department, value);
+                    }
+                    break;
+                case XmlPullParser.END_TAG:
+                    tagName = xpp.getName().toLowerCase();
+                    if (tagName.equals(NationData.Shards.GOVERNMENT_BUDGET.getTag())) {
+                        break loop;
+                    }
+                    break;
+            }
 		return budget;
 	}
 
-	private Map<CauseOfDeath, Integer> parseDeaths(XmlPullParser xpp)
+	private Map<CauseOfDeath, Float> parseDeaths(XmlPullParser xpp)
 		throws NumberFormatException, XmlPullParserException, IOException {
 		String tagName = null;
 		String type = null;
 		String str = null;
-		int value = -1;
-		HashMap<CauseOfDeath, Integer> deaths = new HashMap<CauseOfDeath, Integer>();
+		float value = -1;
+		HashMap<CauseOfDeath, Float> deaths = new HashMap<CauseOfDeath, Float>();
 		loop: while (xpp.next() != XmlPullParser.END_DOCUMENT)
 			switch (xpp.getEventType()) {
 			case XmlPullParser.START_TAG:
@@ -576,9 +557,8 @@ public class NSAPI implements INSAPI {
 				if (tagName.equals(NationData.Shards.SubTags.DEATHS_CAUSE.getTag())) {
 					type = xpp.getAttributeValue(null, NationData.Shards.Attributes.DEATHS_CAUSE_TYPE.getName());
 					str = xpp.nextText();
-					// Get value without %-sign
-					value = Integer.parseInt(str.substring(0, str.length() - 1));
-					deaths.put(CauseOfDeath.parse(type), Integer.valueOf(value));
+					value = Float.parseFloat(str);
+					deaths.put(CauseOfDeath.parse(type), value);
 				}
 				break;
 			case XmlPullParser.END_TAG:
@@ -686,7 +666,7 @@ public class NSAPI implements INSAPI {
 					else if (tagName.equals(RegionData.Shards.TAGS.getTag())) {
 						region.tags = parseTags(xpp);
 					}
-					else {
+					else if (!tagName.equals(RegionData.ROOT_TAG)) {
 						System.err.println("Unknown region tag: " + tagName);
 					}
 					break;
@@ -1074,7 +1054,7 @@ public class NSAPI implements INSAPI {
 		}
 		String str = API + urlStart + (this.version > -1 ? "&v=" + this.version : "") +
 				"&q=" + shardsStr;
-		System.out.println("Str "+str);
+//		System.out.println("Str "+str);
 		
 		HttpClient client = new DefaultHttpClient();
 		client.getParams().setParameter(CoreProtocolPNames.USER_AGENT, this.userAgent);

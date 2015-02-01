@@ -33,9 +33,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.limewoodMedia.nsapi.enums.CauseOfDeath;
+import com.limewoodMedia.nsapi.enums.Department;
 import com.limewoodMedia.nsapi.enums.WAStatus;
 import com.limewoodMedia.nsapi.enums.WAVote;
-import com.limewoodMedia.nsapi.holders.Budget;
 import com.limewoodMedia.nsapi.holders.NationData;
 import com.limewoodMedia.nsapi.holders.NationFreedoms;
 import com.limewoodMedia.nsapi.holders.NationHappening;
@@ -86,6 +86,9 @@ public class NationDataParcelable extends NationData implements Parcelable {
 		this.deaths = data.deaths;
 		this.capital = data.capital;
 		this.banners = data.banners;
+        this.demonym = data.demonym;
+        this.demonym2 = data.demonym2;
+        this.demonym2Plural = data.demonym2Plural;
 	}
 	
 	public static final Parcelable.Creator<NationDataParcelable> CREATOR
@@ -136,30 +139,30 @@ public class NationDataParcelable extends NationData implements Parcelable {
 				data.majorIndustry = in.readString();
 				data.governmentPriority = in.readString();
 				data.leader = in.readString();
-				data.governmentBudget = new Budget();
-				data.governmentBudget.environment = in.readInt();
-				data.governmentBudget.socialEquality = in.readInt();
-				data.governmentBudget.education = in.readInt();
-				data.governmentBudget.lawAndOrder = in.readInt();
-				data.governmentBudget.administration = in.readInt();
-				data.governmentBudget.welfare = in.readInt();
-				data.governmentBudget.spirituality = in.readInt();
-				data.governmentBudget.defence = in.readInt();
-				data.governmentBudget.publicTransport = in.readInt();
-				data.governmentBudget.healthCare = in.readInt();
-				data.governmentBudget.commerce = in.readInt();
+				data.governmentBudget = new HashMap<Department, Float>();
+                num = in.readInt();
+                for(int i=0; i<num; i++) {
+                    data.governmentBudget.put(Department.parse(in.readString()), in.readFloat());
+                }
 				data.founded = in.readString();
 				data.firstLogin = in.readLong();
 				data.lastActivity = in.readString();
 				data.lastLogin = in.readLong();
 				data.influence = in.readString();
-				data.publicSector = in.readInt();
-				data.deaths = new HashMap<CauseOfDeath, Integer>();
+				data.publicSector = in.readFloat();
+				data.deaths = new HashMap<CauseOfDeath, Float>();
 				num = in.readInt();
 				for(int i=0; i<num; i++) {
-					data.deaths.put(CauseOfDeath.parse(in.readString()), in.readInt());
+					data.deaths.put(CauseOfDeath.parse(in.readString()), in.readFloat());
 				}
 				data.capital = in.readString();
+                data.banners = new String[in.readInt()];
+                for(int i=0; i<data.banners.length; i++) {
+                    data.banners[i] = in.readString();
+                }
+                data.demonym = in.readString();
+                data.demonym2 = in.readString();
+                data.demonym2Plural = in.readString();
 				
 				// Read flag bitmap
 				byte[] bArr = in.createByteArray();
@@ -232,39 +235,38 @@ public class NationDataParcelable extends NationData implements Parcelable {
 		dest.writeString(majorIndustry);
 		dest.writeString(governmentPriority);
 		dest.writeString(leader);
-		if(governmentBudget != null) {
-			dest.writeInt(governmentBudget.environment);
-			dest.writeInt(governmentBudget.socialEquality);
-			dest.writeInt(governmentBudget.education);
-			dest.writeInt(governmentBudget.lawAndOrder);
-			dest.writeInt(governmentBudget.administration);
-			dest.writeInt(governmentBudget.welfare);
-			dest.writeInt(governmentBudget.spirituality);
-			dest.writeInt(governmentBudget.defence);
-			dest.writeInt(governmentBudget.publicTransport);
-			dest.writeInt(governmentBudget.healthCare);
-			dest.writeInt(governmentBudget.commerce);
-		} else {
-			for(int i=0; i<11; i++) {
-				dest.writeInt(-1);
-			}
-		}
+        if(governmentBudget != null) {
+            dest.writeInt(governmentBudget.size());
+            for(Entry<Department, Float> e : governmentBudget.entrySet()) {
+                dest.writeString(e.getKey().getDescription());
+                dest.writeFloat(e.getValue());
+            }
+        } else {
+            dest.writeInt(0);
+        }
 		dest.writeString(founded);
 		dest.writeLong(firstLogin);
 		dest.writeString(lastActivity);
 		dest.writeLong(lastLogin);
 		dest.writeString(influence);
-		dest.writeInt(publicSector);
+		dest.writeFloat(publicSector);
 		if(deaths != null) {
 			dest.writeInt(deaths.size());
-			for(Entry<CauseOfDeath, Integer> e : deaths.entrySet()) {
+			for(Entry<CauseOfDeath, Float> e : deaths.entrySet()) {
 				dest.writeString(e.getKey().getDescription());
-				dest.writeInt(e.getValue());
+				dest.writeFloat(e.getValue());
 			}
 		} else {
 			dest.writeInt(0);
 		}
 		dest.writeString(capital);
+        dest.writeInt(banners.length);
+        for(String b : banners) {
+            dest.writeString(b);
+        }
+        dest.writeString(demonym);
+        dest.writeString(demonym2);
+        dest.writeString(demonym2Plural);
 		
 		// Write flag bitmap
 		if(flagBitmap != null) {

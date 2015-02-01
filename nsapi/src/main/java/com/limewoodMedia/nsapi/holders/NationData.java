@@ -24,6 +24,7 @@ package com.limewoodMedia.nsapi.holders;
 
 import com.limewoodMedia.nsapi.enums.Categories;
 import com.limewoodMedia.nsapi.enums.CauseOfDeath;
+import com.limewoodMedia.nsapi.enums.Department;
 import com.limewoodMedia.nsapi.enums.IArguments;
 import com.limewoodMedia.nsapi.enums.IShards;
 import com.limewoodMedia.nsapi.enums.WAStatus;
@@ -42,7 +43,9 @@ import java.util.Map;
  *
  */
 public class NationData {
-	/**
+    public static final String ROOT_TAG = "nation";
+
+    /**
 	 * Shards enum for nation data
 	 * @author Joakim Lindskog
 	 *
@@ -94,7 +97,10 @@ public class NationData {
 		WORLD_CENSUS("wcensus"),
 		CURRENT_CENSUS_SCORE("censusscore"),
 		CENSUS_SCORE("", "censusscore"),
-		BANNERS("banners");
+		BANNERS("banners"),
+        DEMONYM("demonym"),
+        DEMONYM2("demonym2"),
+        DEMONYM2_PLURAL("demonym2plural");
 
 		private String name;
 		private String tag;
@@ -211,6 +217,7 @@ public class NationData {
 			BUDGET_PUBLIC_TRANSPORT("publictransport"),
 			BUDGET_HEALTHCARE("healthcare"),
 			BUDGET_COMMERCE("commerce"),
+            BUDGET_INTERNATIONAL_AID("internationalaid"),
 			DEATHS_CAUSE("cause"),
 			BANNERS_BANNER("banner");
 
@@ -255,19 +262,22 @@ public class NationData {
 	public WAVote securityCouncilVote;
 	public String majorIndustry;
 	public String governmentPriority;
-	public Budget governmentBudget;
+	public Map<Department, Float> governmentBudget;
 	public String founded;
 	public long firstLogin;
 	public String lastActivity;
 	public long lastLogin;
 	public String influence;
-	public int publicSector;
-	public Map<CauseOfDeath, Integer> deaths;
+	public float publicSector;
+	public Map<CauseOfDeath, Float> deaths;
 	public String capital;
 	public int regionalCensus;
 	public int worldCensus;
 	public Map<Integer, Float> censusScore;
 	public String[] banners;
+    public String demonym;
+    public String demonym2;
+    public String demonym2Plural;
 
 	public String getDescription() {
 		String size;

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2015. Joakim Lindskog & Limewood Media
   ~
@@ -20,41 +21,48 @@
   ~ THE SOFTWARE.
   -->
 
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.Nation"
-    android:clickable="true">
+    android:padding="7dp">
 
-    <android.support.v4.view.ViewPager
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/pager"
+    <TextView
+        android:id="@+id/government_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nation_government_title"
+        style="@style/NationGraphsTitle"/>
+
+    <ScrollView
+        android:layout_below="@id/government_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background_colour"
-        tools:context=".activities.Nation">
+        android:layout_height="match_parent">
 
-        <android.support.v4.view.PagerTabStrip
-            android:id="@+id/pager_tab_strip"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:background="@color/list_heading_background"
-            android:textAppearance="@style/PagerTabStripText"
-            android:textColor="@color/medium_green"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp" />
+            android:orientation="vertical">
 
-    </android.support.v4.view.ViewPager>
+            <TextView
+                android:id="@+id/government_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/NationGraphsText"/>
 
-    <fragment android:id="@+id/navigation_drawer"
-        android:layout_width="@dimen/navigation_drawer_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:name="com.limewoodmedia.nsdroid.fragments.NavigationDrawerFragment"
-        tools:layout="@layout/fragment_navigation_drawer" />
+            <TextView
+                android:id="@+id/government_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/NationGraphsText"/>
 
-</android.support.v4.widget.DrawerLayout>
+            <LinearLayout
+                android:id="@+id/government_chart"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="horizontal" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+</RelativeLayout>

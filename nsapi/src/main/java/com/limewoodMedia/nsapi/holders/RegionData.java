@@ -35,7 +35,9 @@ import java.util.Map;
  *
  */
 public class RegionData {
-	/**
+    public static final String ROOT_TAG = "region";
+
+    /**
 	 * Shards for region data
 	 * @author Joakim Lindskog
 	 *

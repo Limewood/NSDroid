@@ -47,7 +47,7 @@
         jar="/home/joakim/android-studio/NSDroid/nsapi/build/libs/nsapi.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="54da07bad320c697587728aca3004a1c8a97f7ef">
+        sha1="41740ee683f88f49bd4672f95abf3ecc10353205">
         <dex dex="/home/joakim/android-studio/NSDroid/app/build/intermediates/pre-dexed/debug/nsapi-66ad685b14a97f8091466b83f34959d5713bf825.jar" />
     </item>
     <item
@@ -56,6 +56,13 @@
         revision="21.1.2"
         sha1="a85588bec3e2c4584d593d3f15df1677321bca72">
         <dex dex="/home/joakim/android-studio/NSDroid/app/build/intermediates/pre-dexed/debug/universal-image-loader-1.9.3-aac911bf9d2090dce41fa5cd367689a4ec55f79c.jar" />
+    </item>
+    <item
+        jar="/home/joakim/.gradle/caches/modules-2/files-2.1/org.achartengine/achartengine/1.2.0/33783b07425e59964f0e7f0d32ba3fbf6e1db976/achartengine-1.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="33783b07425e59964f0e7f0d32ba3fbf6e1db976">
+        <dex dex="/home/joakim/android-studio/NSDroid/app/build/intermediates/pre-dexed/debug/achartengine-1.2.0-e3f92828af98279f60ac6c6ac276d33005617d22.jar" />
     </item>
 
 </items>

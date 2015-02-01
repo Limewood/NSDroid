@@ -21,26 +21,29 @@
   ~ THE SOFTWARE.
   -->
 
-<resources>
-    <!-- Main menu -->
-    <dimen name="menu_item_padding_bottom">9dp</dimen>
-    <dimen name="navigation_drawer_width">180dp</dimen>
-    <dimen name="menu_item_text_size">19sp</dimen>
-    <dimen name="menu_item_text_margin">5dp</dimen>
-    <dimen name="menu_item_padding_start">12dp</dimen>
-    <dimen name="menu_item_padding_middle">6dp</dimen>
-    <dimen name="menu_item_divider_height">1dp</dimen>
-    <dimen name="submenu_item_text_size">18sp</dimen>
-    <dimen name="submenu_item_padding_start">24dp</dimen>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="7dp">
 
-    <!-- ViewPager header -->
-    <dimen name="list_heading_text_size">20sp</dimen>
+    <TextView
+        android:id="@+id/people_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nation_people_title"
+        style="@style/NationGraphsTitle"/>
 
-    <!-- Graph constants -->
-    <dimen name="pie_chart_height">500dp</dimen>
-    <dimen name="pie_chart_label_size">18sp</dimen>
-    <dimen name="pie_chart_margin_left">9dp</dimen>
-    <dimen name="pie_chart_margin_top">9dp</dimen>
-    <dimen name="pie_chart_margin_right">9dp</dimen>
-    <dimen name="pie_chart_margin_bottom">9dp</dimen>
-</resources>
+    <ScrollView
+        android:layout_below="@id/people_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/people_chart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal" />
+
+        </ScrollView>
+
+</RelativeLayout>

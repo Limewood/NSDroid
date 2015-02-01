@@ -25,11 +25,16 @@ package com.limewoodmedia.nsdroid.activities;
 import static com.limewoodMedia.nsapi.holders.NationData.Shards.*;
 
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.Map;
+import java.util.Set;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.limewoodMedia.nsapi.enums.CauseOfDeath;
+import com.limewoodMedia.nsapi.enums.Department;
 import com.limewoodMedia.nsapi.enums.WAStatus;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
@@ -49,19 +54,28 @@ import com.limewoodmedia.nsdroid.views.LoadingView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.model.CategorySeries;
+import org.achartengine.model.SeriesSelection;
+import org.achartengine.renderer.DefaultRenderer;
+import org.achartengine.renderer.SimpleSeriesRenderer;
 
 /**
  * Main activity for nation information
@@ -70,6 +84,7 @@ import android.widget.Toast;
 public class Nation extends SherlockFragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 	public static final String TAG = Nation.class.getName();
 
+    private RelativeLayout overview;
 	private ViewGroup layout;
 	private BannerView banner;
 	private BannerView flag;
@@ -82,10 +97,52 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 	private TextView endorsed;
 	private TextView category;
 	private FreedomView civilRights;
-	private FreedomView economy;
+	private FreedomView economicStrength;
 	private FreedomView politicalFreedoms;
 	private TextView description;
 	private TextView endorsements;
+
+    /** Colors to be used for the pie slices. */
+    private static int[] CHART_COLOURS = new int[] {
+            android.graphics.Color.parseColor("#4572A7"),
+            android.graphics.Color.parseColor("#AA4643"),
+            android.graphics.Color.parseColor("#89A54E"),
+            android.graphics.Color.parseColor("#80699B"),
+            android.graphics.Color.parseColor("#3D96AE"),
+            android.graphics.Color.parseColor("#DB843D"),
+            android.graphics.Color.parseColor("#92A8CD"),
+            android.graphics.Color.parseColor("#A47D7C"),
+            android.graphics.Color.parseColor("#B5CA92"),
+            android.graphics.Color.parseColor("#8bbc21"),
+            android.graphics.Color.parseColor("#1aadce"),
+            android.graphics.Color.parseColor("#910000")
+    };
+
+    // People
+    private RelativeLayout people;
+    private GraphicalView peopleChart;
+    private CategorySeries peopleSeries = new CategorySeries("");
+    private DefaultRenderer peopleRenderer = new DefaultRenderer();
+
+    // Government
+    private RelativeLayout government;
+    private GraphicalView governmentChart;
+    private CategorySeries governmentSeries = new CategorySeries("");
+    private DefaultRenderer governmentRenderer = new DefaultRenderer();
+    private TextView governmentTitle;
+    private TextView governmentSize;
+    private TextView governmentPercent;
+
+    // Economy
+    private RelativeLayout economy;
+    private GraphicalView economyChart;
+    private CategorySeries economySeries = new CategorySeries("");
+    private DefaultRenderer economyRenderer = new DefaultRenderer();
+    private TextView economyTitle;
+    private TextView economyGDP;
+    private TextView economyGDPPC;
+    private TextView economyPoorest;
+    private TextView economyRichest;
 	
 	private String nation;
 	private NationDataParcelable data;
@@ -94,6 +151,7 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 	private DisplayImageOptions options;
 	private boolean endoByYou = false;
 	private boolean myNation = false;
+    private ViewPager viewPager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,36 +169,77 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
         actionBar.setHomeButtonEnabled(true);
 
         Utils.setupNavigationDrawer(this);
-        
+
+        viewPager = (ViewPager) findViewById(R.id.pager);
+
+        // Overview
+        overview = (RelativeLayout) getLayoutInflater().inflate(R.layout.nation_overview, viewPager, false);
+        layout = (ViewGroup) overview.findViewById(R.id.nation_layout);
+		banner = (BannerView) overview.findViewById(R.id.nation_banner);
+        flag = (BannerView) overview.findViewById(R.id.nation_flag);
+		pretitle = (TextView) overview.findViewById(R.id.nation_pretitle);
+        name = (TextView) overview.findViewById(R.id.nation_name);
+        motto = (TextView) overview.findViewById(R.id.nation_motto);
+        region = (TextView) overview.findViewById(R.id.nation_region);
+        region.setMovementMethod(LinkMovementMethod.getInstance());
+        waStatus = (TextView) overview.findViewById(R.id.nation_wa_status);
+        influence = (TextView) overview.findViewById(R.id.nation_influence);
+		endorsed = (TextView) overview.findViewById(R.id.nation_endorsed);
+        category = (TextView) overview.findViewById(R.id.nation_category);
+        civilRights = (FreedomView) overview.findViewById(R.id.nation_civil_rights);
+        economicStrength = (FreedomView) overview.findViewById(R.id.nation_economy);
+        politicalFreedoms = (FreedomView) overview.findViewById(R.id.nation_political_freedoms);
+        description = (TextView) overview.findViewById(R.id.nation_description);
+		endorsements = (TextView) overview.findViewById(R.id.nation_endorsements);
+
+        setUpChartRenderer(peopleRenderer);
+        setUpChartRenderer(governmentRenderer);
+        setUpChartRenderer(economyRenderer);
+
+        // People
+        people = (RelativeLayout) getLayoutInflater().inflate(R.layout.nation_people, viewPager, false);
+
+        // Government
+        government = (RelativeLayout) getLayoutInflater().inflate(R.layout.nation_government, viewPager, false);
+        governmentTitle = (TextView) government.findViewById(R.id.government_title);
+        governmentSize = (TextView) government.findViewById(R.id.government_size);
+        governmentPercent = (TextView) government.findViewById(R.id.government_percent);
+
+        // Economy
+        economy = (RelativeLayout) getLayoutInflater().inflate(R.layout.nation_economy, viewPager, false);
+        economyTitle = (TextView) economy.findViewById(R.id.economy_title);
+        economyGDP = (TextView) economy.findViewById(R.id.economy_gdp);
+        economyGDPPC = (TextView) economy.findViewById(R.id.economy_gdppc);
+        economyPoorest = (TextView) economy.findViewById(R.id.economy_poorest);
+        economyRichest = (TextView) economy.findViewById(R.id.economy_richest);
+
+        // Set up view pager
+        viewPager.setAdapter(new NationPagerAdapter());
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                // Update context menu
+                supportInvalidateOptionsMenu();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
+
         Log.d(TAG, "DATA "+getIntent().getDataString());
         if(getIntent().getData() == null && !getIntent().hasExtra("nation")) {
-        	nation = NationInfo.getInstance(this).getId();
-			myNation = true;
+            nation = NationInfo.getInstance(this).getId();
+            myNation = true;
         } else if(getIntent().hasExtra("nation")) {
-			nation = getIntent().getStringExtra("nation");
-			myNation = nation.equals(NationInfo.getInstance(this).getId());
-		} else {
-        	nation = getIntent().getDataString().replace("com.limewoodMedia.nsdroid.nation://", "");
-			myNation = nation.equals(NationInfo.getInstance(this).getId());
+            nation = getIntent().getStringExtra("nation");
+            myNation = nation.equals(NationInfo.getInstance(this).getId());
+        } else {
+            nation = getIntent().getDataString().replace("com.limewoodMedia.nsdroid.nation://", "");
+            myNation = nation.equals(NationInfo.getInstance(this).getId());
         }
-        
-        layout = (ViewGroup) findViewById(R.id.nation_layout);
-		banner = (BannerView) findViewById(R.id.nation_banner);
-        flag = (BannerView) findViewById(R.id.nation_flag);
-		pretitle = (TextView) findViewById(R.id.nation_pretitle);
-        name = (TextView) findViewById(R.id.nation_name);
-        motto = (TextView) findViewById(R.id.nation_motto);
-        region = (TextView) findViewById(R.id.nation_region);
-        region.setMovementMethod(LinkMovementMethod.getInstance());
-        waStatus = (TextView) findViewById(R.id.nation_wa_status);
-        influence = (TextView) findViewById(R.id.nation_influence);
-		endorsed = (TextView) findViewById(R.id.nation_endorsed);
-        category = (TextView) findViewById(R.id.nation_category);
-        civilRights = (FreedomView) findViewById(R.id.nation_civil_rights);
-        economy = (FreedomView) findViewById(R.id.nation_economy);
-        politicalFreedoms = (FreedomView) findViewById(R.id.nation_political_freedoms);
-        description = (TextView) findViewById(R.id.nation_description);
-		endorsements = (TextView) findViewById(R.id.nation_endorsements);
 
 //        if(savedInstanceState == null) {
         	loadNation();
@@ -150,10 +249,101 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 //        	doSetup();
 //        }
     }
-    
+
+    private void setUpChartRenderer(DefaultRenderer chartRenderer) {
+        Resources r = getResources();
+        float labelTextSize = r.getDimension(R.dimen.pie_chart_label_size);
+
+        chartRenderer.setZoomButtonsVisible(false);
+        chartRenderer.setStartAngle(-90);
+        chartRenderer.setDisplayValues(true);
+        chartRenderer.setClickEnabled(true);
+        chartRenderer.setInScroll(true);
+        chartRenderer.setAntialiasing(true);
+        chartRenderer.setLabelsTextSize(labelTextSize);
+        chartRenderer.setLegendTextSize(labelTextSize);
+        chartRenderer.setTextTypeface(Typeface.DEFAULT);
+        chartRenderer.setZoomRate(6);
+        chartRenderer.setPanEnabled(false);
+        chartRenderer.setLabelsColor(android.graphics.Color.BLACK);
+        chartRenderer.setMargins(new int[]{
+                Math.round(r.getDimension(R.dimen.pie_chart_margin_top)),
+                Math.round(r.getDimension(R.dimen.pie_chart_margin_left)),
+                Math.round(r.getDimension(R.dimen.pie_chart_margin_bottom)),
+                Math.round(r.getDimension(R.dimen.pie_chart_margin_right))
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (peopleChart == null) {
+            // People
+            LinearLayout layout = (LinearLayout) people.findViewById(R.id.people_chart);
+            peopleChart = ChartFactory.getPieChartView(this, peopleSeries, peopleRenderer);
+            peopleChart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SeriesSelection seriesSelection = peopleChart.getCurrentSeriesAndPoint();
+                    if (seriesSelection != null) {
+                        for (int i = 0; i < peopleSeries.getItemCount(); i++) {
+                            peopleRenderer.getSeriesRendererAt(i).setHighlighted(i == seriesSelection.getPointIndex());
+                        }
+                        peopleChart.repaint();
+                    }
+                }
+            });
+            Resources r = getResources();
+            layout.addView(peopleChart, new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    Math.round(r.getDimension(R.dimen.pie_chart_height))));
+            // Government
+            layout = (LinearLayout) government.findViewById(R.id.government_chart);
+            governmentChart = ChartFactory.getPieChartView(this, governmentSeries, governmentRenderer);
+            governmentChart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SeriesSelection seriesSelection = governmentChart.getCurrentSeriesAndPoint();
+                    if (seriesSelection != null) {
+                        for (int i = 0; i < governmentSeries.getItemCount(); i++) {
+                            governmentRenderer.getSeriesRendererAt(i).setHighlighted(i == seriesSelection.getPointIndex());
+                        }
+                        governmentChart.repaint();
+                    }
+                }
+            });
+            layout.addView(governmentChart, new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    Math.round(r.getDimension(R.dimen.pie_chart_height))));
+            // Economy
+            layout = (LinearLayout) economy.findViewById(R.id.economy_chart);
+            economyChart = ChartFactory.getPieChartView(this, economySeries, economyRenderer);
+            economyChart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SeriesSelection seriesSelection = economyChart.getCurrentSeriesAndPoint();
+                    if (seriesSelection != null) {
+                        for (int i = 0; i < economySeries.getItemCount(); i++) {
+                            economyRenderer.getSeriesRendererAt(i).setHighlighted(i == seriesSelection.getPointIndex());
+                        }
+                        economyChart.repaint();
+                    }
+                }
+            });
+            layout.addView(economyChart, new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    Math.round(r.getDimension(R.dimen.pie_chart_height))));
+        } else {
+            peopleChart.repaint();
+            governmentChart.repaint();
+            economyChart.repaint();
+        }
+    }
+
     private void loadNation() {
     	layout.setVisibility(View.GONE);
-    	final LoadingView loadingView = (LoadingView) findViewById(R.id.loading);
+    	final LoadingView loadingView = (LoadingView) overview.findViewById(R.id.loading);
     	LoadingHelper.startLoading(loadingView, R.string.loading_nation, this);
     	errorMessage = getResources().getString(R.string.general_error);
         new AsyncTask<Void, Void, Boolean>() {
@@ -166,7 +356,11 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 	                		INDUSTRY_DESCRIPTION, LEGISLATION, CRIME, NAME,
 	                		ANIMAL, ANIMAL_TRAIT, CUSTOM_RELIGION, CURRENCY,
 	                		REGION, WA_STATUS, INFLUENCE, CUSTOM_CAPITAL,
-							BANNERS, FREEDOM_SCORES, ENDORSEMENTS);
+							BANNERS, FREEDOM_SCORES, ENDORSEMENTS,
+                            DEATHS, // People
+                            GOVERNMENT_BUDGET, DEMONYM, // Government
+                            PUBLIC_SECTOR // Economy
+                    );
 	                
 	                return true;
 				} catch (RateLimitReachedException e) {
@@ -189,6 +383,9 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
         		if(result) {
                 	layout.setVisibility(View.VISIBLE);
         			doSetup();
+                    doPeopleSetup();
+                    doGovernmentSetup();
+                    doEconomySetup();
         		}
         		else {
         			Toast.makeText(Nation.this, errorMessage, Toast.LENGTH_SHORT).show();
@@ -254,7 +451,7 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 		}
         category.setText(data.category);
         civilRights.setText(data.freedoms.civilRights);
-        economy.setText(data.freedoms.economy);
+        economicStrength.setText(data.freedoms.economy);
         politicalFreedoms.setText(data.freedoms.politicalFreedoms);
 
 		// Set gradients
@@ -263,7 +460,7 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 		civilRights.setGradient(colors[0], colors[1]);
 
 		colors = getGradientFor(data.freedoms.economyValue);
-		economy.setGradient(colors[0], colors[1]);
+		economicStrength.setGradient(colors[0], colors[1]);
 
 		colors = getGradientFor(data.freedoms.politicalFreedomsValue);
 		politicalFreedoms.setGradient(colors[0], colors[1]);
@@ -294,13 +491,80 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 		});
         layout.setVisibility(View.VISIBLE);
     }
-    
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-    	super.onSaveInstanceState(outState);
-    	
-    	outState.putParcelable("nation_data", data);
+
+    private void doPeopleSetup() {
+        peopleSeries.clear();
+        peopleRenderer.removeAllRenderers();
+        Set<Map.Entry<CauseOfDeath, Float>> deaths = data.deaths.entrySet();
+        NumberFormat format = NumberFormat.getPercentInstance();
+        format.setMaximumFractionDigits(1);
+        for(Map.Entry<CauseOfDeath, Float> d : deaths) {
+            peopleSeries.add(d.getKey() == CauseOfDeath.ANIMAL_ATTACK ?
+                    d.getKey().getDescription().replace("Animal", data.animal.substring(0, 1).toUpperCase()+data.animal.substring(1)) :
+                    d.getKey().getDescription(), d.getValue()/100f);
+            SimpleSeriesRenderer renderer = new SimpleSeriesRenderer();
+            renderer.setColor(CHART_COLOURS[(peopleSeries.getItemCount() - 1) % CHART_COLOURS.length]);
+            renderer.setChartValuesFormat(format);
+            peopleRenderer.addSeriesRenderer(renderer);
+        }
+        peopleChart.repaint();
     }
+
+    private void doGovernmentSetup() {
+        governmentTitle.setText(getString(R.string.nation_government_title, Utils.capitalize(data.demonym)));
+        // TODO Add government size and percent
+//        governmentSize.setText(getString(R.string.nation_government_size, 0, data.currency));
+//        governmentPercent.setText(getString(R.string.nation_government_percent, 0));
+        governmentSeries.clear();
+        governmentRenderer.removeAllRenderers();
+        Set<Map.Entry<Department, Float>> departments = data.governmentBudget.entrySet();
+        NumberFormat format = NumberFormat.getPercentInstance();
+        format.setMaximumFractionDigits(1);
+        for(Map.Entry<Department, Float> d : departments) {
+            if(d.getValue() == 0) continue;
+            governmentSeries.add(d.getKey().getDescription(), d.getValue()/100f);
+            SimpleSeriesRenderer renderer = new SimpleSeriesRenderer();
+            renderer.setColor(CHART_COLOURS[(governmentSeries.getItemCount() - 1) % CHART_COLOURS.length]);
+            renderer.setChartValuesFormat(format);
+            governmentRenderer.addSeriesRenderer(renderer);
+        }
+        governmentChart.repaint();
+    }
+
+    private void doEconomySetup() {
+        economyTitle.setText(getString(R.string.nation_economy_title, Utils.capitalize(data.demonym)));
+        // TODO Add GDP, GDPPC, Poorest and Richest
+//        economyGDP.setText(getString(R.string.nation_economy_gdp, 0, data.currency));
+//        economyGDPPC.setText(getString(R.string.nation_economy_gdppc, 0, data.currency));
+//        economyPoorest.setText(getString(R.string.nation_economy_poorest, 0, data.currency));
+//        economyRichest.setText(getString(R.string.nation_economy_richest, 0, data.currency));
+        economySeries.clear();
+        economyRenderer.removeAllRenderers();
+        float publicSector = data.publicSector;
+        NumberFormat format = NumberFormat.getPercentInstance();
+        format.setMaximumFractionDigits(1);
+
+        economySeries.add("Public Sector", publicSector/100f);
+        SimpleSeriesRenderer renderer = new SimpleSeriesRenderer();
+        renderer.setColor(CHART_COLOURS[(economySeries.getItemCount() - 1) % CHART_COLOURS.length]);
+        renderer.setChartValuesFormat(format);
+        economyRenderer.addSeriesRenderer(renderer);
+
+        economySeries.add("Private Sector", 1-(publicSector/100f));
+        renderer = new SimpleSeriesRenderer();
+        renderer.setColor(CHART_COLOURS[(economySeries.getItemCount() - 1) % CHART_COLOURS.length]);
+        renderer.setChartValuesFormat(format);
+        economyRenderer.addSeriesRenderer(renderer);
+
+        economyChart.repaint();
+    }
+    
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//    	super.onSaveInstanceState(outState);
+//
+//    	outState.putParcelable("nation_data", data);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -384,5 +648,67 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
     @Override
     public void onNavigationDrawerItemSelected(int id) {
         Utils.onNavigationDrawerItemSelected(this, id);
+    }
+
+    private class NationPagerAdapter extends PagerAdapter {
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            // Return views here
+            switch(position) {
+                case 0: // Overview
+                    if(overview.getParent() == null) {
+                        container.addView(overview);
+                    }
+                    return overview;
+                case 1: // People
+                    if(people.getParent() == null) {
+                        container.addView(people);
+                    }
+                    return people;
+                case 2: // Government
+                    if(government.getParent() == null) {
+                        container.addView(government);
+                    }
+                    return government;
+                case 3: // Economy
+                    if(economy.getParent() == null) {
+                        container.addView(economy);
+                    }
+                    return economy;
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View)object);
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch(position) {
+                case 0: // Overview
+                    return getString(R.string.nation_overview_header);
+                case 1: // People
+                    return getString(R.string.nation_people_header);
+                case 2: // Government
+                    return getString(R.string.nation_government_header);
+                case 3: // Economy
+                    return getString(R.string.nation_economy_header);
+                default:
+                    return null;
+            }
+        }
     }
 }

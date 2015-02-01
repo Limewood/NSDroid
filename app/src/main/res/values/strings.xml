@@ -62,6 +62,19 @@
     <string name="nation_endorsed_msg">Nation endorsed!</string>
     <string name="nation_unendorsed_msg">Nation unendorsed!</string>
     <string name="endorsements_title">Endorsements</string>
+    <string name="nation_overview_header">Overview</string>
+    <string name="nation_people_header">People</string>
+    <string name="nation_people_title">Leading Causes of Death</string>
+    <string name="nation_government_header">Government</string>
+    <string name="nation_government_title">%1$s Government Expenditure</string>
+    <string name="nation_government_size">%1$s %2$ss</string>
+    <string name="nation_government_percent">%1$s%% of GDP</string>
+    <string name="nation_economy_header">Economy</string>
+    <string name="nation_economy_title">The %1$s Economy</string>
+    <string name="nation_economy_gdp">GDP: %1$s %2$ss</string>
+    <string name="nation_economy_gdppc">%1$s %2$ss per person</string>
+    <string name="nation_economy_poorest">Poorest 10%%: %1$s %2$ss per person</string>
+    <string name="nation_economy_richest">Richest 10%%: %1$s %2$ss per person</string>
     
     <!-- Region activity -->
     <string name="wfe">World Factbook Entry</string>
