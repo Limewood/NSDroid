@@ -146,12 +146,6 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
                 } catch (RateLimitReachedException e) {
                     e.printStackTrace();
                     errorMessage = getResources().getString(R.string.rate_limit_reached);
-                } catch (UnknownRegionException e) {
-                    e.printStackTrace();
-                    errorMessage = getResources().getString(R.string.unknown_region);
-                } catch (UnknownNationException e) {
-                    e.printStackTrace();
-                    errorMessage = getResources().getString(R.string.unknown_nation);
                 } catch (RuntimeException e) {
                     e.printStackTrace();
                     errorMessage = e.getMessage();

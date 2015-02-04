@@ -65,7 +65,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
-import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -113,8 +112,16 @@ public class NSDroid extends SherlockFragmentActivity implements NavigationDrawe
 			new AsyncTask<Void, Void, Void>() {
 				@Override
 				protected Void doInBackground(Void... params) {
-					NationData nData = API.getInstance(NSDroid.this).getNationInfo(info.getId(), NationData.Shards.WA_STATUS);
-					info.setWAStatus(nData.worldAssemblyStatus);
+                    try {
+                        NationData nData = API.getInstance(NSDroid.this).getNationInfo(info.getId(), NationData.Shards.WA_STATUS);
+                        info.setWAStatus(nData.worldAssemblyStatus);
+                    } catch (UnknownNationException e) {
+                        e.printStackTrace();
+                        Toast.makeText(NSDroid.this, getString(R.string.unknown_nation, e.getNation()), Toast.LENGTH_LONG).show();
+                    } catch (RateLimitReachedException e) {
+                        e.printStackTrace();
+                        Toast.makeText(NSDroid.this, R.string.rate_limit_reached, Toast.LENGTH_LONG).show();
+                    }
 					return null;
 				}
 			}.execute();
@@ -213,8 +220,8 @@ public class NSDroid extends SherlockFragmentActivity implements NavigationDrawe
 	                		RegionData.Shards.NAME, RegionData.Shards.HAPPENINGS, RegionData.Shards.MESSAGES);
 	                
 	                // Fetch nation and region names
-	                Pattern nPattern = Pattern.compile("(.*?)@@([a-z\\d_]+)@@(.*?)");
-	                Pattern rPattern = Pattern.compile("(.*?)%%([a-z\\d_]+)%%(.*?)");
+	                Pattern nPattern = Pattern.compile("(.*?)@@([a-z\\-\\d_]+)@@(.*?)");
+	                Pattern rPattern = Pattern.compile("(.*?)%%([a-z\\-\\d_]+)%%(.*?)");
 	                Matcher matcher;
 	                String n, r;
 //	                NationData nd;
@@ -270,17 +277,17 @@ public class NSDroid extends SherlockFragmentActivity implements NavigationDrawe
 					errorMessage = getResources().getString(R.string.rate_limit_reached);
 				} catch (UnknownRegionException e) {
 					e.printStackTrace();
-					errorMessage = getResources().getString(R.string.unknown_region);
+					errorMessage = getResources().getString(R.string.unknown_region, e.getRegion());
 				} catch (UnknownNationException e) {
 					e.printStackTrace();
-					errorMessage = getResources().getString(R.string.unknown_nation);
+					errorMessage = getResources().getString(R.string.unknown_nation, e.getNation());
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
 				}
 				
 				return false;
-        	};
+        	}
         	
         	protected void onPostExecute(Boolean result) {
         		// Remove loading animation
@@ -293,7 +300,7 @@ public class NSDroid extends SherlockFragmentActivity implements NavigationDrawe
         		else {
 					Toast.makeText(NSDroid.this, errorMessage, Toast.LENGTH_SHORT).show();
         		}
-        	};
+        	}
         }.execute();
     }
     

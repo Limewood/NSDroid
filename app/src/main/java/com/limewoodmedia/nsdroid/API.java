@@ -171,13 +171,13 @@ public class API {
      * @throws RateLimitReachedException if the rate limit was reached
      */
     public synchronized WADataParcelable getWAInfo(WACouncil council, WAData.Shards...shards)
-            throws RateLimitReachedException, UnknownRegionException {
+            throws RateLimitReachedException {
 
         return new WADataParcelable(nsapi.getWAInfo(council, shards));
     }
 	
 	public synchronized RegionDataParcelable getHomeRegionInfo(Context context, RegionData.Shards...shards)
-			throws RateLimitReachedException, UnknownRegionException {
+            throws RateLimitReachedException, UnknownRegionException, UnknownNationException {
 		// Check if region is cached
 		NationInfo info = NationInfo.getInstance(context);
 		String region = info.getRegionId();

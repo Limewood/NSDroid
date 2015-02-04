@@ -27,7 +27,7 @@ package com.limewoodMedia.nsapi.exceptions;
  * @author Joakim Lindskog
  *
  */
-public class UnknownNationException extends RuntimeException {
+public class UnknownNationException extends Exception {
 	private static final long serialVersionUID = -130990913454379426L;
 	private String nation;
 

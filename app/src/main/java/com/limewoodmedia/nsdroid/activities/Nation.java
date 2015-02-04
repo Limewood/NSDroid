@@ -376,7 +376,7 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 					errorMessage = getResources().getString(R.string.rate_limit_reached);
 				} catch (UnknownNationException e) {
 					e.printStackTrace();
-					errorMessage = getResources().getString(R.string.unknown_nation);
+					errorMessage = getResources().getString(R.string.unknown_nation, e.getNation());
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 					errorMessage = e.getMessage();

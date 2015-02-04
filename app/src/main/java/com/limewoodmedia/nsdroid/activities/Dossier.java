@@ -28,8 +28,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
-import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
 import com.limewoodmedia.nsdroid.API;
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.LoadingHelper;
@@ -44,7 +42,6 @@ import com.limewoodmedia.nsdroid.views.LoadingView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -99,19 +96,13 @@ public class Dossier extends SherlockFragmentActivity implements NavigationDrawe
 						return null;
 					}
 					return API.getInstance(Dossier.this).getDossier();
-				} catch (RateLimitReachedException e) {
-					e.printStackTrace();
-					errorMessage = getResources().getString(R.string.rate_limit_reached);
-				} catch (UnknownRegionException e) {
-					e.printStackTrace();
-					errorMessage = getResources().getString(R.string.unknown_region);
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
 				}
 				
 				return null;
-        	};
+        	}
         	
         	protected void onPostExecute(DossierData result) {
         		LoadingHelper.stopLoading(loadingView);
@@ -121,7 +112,7 @@ public class Dossier extends SherlockFragmentActivity implements NavigationDrawe
         		else {
         			Toast.makeText(Dossier.this, errorMessage, Toast.LENGTH_SHORT).show();
         		}
-        	};
+        	}
         }.execute();
     }
     
@@ -196,7 +187,7 @@ public class Dossier extends SherlockFragmentActivity implements NavigationDrawe
 													public void run() {
 														Toast.makeText(Dossier.this, R.string.nation_removed_from_dossier, Toast.LENGTH_SHORT).show();
 														loadDossier();
-													};
+													}
 												});
 											}
 										} catch (IOException e) {
@@ -266,7 +257,7 @@ public class Dossier extends SherlockFragmentActivity implements NavigationDrawe
 													public void run() {
 														Toast.makeText(Dossier.this, R.string.region_removed_from_dossier, Toast.LENGTH_SHORT).show();
 														loadDossier();
-													};
+													}
 												});
 											}
 										} catch (IOException e) {

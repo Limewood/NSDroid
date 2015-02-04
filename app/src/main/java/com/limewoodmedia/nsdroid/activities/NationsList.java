@@ -24,6 +24,9 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockListActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
+import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
+import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
 import com.limewoodMedia.nsapi.holders.NationData;
 import com.limewoodmedia.nsdroid.API;
 import com.limewoodmedia.nsdroid.NationInfo;
@@ -150,8 +153,15 @@ public class NationsList extends SherlockListActivity {
 									new AsyncTask<Void, Void, Void>() {
 										@Override
 										protected Void doInBackground(Void... params) {
-											NationData nData = API.getInstance(NationsList.this).getNationInfo(info.getId(), NationData.Shards.WA_STATUS);
-											info.setWAStatus(nData.worldAssemblyStatus);
+                                            NationData nData = null;
+                                            try {
+                                                nData = API.getInstance(NationsList.this).getNationInfo(info.getId(), NationData.Shards.WA_STATUS);
+                                                info.setWAStatus(nData.worldAssemblyStatus);
+                                            } catch (RateLimitReachedException e) {
+                                                e.printStackTrace();
+                                            } catch (UnknownNationException e) {
+                                                e.printStackTrace();
+                                            }
 											return null;
 										}
 									}.execute();
@@ -231,14 +241,35 @@ public class NationsList extends SherlockListActivity {
 				info.setName((String)v.getTag());
 				info.setFlag(null);
 				new AsyncTask<Void, Void, Void>() {
+                    private String errorMessage;
+
 					@Override
 					protected Void doInBackground(Void... params) {
-						NationData nData = API.getInstance(NationsList.this).getNationInfo(info.getId(), NationData.Shards.WA_STATUS);
-						info.setWAStatus(nData.worldAssemblyStatus);
-						API.getInstance(NationsList.this).getHomeRegionInfo(NationsList.this);
-						return null;
+                        NationData nData = null;
+                        try {
+                            nData = API.getInstance(NationsList.this).getNationInfo(info.getId(), NationData.Shards.WA_STATUS);
+                            info.setWAStatus(nData.worldAssemblyStatus);
+                            API.getInstance(NationsList.this).getHomeRegionInfo(NationsList.this);
+                        } catch (RateLimitReachedException e) {
+                            e.printStackTrace();
+                            errorMessage = getString(R.string.rate_limit_reached);
+                        } catch (UnknownNationException e) {
+                            e.printStackTrace();
+                            errorMessage = getString(R.string.unknown_nation, e.getNation());
+                        } catch (UnknownRegionException e) {
+                            e.printStackTrace();
+                            errorMessage = getString(R.string.unknown_region, e.getRegion());
+                        }
+                        return null;
 					}
-				}.execute();
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        if(errorMessage != null) {
+                            Toast.makeText(NationsList.this, errorMessage, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }.execute();
 				
 				dialog.dismiss();
 				

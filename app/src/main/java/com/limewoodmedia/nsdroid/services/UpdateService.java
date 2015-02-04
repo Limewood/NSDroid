@@ -1,5 +1,8 @@
 package com.limewoodmedia.nsdroid.services;
 
+import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
+import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
+import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
 import com.limewoodMedia.nsapi.holders.NationData;
 import com.limewoodMedia.nsapi.holders.RMBMessage;
 import com.limewoodMedia.nsapi.holders.RegionData;
@@ -62,11 +65,23 @@ public class UpdateService extends IntentService {
         	if(intent.getStringExtra("region").equalsIgnoreCase("-1")) {
 	        	if(intent.getStringExtra("shard").equalsIgnoreCase("messages")) {
 	        		// Check for new messages
-	        		NationData nData = API.getInstance(this).getNationInfo(
-	        				NationInfo.getInstance(this).getName(), NationData.Shards.REGION);
-	        		rData = API.getInstance(this).getRegionInfo(nData.region, RegionData.Shards.MESSAGES);
-	        		
-	        		if(rData.messages != null && rData.messages.size() > 0) {
+                    NationData nData = null;
+                    try {
+                        nData = API.getInstance(this).getNationInfo(
+                                NationInfo.getInstance(this).getName(), NationData.Shards.REGION);
+                        rData = API.getInstance(this).getRegionInfo(nData.region, RegionData.Shards.MESSAGES);
+                    } catch (RateLimitReachedException e) {
+                        e.printStackTrace();
+                        return;
+                    } catch (UnknownNationException e) {
+                        e.printStackTrace();
+                        return;
+                    } catch (UnknownRegionException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+
+                    if(rData.messages != null && rData.messages.size() > 0) {
 	        			RMBMessage msg = rData.messages.get(rData.messages.size()-1);
 		        		long lastTS = prefs.getLong("update_region_messages_timestamp", -1);
 		        		String lastNation = prefs.getString("update_region_messages_nation", "");

@@ -838,7 +838,7 @@ public class NSAPI implements INSAPI {
 	 * @see com.limewoodMedia.nsapi.INSAPI#getWorldInfo(WorldData.Shards[])
 	 */
 	@Override
-	public WorldData getWorldInfo(WorldData.Shards...shards) {
+	public WorldData getWorldInfo(WorldData.Shards...shards) throws RateLimitReachedException {
 		if (!makeCall()) {
 			throw new RateLimitReachedException();
 		}
@@ -912,7 +912,7 @@ public class NSAPI implements INSAPI {
 	 * @see com.limewoodMedia.nsapi.INSAPI#getWorldInfo(WorldData.Shards[])
 	 */
 	@Override
-	public WAData getWAInfo(WACouncil council, WAData.Shards...shards) {
+	public WAData getWAInfo(WACouncil council, WAData.Shards...shards) throws RateLimitReachedException {
 		if (!makeCall()) {
 			throw new RateLimitReachedException();
 		}

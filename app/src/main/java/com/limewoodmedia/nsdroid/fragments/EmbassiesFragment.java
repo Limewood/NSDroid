@@ -204,7 +204,7 @@ public class EmbassiesFragment extends SherlockFragment implements OnClickListen
 					errorMessage = getResources().getString(R.string.rate_limit_reached);
 				} catch (UnknownRegionException e) {
 					e.printStackTrace();
-					errorMessage = getResources().getString(R.string.unknown_region);
+					errorMessage = getResources().getString(R.string.unknown_region, e.getRegion());
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 					errorMessage = e.getMessage();

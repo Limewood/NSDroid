@@ -27,6 +27,6 @@ package com.limewoodMedia.nsapi.exceptions;
  * @author Joakim Lindskog
  *
  */
-public class RateLimitReachedException extends RuntimeException {
+public class RateLimitReachedException extends Exception {
 	private static final long serialVersionUID = -1921022462294128042L;
 }

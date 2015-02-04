@@ -47,7 +47,9 @@ public enum CauseOfDeath {
 	INVOLUNTARY_EUTHANASIA("Involuntary Euthanasia"),
 	MALNOURISHMENT("Malnourishment"),
 	SCURVY("Scurvy"),
-	NUCLEAR_SPILL("Nuclear Spill");
+	NUCLEAR_SPILL("Nuclear Spill"),
+    BUNGEE_JUMPING("Bungee Jumping"),
+    UNKNOWN("Unknown (please report)");
 
 	private String description;
 
@@ -57,7 +59,7 @@ public enum CauseOfDeath {
 				return c;
 			}
 		}
-		return null;
+		return UNKNOWN;
 	}
 
 	private CauseOfDeath(String description) {

@@ -4,8 +4,8 @@
     <string name="app_name">NSDroid</string>
     <string name="nation_flag">Nation flag</string>
     <string name="region_flag">Region flag</string>
-    <string name="unknown_nation">Unknown nation</string>
-    <string name="unknown_region">Unknown region</string>
+    <string name="unknown_nation">Unknown nation %s</string>
+    <string name="unknown_region">Unknown region %s</string>
     <string name="rate_limit_reached">Rate limit reached! Please wait and try again.</string>
     <string name="general_error">An error has occurred, please contact the developer.</string>
     <string name="io_error">An error occurred - please check your network connection.</string>
@@ -167,6 +167,9 @@
     <string name="general_assembly">General Assembly</string>
     <string name="security_council">Security Council</string>
     <string name="voting_ends">Voting ends in %1$d %3$s %2$d %4$s</string>
+
+    <!-- News -->
+    <string name="news">News</string>
     
     <!-- Nations list -->
     <string name="nations_list_title">Nations</string>
@@ -193,6 +196,7 @@
     <string name="menu_nation">Nation</string>
     <string name="menu_region">Region</string>
     <string name="menu_wa">WA</string>
+    <string name="menu_news">News</string>
     <string name="menu_settings">Settings</string>
 
     <!-- Common menu strings -->

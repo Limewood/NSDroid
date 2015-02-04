@@ -34,6 +34,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
+import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
 import com.limewoodMedia.nsapi.holders.RegionData;
 import com.limewoodmedia.nsdroid.AlphabeticComparator;
@@ -294,13 +295,16 @@ public class Region extends SherlockFragmentActivity implements NavigationDrawer
 					errorMessage = getResources().getString(R.string.rate_limit_reached);
 				} catch (UnknownRegionException e) {
 					e.printStackTrace();
-					errorMessage = getResources().getString(R.string.unknown_region);
+					errorMessage = getResources().getString(R.string.unknown_region, e.getRegion());
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
-				}
-				
-				return false;
+				} catch (UnknownNationException e) {
+                    e.printStackTrace();
+                    errorMessage = getResources().getString(R.string.unknown_nation, e.getNation());
+                }
+
+                return false;
         	}
         	
         	protected void onPostExecute(Boolean result) {

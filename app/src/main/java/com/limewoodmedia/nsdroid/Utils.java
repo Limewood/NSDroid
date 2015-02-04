@@ -33,6 +33,7 @@ import com.limewoodmedia.nsdroid.activities.Dossier;
 import com.limewoodmedia.nsdroid.activities.Issues;
 import com.limewoodmedia.nsdroid.activities.NSDroid;
 import com.limewoodmedia.nsdroid.activities.Nation;
+import com.limewoodmedia.nsdroid.activities.News;
 import com.limewoodmedia.nsdroid.activities.Preferences;
 import com.limewoodmedia.nsdroid.activities.Region;
 import com.limewoodmedia.nsdroid.activities.WorldAssembly;
@@ -155,6 +156,10 @@ public class Utils {
 //                intent = new Intent(context, WorldAssembly.class);
 //                context.startActivity(intent);
 //                break;
+            case R.id.menu_news: // News
+                intent = new Intent(context, News.class);
+                context.startActivity(intent);
+                break;
             case R.id.menu_settings: // Preferences
                 intent = new Intent(context, Preferences.class);
                 context.startActivity(intent);
