@@ -46,7 +46,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -129,8 +128,8 @@ public class EmbassiesFragment extends SherlockFragment implements OnClickListen
     				str = res.getString(R.string.embassy_requested);
     				background = R.drawable.embassy_requested;
     				break;
-    			case DENIED:
-    				str = res.getString(R.string.embassy_denied);
+    			case REJECTED:
+    				str = res.getString(R.string.embassy_rejected);
     				background = R.drawable.embassy_denied;
     				break;
     			case CLOSING:
@@ -268,7 +267,7 @@ public class EmbassiesFragment extends SherlockFragment implements OnClickListen
 			status = EmbassyStatus.REQUESTED;
 			break;
 		case 6: // Denied
-			status = EmbassyStatus.DENIED;
+			status = EmbassyStatus.REJECTED;
 			break;
 		case 7: // Closing
 			status = EmbassyStatus.CLOSING;

@@ -135,6 +135,9 @@
     <string name="issue_position_dismiss">The government is preparing to dismiss this issue.</string>
     <string name="issue_position_undecided">The government has yet to formalize a position on this issue.</string>
     <string name="loading_issue">Summoning indecision&#8230;</string>
+    <string name="previous_choice">Previous choice</string>
+    <string name="previously_dismissed">Previously dismissed</string>
+    <string name="issue_loading">Loading&#8230;</string>
     
     <!-- Embassies -->
     <string name="embassies">embassies</string>
@@ -143,7 +146,7 @@
     <string name="embassy_invited">invitation</string>
     <string name="embassy_pending">pending</string>
     <string name="embassy_requested">requested</string>
-    <string name="embassy_denied">denied</string>
+    <string name="embassy_rejected">rejected</string>
     <string name="embassy_closing">closing</string>
     
     <!-- Dossier -->

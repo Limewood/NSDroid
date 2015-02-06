@@ -13,8 +13,8 @@ public class Embassy {
 		INVITED("invited"),
 		/** An embassy this region requested with another region */
 		REQUESTED("requested"),
-		/** An requested embassy that was denied recently */
-		DENIED("denied"),
+		/** An requested embassy that was rejected recently */
+		REJECTED("rejected"),
 		/** An embassy that was recently closed */
 		CLOSING("closing");
 		
@@ -27,7 +27,7 @@ public class Embassy {
 					return es;
 				}
 			}
-			return null;
+			return ESTABLISHED;
 		}
 		
 		private String description;
@@ -39,7 +39,7 @@ public class Embassy {
 		public String getDescription() {
 			return description;
 		}
-	};
+	}
 	
 	public String region;
 	public EmbassyStatus status;

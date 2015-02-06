@@ -40,4 +40,14 @@
     <!-- World Assembly -->
     <color name="sc_against">#AAA91347</color>
     <color name="ga_for">#AA1373FF</color>
+
+    <!-- Issues -->
+    <color name="issue_selected">#CAEAC2</color>
+    <color name="issue_dismissed">#FAFAF2</color>
+    <color name="issue_dismissed_border">#AAAAA2</color>
+    <color name="issue_border">#7A7A72</color>
+    <color name="issue_normal">#EAEAE2</color>
+    <color name="issue_focused">#DADAD2</color>
+    <color name="issue_previous">#EEEE73</color>
+    <color name="issue_previous_border">#3AAA32</color>
 </resources>

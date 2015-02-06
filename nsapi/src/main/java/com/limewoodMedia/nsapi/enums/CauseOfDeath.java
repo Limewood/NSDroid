@@ -49,6 +49,7 @@ public enum CauseOfDeath {
 	SCURVY("Scurvy"),
 	NUCLEAR_SPILL("Nuclear Spill"),
     BUNGEE_JUMPING("Bungee Jumping"),
+    SUNBURN("Sunburn"),
     UNKNOWN("Unknown (please report)");
 
 	private String description;

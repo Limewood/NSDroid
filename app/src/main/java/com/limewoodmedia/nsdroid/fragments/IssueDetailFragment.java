@@ -30,6 +30,7 @@ import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.API;
 import com.limewoodmedia.nsdroid.CustomAlertDialogBuilder;
 import com.limewoodmedia.nsdroid.LoadingHelper;
+import com.limewoodmedia.nsdroid.db.IssuesDatabase;
 import com.limewoodmedia.nsdroid.holders.Issue;
 import com.limewoodmedia.nsdroid.views.ChoiceView;
 import com.limewoodmedia.nsdroid.views.LoadingView;
@@ -38,6 +39,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
@@ -52,6 +54,11 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import org.xml.sax.XMLReader;
+
+/**
+ * Fragment for showing a specific issue
+ */
 public class IssueDetailFragment extends SherlockFragment implements OnClickListener {
 	private static final String TAG = IssueDetailFragment.class.getName();
 	
@@ -65,15 +72,15 @@ public class IssueDetailFragment extends SherlockFragment implements OnClickList
 	private Context context;
 	private int issueId;
 	private AsyncTask<Void, Void, Issue> loadIssue;
+    private IssuesDatabase db;
 
-	public IssueDetailFragment() {
-		
-	}
+	public IssueDetailFragment() {}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		context = getActivity();
+        this.db = IssuesDatabase.getInstance(getActivity());
 	}
 	
 	@Override
@@ -112,10 +119,15 @@ public class IssueDetailFragment extends SherlockFragment implements OnClickList
 		layout.setVisibility(View.GONE);
     	final LoadingView loadingView = (LoadingView) root.findViewById(R.id.loading);
     	LoadingHelper.startLoading(loadingView, R.string.loading_issue, getActivity());
+        title.setText(R.string.issue_loading);
 		loadIssue = new AsyncTask<Void, Void, Issue>() {
+            private int previous = -1;
+
 			@Override
 			protected Issue doInBackground(Void... params) {
 				if(API.getInstance(context).checkLogin(getActivity())) {
+                    // Get previous choice
+                    previous = db.getPreviousIssueChoiceIndex(id);
 					return API.getInstance(getActivity()).getIssue(id);
 				}
 				return null;
@@ -133,26 +145,38 @@ public class IssueDetailFragment extends SherlockFragment implements OnClickList
 						LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 								LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 						params.setMargins(0, 0, 0, 9);
-						int i=0;
 						Log.d(TAG, "Selected "+result.selectedChoice);
+                        String posText;
 						if(result.selectedChoice > -1) {
-							position.setText(getResources().getString(R.string.issue_position_choice,
-									result.selectedChoice));
+							posText = getString(R.string.issue_position_choice,
+                                    result.selectedChoice+1);
 						} else if(result.dismissed) {
-							position.setText(R.string.issue_position_dismiss);
+							posText = getString(R.string.issue_position_dismiss);
 						} else {
-							position.setText(R.string.issue_position_undecided);
+							posText = getString(R.string.issue_position_undecided);
 						}
-						
+                        if(previous == -2) { // Previously dismissed
+                            posText += "<br/><small><font color='grey'>" + getString(R.string.previously_dismissed) + "</font></small>";
+                        }
+                        position.setText(Html.fromHtml(posText));
+
+                        int i=0;
 						for(String choice : result.choices) {
 							cText = (ChoiceView) getLayoutInflater(null).inflate(R.layout.issue_choice, null);
-							cText.setText(Html.fromHtml(choice));
 							cText.setTextColor(getResources().getColor(android.R.color.black));
 							cText.setTag(R.id.choice_index, i);
 							cText.setTag(R.id.choice_type, true);
 							cText.setOnClickListener(IssueDetailFragment.this);
+                            // Indicate previous choice
+                            if(previous == i) {
+                                cText.setBackgroundResource(R.drawable.choice_background_previous);
+                                choice += "<br/><small><font color='grey'>" + getString(R.string.previous_choice) + "</font></small>";
+                            } else {
+                                cText.setBackgroundResource(R.drawable.choice_background);
+                            }
+                            cText.setText(Html.fromHtml(choice));
 							if(!result.dismissed) {
-								cText.setSelected(result.selectedChoice == i+1);
+								cText.setSelected(result.selectedChoice == i);
 								cText.setDismissed(false);
 							} else {
 								cText.setDismissed(true);
@@ -164,7 +188,7 @@ public class IssueDetailFragment extends SherlockFragment implements OnClickList
 						}
 					}
 				}
-			};
+			}
 		}.execute();
 	}
 	
@@ -177,38 +201,41 @@ public class IssueDetailFragment extends SherlockFragment implements OnClickList
 		builder.setTitle(R.string.issue_dismiss_title)
 			.setMessage(getResources().getString(R.string.issue_dismiss_text))
 			.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(final DialogInterface dialog, int which) {
-					new AsyncTask<Integer, Void, Boolean>() {
-						@Override
-						protected Boolean doInBackground(Integer... params) {
-							if(API.getInstance(getActivity()).checkLogin(getActivity())) {
-								try {
-									return API.getInstance(getActivity()).answerIssue(
-											issueId, (Integer)params[0]);
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							}
-							return false;
-						}
-						
-						protected void onPostExecute(Boolean result) {
-							Log.d(TAG, "Result: "+result);
-							// Show as dismissed
-							showAsDismissed();
-							dialog.dismiss();
-						};
-					}.execute(-1);
-				}
-			})
+                @Override
+                public void onClick(final DialogInterface dialog, int which) {
+                    new AsyncTask<Integer, Void, Boolean>() {
+                        @Override
+                        protected Boolean doInBackground(Integer... params) {
+                            if (API.getInstance(getActivity()).checkLogin(getActivity())) {
+                                try {
+                                    boolean success = API.getInstance(getActivity()).answerIssue(
+                                            issueId, (Integer) params[0]);
+                                    if (success) {
+                                        db.setIssueChoice(issueId, -2);
+                                    }
+                                    return success;
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            return false;
+                        }
+
+                        protected void onPostExecute(Boolean result) {
+                            Log.d(TAG, "Result: " + result);
+                            // Show as dismissed
+                            showAsDismissed();
+                            dialog.dismiss();
+                        }
+                    }.execute(-1);
+                }
+            })
 			.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
-				}
-			})
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            })
 			.show();
 	}
 
@@ -222,37 +249,40 @@ public class IssueDetailFragment extends SherlockFragment implements OnClickList
 				.setMessage(getResources().getString(R.string.issue_choose_text,
 						((Integer)v.getTag(R.id.choice_index))+1))
 				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(final DialogInterface dialog, int which) {
-						new AsyncTask<Integer, Void, Boolean>() {
-							@Override
-							protected Boolean doInBackground(Integer... params) {
-								if(API.getInstance(getActivity()).checkLogin(getActivity())) {
-									try {
-										return API.getInstance(getActivity()).answerIssue(
-												issueId, (Integer)params[0]);
-									} catch (IOException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-								}
-								return false;
-							}
-							
-							protected void onPostExecute(Boolean result) {
-								Log.d(TAG, "Result: "+result);
-								selectOption(v);
-								dialog.dismiss();
-							};
-						}.execute((Integer)v.getTag(R.id.choice_index));
-					}
-				})
+                    @Override
+                    public void onClick(final DialogInterface dialog, int which) {
+                        new AsyncTask<Integer, Void, Boolean>() {
+                            @Override
+                            protected Boolean doInBackground(Integer... params) {
+                                if (API.getInstance(getActivity()).checkLogin(getActivity())) {
+                                    try {
+                                        boolean success = API.getInstance(getActivity()).answerIssue(
+                                                issueId, (Integer) params[0]);
+                                        if (success) {
+                                            db.setIssueChoice(issueId, params[0]);
+                                        }
+                                        return success;
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                return false;
+                            }
+
+                            protected void onPostExecute(Boolean result) {
+                                Log.d(TAG, "Result: " + result);
+                                selectOption(v);
+                                dialog.dismiss();
+                            }
+                        }.execute((Integer) v.getTag(R.id.choice_index));
+                    }
+                })
 				.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				})
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
 				.show();
 		}
 	}

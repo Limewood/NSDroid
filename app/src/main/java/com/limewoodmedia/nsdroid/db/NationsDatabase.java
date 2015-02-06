@@ -14,14 +14,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
- * Database of saved nations
+ * Database of saved nations (main and puppets)
  * @author Joakim Lindskog
  *
  */
 public class NationsDatabase extends SQLiteOpenHelper {
 	private static final String TAG = NationsDatabase.class.getName();
 	
-    // Database Version
+    // Database Version TODO If this changes, implement copy of old values!
     private static final int DATABASE_VERSION = 2;
  
     // Database Name

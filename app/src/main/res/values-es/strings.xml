@@ -108,7 +108,7 @@
     <string name="embassy_invited">invitación</string>
     <string name="embassy_pending">pendiente</string>
     <string name="embassy_requested">solicitada</string>
-    <string name="embassy_denied">denegada</string>
+    <string name="embassy_rejected">denegada</string>
     <string name="embassy_closing">clausurando</string>
     
     <!-- Dossier -->

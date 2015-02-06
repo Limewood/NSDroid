@@ -386,8 +386,16 @@ public class API {
 		    
 		    // Issue name
 		    String prefix = "<div class=\"dpaper4\"><p>";
-			String text = builder.substring(builder.indexOf(prefix)+prefix.length());
-			text = text.substring(0, text.indexOf("</div>"));
+            int index = builder.indexOf(prefix);
+            String text;
+            if(index > -1) { // Unanswered or dismissed issue
+                text = builder.substring(builder.indexOf(prefix) + prefix.length());
+                text = text.substring(0, text.indexOf("</div>"));
+            } else { // Answered issue
+                prefix = "<p class=\"dtitle\">";
+                text = builder.substring(builder.indexOf(prefix) + prefix.length());
+                text = text.substring(0, text.indexOf("<p class=\"dstatus\">"));
+            }
 			issue.name = text;
 		    
 		    // Issue text
@@ -427,7 +435,7 @@ public class API {
 			
 			pattern = Pattern.compile("(\n?)\\<p\\>(.+)(\\d+)", Pattern.DOTALL);
 			try {
-				selected = Integer.parseInt(pattern.matcher(text).replaceAll("$3"));
+				selected = Integer.parseInt(pattern.matcher(text).replaceAll("$3")) -1;
 			} catch(NumberFormatException e) {
 				// No issue selected
 //				e.printStackTrace();
@@ -490,93 +498,119 @@ public class API {
 		
 		DossierData data = new DossierData();
 		HttpClient client = getClient();
-		HttpGet httpGet = new HttpGet("http://www.nationstates.net/page=dossier");
-		
-		try {
-	        HttpResponse response = client.execute(httpGet, httpContext);
-	        StringBuilder builder = new StringBuilder();
-	        BufferedReader reader = null;
-		    try {
-		        reader = new BufferedReader(new InputStreamReader(response.getEntity()
-		        		.getContent(), "UTF-8"));
-		        for (String line; (line = reader.readLine()) != null;) {
-		            builder.append(line.trim());
-		        }
-		    } finally {
-		        if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-		    }
 
-		    // Dossier nations
-		    String prefix = "<table class=\"shiny\"";
-			String text = builder.substring(builder.indexOf(prefix)+prefix.length());
-			prefix = "<tbody>";
-			text = text.substring(text.indexOf(prefix)+prefix.length());
-			String nText = text.substring(0, text.indexOf("</tbody>"));
-			String[] arr = nText.split("<tr>");
-			NationDataParcelable[] nations = new NationDataParcelable[arr.length];
-			NationDataParcelable ndp;
-			int i=0;
-			String[] nInfo, nArr;
-			for(String s : arr) {
-				System.out.println("String: "+s);
-				if(s.trim().length() == 0) continue;
-				ndp = new NationDataParcelable();
-				if(s.split("<td").length == 3) {
-					ndp.name = s.substring(s.lastIndexOf("<td>")+4, s.lastIndexOf("</td>"));
-				} else {
-					ndp.name = TagParser.idToName(s.substring(s.indexOf("href=\"nation=")+13, s.indexOf("\" class=\"nlink")));
-					nInfo = s.split("<td align=\"center\">");
-					ndp.category = nInfo[2].substring(0, nInfo[2].indexOf("</td>"));
-					nArr = nInfo[3].split("<br>");
-					ndp.lastActivity = nArr[0].replace("Active ", "")
-							.replace("minutes", "m")
-							.replace("minute", "m")
-							.replace("days", "d")
-							.replace("day", "d")
-							.replace("seconds", "s")
-							.replace("hours", "h")
-							.replace("hour", "h");
-					ndp.region = nArr[1].substring(nArr[1].indexOf('>')+1, nArr[1].indexOf("</a>"));
-				}
-				nations[i] = ndp;
-				i++;
-			}
-			data.nations = nations;
-		    
-		    // Dossier regions
-//			prefix = "<table class=\"shiny\"";
-//			text = text.substring(text.indexOf(prefix)+prefix.length());
-			prefix = "<tbody>";
-			text = text.substring(text.indexOf(prefix)+prefix.length());
-			String rText = text.substring(0, text.indexOf("</tbody>"));
-			arr = rText.split("<tr>");
-			RegionDataParcelable[] regions = new RegionDataParcelable[arr.length];
-			RegionDataParcelable rdp;
-			i=0;
-			String[] rArr;
-			for(String s : arr) {
-				if(s.trim().length() == 0) continue;
-				rdp = new RegionDataParcelable();
-				nArr = s.split("<td>");
-				rArr = nArr[1].split("<td align=\"center\">");
-				rdp.name = rArr[0].substring(rArr[0].indexOf('>')+1, rArr[0].indexOf("</a>"));
-				rdp.numNations = Integer.parseInt(rArr[1].substring(0, rArr[1].indexOf('<')));
-				if(nArr[2].contains("<a href=")) {
-					rdp.delegate = nArr[2].substring(nArr[2].indexOf("<a href=\"nation=")+16,
-							nArr[2].indexOf("\" class"));
-				} else {
-					rdp.delegate = nArr[2].substring(0, nArr[2].indexOf('<'));
-				}
-				regions[i] = rdp;
-				i++;
-			}
-			
-			data.regions = regions;
-	    } catch (ClientProtocolException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+        List<NationDataParcelable> nations = new ArrayList<NationDataParcelable>();
+        List<RegionDataParcelable> regions = new ArrayList<RegionDataParcelable>();
+        boolean nationsDone = false, regionsDone = false;
+        HttpGet httpGet;
+        outer: for(int start=0; true; start+=15) {
+            // Get first 15, then next page until we find duplicates
+            httpGet = new HttpGet("http://www.nationstates.net/page=dossier?start="+start+"/rstart="+start);
+
+            try {
+                HttpResponse response = client.execute(httpGet, httpContext);
+                StringBuilder builder = new StringBuilder();
+                BufferedReader reader = null;
+                try {
+                    reader = new BufferedReader(new InputStreamReader(response.getEntity()
+                            .getContent(), "UTF-8"));
+                    for (String line; (line = reader.readLine()) != null; ) {
+                        builder.append(line.trim());
+                    }
+                } finally {
+                    if (reader != null) try {
+                        reader.close();
+                    } catch (IOException logOrIgnore) {
+                    }
+                }
+
+                // Dossier nations
+                String prefix = "<table class=\"shiny\"";
+                String text = builder.substring(builder.indexOf(prefix) + prefix.length());
+                prefix = "<tbody>";
+                text = text.substring(text.indexOf(prefix) + prefix.length());
+                String[] nArr, nInfo, arr;
+                if(!nationsDone) {
+                    String nText = text.substring(0, text.indexOf("</tbody>"));
+                    arr = nText.split("<tr>");
+                    NationDataParcelable ndp;
+                    nFor: for (String s : arr) {
+                        if (s.trim().length() == 0) continue;
+                        ndp = new NationDataParcelable();
+                        if (s.split("<td").length == 3) {
+                            ndp.name = s.substring(s.lastIndexOf("<td>") + 4, s.lastIndexOf("</td>"));
+                        } else {
+                            ndp.name = TagParser.idToName(s.substring(s.indexOf("href=\"nation=") + 13, s.indexOf("\" class=\"nlink")));
+                            nInfo = s.split("<td align=\"center\">");
+                            ndp.category = nInfo[2].substring(0, nInfo[2].indexOf("</td>"));
+                            nArr = nInfo[3].split("<br>");
+                            ndp.lastActivity = nArr[0].replace("Active ", "")
+                                    .replace("minutes", "m")
+                                    .replace("minute", "m")
+                                    .replace("days", "d")
+                                    .replace("day", "d")
+                                    .replace("seconds", "s")
+                                    .replace("hours", "h")
+                                    .replace("hour", "h");
+                            ndp.region = nArr[1].substring(nArr[1].indexOf('>') + 1, nArr[1].indexOf("</a>"));
+                        }
+                        for (NationDataParcelable nd : nations) {
+                            if (nd.name.equals(ndp.name)) {
+                                nationsDone = true;
+                                if(regionsDone) {
+                                    break outer;
+                                }
+                                break nFor;
+                            }
+                        }
+                        nations.add(ndp);
+                    }
+                }
+
+                // Dossier regions
+                //			prefix = "<table class=\"shiny\"";
+                //			text = text.substring(text.indexOf(prefix)+prefix.length());
+                prefix = "<tbody>";
+                text = text.substring(text.indexOf(prefix) + prefix.length());
+                if(!regionsDone) {
+                    String rText = text.substring(0, text.indexOf("</tbody>"));
+                    arr = rText.split("<tr>");
+                    RegionDataParcelable rdp;
+                    String[] rArr;
+                    rFor:
+                    for (String s : arr) {
+                        if (s.trim().length() == 0) continue;
+                        rdp = new RegionDataParcelable();
+                        nArr = s.split("<td>");
+                        rArr = nArr[1].split("<td align=\"center\">");
+                        rdp.name = rArr[0].substring(rArr[0].indexOf('>') + 1, rArr[0].indexOf("</a>"));
+                        rdp.numNations = Integer.parseInt(rArr[1].substring(0, rArr[1].indexOf('<')));
+                        if (nArr[2].contains("<a href=")) {
+                            rdp.delegate = nArr[2].substring(nArr[2].indexOf("<a href=\"nation=") + 16,
+                                    nArr[2].indexOf("\" class"));
+                        } else {
+                            rdp.delegate = nArr[2].substring(0, nArr[2].indexOf('<'));
+                        }
+                        for (RegionDataParcelable rd : regions) {
+                            if (rd.name.equals(rdp.name)) {
+                                regionsDone = true;
+                                if(nationsDone) {
+                                    break outer;
+                                }
+                                break rFor;
+                            }
+                        }
+                        regions.add(rdp);
+                    }
+                }
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        data.nations = nations.toArray(new NationDataParcelable[nations.size()]);
+        data.regions = regions.toArray(new RegionDataParcelable[regions.size()]);
 		
 		return data;
 	}
@@ -776,10 +810,36 @@ public class API {
 		if(httpContext == null) {
 			return false;
 		}
+        // Check for cookie
 		List<Cookie> cookies = ((BasicCookieStore)httpContext.getAttribute(ClientContext.COOKIE_STORE)).getCookies();
 		for(Cookie cookie : cookies) {
 			if(cookie.getDomain().equals(".nationstates.net") && cookie.getName().equals("pin")
 					&& !cookie.getValue().equals("-1") && !cookie.isExpired(new Date())) {
+                // Check for "loggedin" id of body tag to make sure
+                HttpClient client = getClient();
+                HttpGet httpGet = new HttpGet("http://www.nationstates.net");
+
+                try {
+                    HttpResponse response = client.execute(httpGet, httpContext);
+                    StringBuilder builder = new StringBuilder();
+                    BufferedReader reader = null;
+                    try {
+                        reader = new BufferedReader(new InputStreamReader(response.getEntity()
+                                .getContent(), "UTF-8"));
+                        for (String line; (line = reader.readLine()) != null;) {
+                            builder.append(line.trim());
+                        }
+                    } finally {
+                        if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
+                    }
+
+                    String prefix = "<body id=\"loggedin\">";
+                    return builder.indexOf(prefix) > -1;
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 				return true;
 			}
 		}

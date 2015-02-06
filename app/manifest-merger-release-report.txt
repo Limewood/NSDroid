@@ -177,11 +177,19 @@ ADDED from AndroidManifest.xml:110:9
 		ADDED from AndroidManifest.xml:113:13
 	android:name
 		ADDED from AndroidManifest.xml:111:13
-receiver#com.limewoodmedia.nsdroid.receivers.UpdateReceiver
-ADDED from AndroidManifest.xml:117:9
-	android:name
+activity#com.limewoodmedia.nsdroid.activities.News
+ADDED from AndroidManifest.xml:116:9
+	android:label
 		ADDED from AndroidManifest.xml:118:13
-service#com.limewoodmedia.nsdroid.services.UpdateService
-ADDED from AndroidManifest.xml:121:9
+	android:theme
+		ADDED from AndroidManifest.xml:119:13
 	android:name
-		ADDED from AndroidManifest.xml:122:13
+		ADDED from AndroidManifest.xml:117:13
+receiver#com.limewoodmedia.nsdroid.receivers.UpdateReceiver
+ADDED from AndroidManifest.xml:123:9
+	android:name
+		ADDED from AndroidManifest.xml:124:13
+service#com.limewoodmedia.nsdroid.services.UpdateService
+ADDED from AndroidManifest.xml:127:9
+	android:name
+		ADDED from AndroidManifest.xml:128:13

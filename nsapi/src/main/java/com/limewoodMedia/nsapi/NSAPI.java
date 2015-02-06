@@ -796,6 +796,7 @@ public class NSAPI implements INSAPI {
 				tagName = xpp.getName().toLowerCase();
 				if (tagName.equals(RegionData.Shards.SubTags.EMBASSIES_EMBASSY.getTag())) {
 					embassy = new Embassy();
+                    System.out.println("Embassy type: "+xpp.getAttributeValue(null, "type"));
 					embassy.status = Embassy.EmbassyStatus.parse(xpp.getAttributeValue(null, "type"));
 					embassy.region = xpp.nextText();
 					embassies.add(embassy);
@@ -928,7 +929,10 @@ public class NSAPI implements INSAPI {
         }
         if(needsResolution) {
             // Add resolution shard
-            shards = Arrays.copyOf(shards, shards.length+1);
+            WAData.Shards[] shards2 = new WAData.Shards[shards.length+1];
+            for(int i=0, len=shards.length; i<len; i++) {
+                shards2[i] = shards[i];
+            }
             shards[shards.length-1] = WAData.Shards.RESOLUTION;
         }
 		NSData data = null;
