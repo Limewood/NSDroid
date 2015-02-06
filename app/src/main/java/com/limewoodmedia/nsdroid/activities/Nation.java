@@ -473,7 +473,7 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 		colors = getGradientFor(data.freedoms.politicalFreedomsValue);
 		politicalFreedoms.setGradient(colors[0], colors[1]);
 
-        description.setText(data.getDescription());
+        description.setText(Html.fromHtml(data.getDescription().replace("\n", "<br/>")));
 
 		// Endorsements
 		if(data.endorsements.length > 0) {
