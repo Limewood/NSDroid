@@ -8,6 +8,11 @@
     <color name="region_link">#803000</color>
     <color name="background_colour">@android:color/white</color>
 
+    <!-- NS Frame -->
+    <color name="ns_frame_background">#F9F9F9</color>
+    <color name="ns_frame_border">#CCCCCC</color>
+    <color name="ns_big_frame_background">#E5EFDF</color>
+
     <!-- Freedom value bubble -->
     <color name="freedom_value_bubble_highest_start">#2CFF00</color>
     <color name="freedom_value_bubble_highest_end">#167F00</color>
@@ -38,8 +43,10 @@
     <color name="list_heading_background">#EAEAE2</color>
 
     <!-- World Assembly -->
-    <color name="sc_against">#AAA91347</color>
-    <color name="ga_for">#AA1373FF</color>
+    <color name="wa_against">#AA4643</color>
+    <color name="wa_for">#4572A7</color>
+    <color name="wa_against_below">#AAAA4643</color>
+    <color name="wa_for_below">#AA4572A7</color>
 
     <!-- Issues -->
     <color name="issue_selected">#CAEAC2</color>

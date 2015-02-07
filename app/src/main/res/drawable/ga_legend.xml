@@ -26,5 +26,5 @@
     <padding android:left="13dp" android:top="2dp"
             android:right="13dp" android:bottom="3dp" />
     <corners android:radius="17dp" />
-    <solid android:color="@color/ga_for"/>
+    <solid android:color="@color/wa_for"/>
 </shape>

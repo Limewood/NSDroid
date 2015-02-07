@@ -170,6 +170,11 @@
     <string name="general_assembly">General Assembly</string>
     <string name="security_council">Security Council</string>
     <string name="voting_ends">Voting ends in %1$d %3$s %2$d %4$s</string>
+    <string name="wa_at_vote">At vote</string>
+    <string name="wa_votes_for">For</string>
+    <string name="wa_votes_against">Against</string>
+    <string name="wa_recent">Recent</string>
+    <string name="wa_proposed_by">Proposed by</string>
 
     <!-- News -->
     <string name="news">News</string>

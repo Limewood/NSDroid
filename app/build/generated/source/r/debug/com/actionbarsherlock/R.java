@@ -122,10 +122,10 @@ public final class R {
 		public static final int abs__bright_foreground_disabled_holo_light = 0x7f090003;
 		public static final int abs__bright_foreground_holo_dark = 0x7f090004;
 		public static final int abs__bright_foreground_holo_light = 0x7f090005;
-		public static final int abs__primary_text_disable_only_holo_dark = 0x7f090029;
-		public static final int abs__primary_text_disable_only_holo_light = 0x7f09002a;
-		public static final int abs__primary_text_holo_dark = 0x7f09002b;
-		public static final int abs__primary_text_holo_light = 0x7f09002c;
+		public static final int abs__primary_text_disable_only_holo_dark = 0x7f09002e;
+		public static final int abs__primary_text_disable_only_holo_light = 0x7f09002f;
+		public static final int abs__primary_text_holo_dark = 0x7f090030;
+		public static final int abs__primary_text_holo_light = 0x7f090031;
 	}
 	public static final class dimen {
 		public static final int abs__action_bar_default_height = 0x7f0a0000;
@@ -136,8 +136,8 @@ public final class R {
 		public static final int abs__action_bar_title_text_size = 0x7f0a0005;
 		public static final int abs__action_button_min_width = 0x7f0a0006;
 		public static final int abs__config_prefDialogWidth = 0x7f0a0007;
-		public static final int abs__dialog_min_width_major = 0x7f0a001d;
-		public static final int abs__dialog_min_width_minor = 0x7f0a001e;
+		public static final int abs__dialog_min_width_major = 0x7f0a0029;
+		public static final int abs__dialog_min_width_minor = 0x7f0a002a;
 		public static final int abs__dropdownitem_icon_width = 0x7f0a0008;
 		public static final int abs__dropdownitem_text_padding_left = 0x7f0a0009;
 		public static final int abs__dropdownitem_text_padding_right = 0x7f0a000a;

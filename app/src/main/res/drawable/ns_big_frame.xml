@@ -22,9 +22,7 @@
   -->
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-    <stroke android:width="2dp" android:color="#CCCCCC" />
-    <padding android:left="13dp" android:top="2dp"
-            android:right="13dp" android:bottom="3dp" />
-    <corners android:radius="17dp" />
-    <solid android:color="@color/wa_against"/>
+    <padding android:left="@dimen/ns_frame_padding_sides" android:top="@dimen/ns_frame_padding_bottom"
+            android:right="@dimen/ns_frame_padding_sides" android:bottom="@dimen/ns_frame_padding_bottom" />
+    <solid android:color="@color/ns_big_frame_background"/>
 </shape>

@@ -152,10 +152,10 @@ public class Utils {
                     context.startActivity(intent);
                 }
                 break;
-//            case R.id.menu_wa: // World Assembly
-//                intent = new Intent(context, WorldAssembly.class);
-//                context.startActivity(intent);
-//                break;
+            case R.id.menu_wa: // World Assembly
+                intent = new Intent(context, WorldAssembly.class);
+                context.startActivity(intent);
+                break;
             case R.id.menu_news: // News
                 intent = new Intent(context, News.class);
                 context.startActivity(intent);

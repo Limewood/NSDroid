@@ -23,9 +23,11 @@ package com.limewoodmedia.nsdroid.fragments;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,14 +46,17 @@ import com.limewoodmedia.nsdroid.R;
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.BarChart;
+import org.achartengine.model.CategorySeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * Fragment showing overview of WA Council
+ */
 public class WACouncilFragment extends SherlockFragment {
 	@SuppressWarnings("unused")
 	private static final String TAG = WACouncilFragment.class.getName();
@@ -117,13 +122,12 @@ public class WACouncilFragment extends SherlockFragment {
 	
 	public void setCouncil(WACouncil council, WAData data) {
 		this.council = council;
-        title.setBackgroundResource(council == WACouncil.GENERAL_ASSEMBLY ? R.drawable.ga_legend : R.drawable.sc_legend);
 
         title.setText(council == WACouncil.GENERAL_ASSEMBLY ? R.string.general_assembly : R.string.security_council);
         if(data.resolution.name != null) {
-            atVote.setText(Html.fromHtml("<b>At vote:</b> " + data.resolution.name));
-            votes.setText(Html.fromHtml("<b>For:</b> " + data.resolution.votes.forVotes + "<br/>"
-                    + "<b>Against:</b> " + data.resolution.votes.againstVotes));
+            atVote.setText(Html.fromHtml("<b>" + getString(R.string.wa_at_vote) + ":</b> " + data.resolution.name));
+            votes.setText(Html.fromHtml("<b>" + getString(R.string.wa_votes_for) + ":</b> " + data.resolution.votes.forVotes + "<br/>"
+                    + "<b>" + getString(R.string.wa_votes_against) + ":</b> " + data.resolution.votes.againstVotes));
             Calendar cal = Calendar.getInstance(Locale.ENGLISH);
             cal.add(Calendar.DAY_OF_YEAR, 5);
             long now = cal.getTimeInMillis() / 1000;
@@ -133,52 +137,70 @@ public class WACouncilFragment extends SherlockFragment {
             Resources r = getResources();
             below.setText(Html.fromHtml(getString(R.string.voting_ends, days, hours,
                     r.getQuantityString(R.plurals.days, days), r.getQuantityString(R.plurals.hours, hours))
-                    +"<br/><br/><b>Recent:</b> "+data.lastResolution));
+                    +"<br/><br/><b>" + getString(R.string.wa_recent) + ":</b> "+data.lastResolution));
 
             // Set up chart
+            Log.d(TAG, "Set up values");
             series.clear();
-            XYSeries forVotes = new XYSeries("For");
-            XYSeries againstVotes = new XYSeries("Against");
-            forVotes.add(0, data.resolution.votes.forVotes);
-            againstVotes.add(0, data.resolution.votes.againstVotes);
-            series.addSeries(forVotes);
-            series.addSeries(againstVotes);
+            CategorySeries forVotes = new CategorySeries("For");
+            CategorySeries againstVotes = new CategorySeries("Against");
+            forVotes.add("For", data.resolution.votes.forVotes);
+            againstVotes.add("Against", data.resolution.votes.againstVotes);
+            series.addSeries(forVotes.toXYSeries());
+            series.addSeries(againstVotes.toXYSeries());
+
+            setUpChartRenderer(renderer);
+            renderer.setYAxisMax(Math.max(data.resolution.votes.forVotes, data.resolution.votes.againstVotes)*1.2f);
+
+            LinearLayout layout = (LinearLayout) root.findViewById(R.id.at_vote_chart);
+            chart = ChartFactory.getBarChartView(getActivity(), series, renderer, BarChart.Type.DEFAULT);
+            layout.addView(chart, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, r.getDimensionPixelSize(R.dimen.wa_bar_chart_height)));
 
             chart.repaint();
         } else {
             atVote.setText(R.string.none);
             votes.setVisibility(View.GONE);
-            chart.setVisibility(View.GONE);
-            below.setText(Html.fromHtml("<br/><br/><b>Recent:</b> " + data.lastResolution));
+            root.findViewById(R.id.at_vote_chart).setVisibility(View.GONE);
+            below.setText(Html.fromHtml("<br/><br/><b>" + getString(R.string.wa_recent) + ":</b> " + data.lastResolution));
         }
 	}
 
     private void setUpChartRenderer(XYMultipleSeriesRenderer chartRenderer) {
+        Log.d(TAG, "Set up chart renderer");
         Resources r = getResources();
-        float labelTextSize = r.getDimension(R.dimen.pie_chart_label_size);
+        float labelTextSize = r.getDimension(R.dimen.bar_chart_label_size);
+
+        // For renderer
+        forRenderer = new XYSeriesRenderer();
+        forRenderer.setColor(r.getColor(R.color.wa_for));
+        forRenderer.setChartValuesTextSize(labelTextSize);
+        forRenderer.setDisplayChartValues(true);
+
+        againstRenderer = new XYSeriesRenderer();
+        againstRenderer.setColor(r.getColor(R.color.wa_against));
+        againstRenderer.setChartValuesTextSize(labelTextSize);
+        againstRenderer.setDisplayChartValues(true);
 
         chartRenderer.setZoomButtonsVisible(false);
         chartRenderer.setOrientation(XYMultipleSeriesRenderer.Orientation.HORIZONTAL);
-        chartRenderer.setDisplayValues(true);
         chartRenderer.setClickEnabled(true);
         chartRenderer.setInScroll(true);
         chartRenderer.setAntialiasing(true);
-        chartRenderer.setLabelsTextSize(labelTextSize);
-//        chartRenderer.setLegendTextSize(labelTextSize);
         chartRenderer.setShowLegend(false);
         chartRenderer.setTextTypeface(Typeface.DEFAULT);
-        chartRenderer.setZoomRate(6);
         chartRenderer.setPanEnabled(false);
-        chartRenderer.setLabelsColor(android.graphics.Color.BLACK);
-        chartRenderer.setXAxisMin(0);
-        chartRenderer.setXAxisMax(0);
+        chartRenderer.setShowLabels(false);
+        chartRenderer.setXAxisMin(-0.5);
+        chartRenderer.setXAxisMax(2.5);
+        chartRenderer.setYAxisMin(0);
         chartRenderer.setXLabels(0);
-        chartRenderer.setMargins(new int[]{
-                Math.round(r.getDimension(R.dimen.pie_chart_margin_top)),
-                Math.round(r.getDimension(R.dimen.pie_chart_margin_left)),
-                Math.round(r.getDimension(R.dimen.pie_chart_margin_bottom)),
-                Math.round(r.getDimension(R.dimen.pie_chart_margin_right))
-        });
+        chartRenderer.setYLabels(0);
+        chartRenderer.setBarWidth(r.getDimensionPixelSize(R.dimen.wa_bar_width));
+        chartRenderer.setGridColor(Color.WHITE);
+        chartRenderer.setMarginsColor(Color.WHITE);
+        chartRenderer.setMargins(new int[]{0,0,0,0});
+        chartRenderer.setBackgroundColor(Color.WHITE);
+        chartRenderer.setApplyBackgroundColor(true);
         chartRenderer.addSeriesRenderer(forRenderer);
         chartRenderer.addSeriesRenderer(againstRenderer);
     }
@@ -187,29 +209,8 @@ public class WACouncilFragment extends SherlockFragment {
     public void onResume() {
         super.onResume();
 
-        if(chart == null) {
-            // Create chart
-            LinearLayout layout = (LinearLayout) root.findViewById(R.id.at_vote_chart);
-            chart = ChartFactory.getBarChartView(getActivity(), series, renderer, BarChart.Type.DEFAULT);
-            layout.addView(chart, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
-
-            Resources r = getResources();
-
-            // For renderer
-            forRenderer = new XYSeriesRenderer();
-            forRenderer.setColor(r.getColor(R.color.ga_for));
-            forRenderer.setFillPoints(true);
-            forRenderer.setLineWidth(2);
-            forRenderer.setDisplayChartValues(true);
-
-            againstRenderer = new XYSeriesRenderer();
-            againstRenderer.setColor(r.getColor(R.color.sc_against));
-            againstRenderer.setFillPoints(true);
-            againstRenderer.setLineWidth(2);
-            againstRenderer.setDisplayChartValues(true);
-
-            setUpChartRenderer(renderer);
-        } else {
+        if(chart != null) {
+            Log.d(TAG, "Repaint chart");
             chart.repaint();
         }
     }
