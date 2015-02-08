@@ -301,7 +301,7 @@ public class NSAPI implements INSAPI {
 						nation.generalAssemblyVote = WAVote.parse(xpp.nextText());
 					}
 					else if (tagName.equals(NationData.Shards.SC_VOTE.getTag())) {
-						nation.generalAssemblyVote = WAVote.parse(xpp.nextText());
+						nation.securityCouncilVote = WAVote.parse(xpp.nextText());
 					}
 					else if (tagName.equals(NationData.Shards.MAJOR_INDUSTRY.getTag())) {
 						nation.majorIndustry = xpp.nextText();

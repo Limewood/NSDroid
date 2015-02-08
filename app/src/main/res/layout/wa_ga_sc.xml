@@ -21,77 +21,94 @@
   ~ THE SOFTWARE.
   -->
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <ScrollView
+        android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="7dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/title"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:textSize="21sp"
-            android:textStyle="bold"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="7dp"/>
+            android:padding="7dp">
 
-        <TextView
-            android:id="@+id/category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/title"
-            android:textColorLink="@color/medium_green"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="7dp"/>
 
-        <TextView
-            android:id="@+id/proposer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/category"
-            android:textSize="16sp"
-            android:gravity="center_horizontal"
-            android:layout_marginBottom="5dp"
-            android:textColorLink="@color/medium_green"/>
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:textColorLink="@color/medium_green"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"/>
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/proposer"
-            android:background="@drawable/ns_big_frame"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:textColorLink="@color/medium_green"
-            android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/proposer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/category"
+                android:textSize="16sp"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:textColorLink="@color/medium_green"/>
 
-        <LinearLayout
-            android:id="@+id/chart"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/wa_area_chart_height"
-            android:layout_below="@id/text"
-            android:orientation="horizontal"/>
+            <TextView
+                android:id="@+id/nation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/proposer"
+                android:textSize="16sp"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:textColorLink="@color/medium_green"/>
 
-        <TextView
-            android:id="@+id/below_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/chart"
-            android:textColorLink="@color/medium_green"
-            android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nation"
+                android:background="@drawable/ns_big_frame"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textColorLink="@color/medium_green"
+                android:textSize="18sp"/>
 
-        <include
-            layout="@layout/loading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true" />
+            <LinearLayout
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/wa_area_chart_height"
+                android:layout_below="@id/text"
+                android:orientation="horizontal"/>
+
+            <TextView
+                android:id="@+id/below_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/chart"
+                android:textColorLink="@color/medium_green"
+                android:textSize="18sp"/>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    <include
+        layout="@layout/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
 
     </RelativeLayout>
-
-</ScrollView>

@@ -290,6 +290,14 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int label=0x7f010006;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int legend=0x7f010063;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
@@ -443,7 +451,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int state_dismissed=0x7f010063;
+        public static final int state_dismissed=0x7f010064;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -841,46 +849,49 @@ containing a value of this type.
         public static final int ga_legend=0x7f020086;
         public static final int ic_action_search=0x7f020087;
         public static final int ic_drawer=0x7f020088;
-        public static final int ic_menu_moreoverflow=0x7f020089;
-        public static final int ic_menu_refresh=0x7f02008a;
-        public static final int ic_menu_wa=0x7f02008b;
-        public static final int icon_dossier=0x7f02008c;
-        public static final int icon_embassies=0x7f02008d;
-        public static final int icon_issues=0x7f02008e;
-        public static final int icon_nation=0x7f02008f;
-        public static final int icon_news=0x7f020090;
-        public static final int icon_region=0x7f020091;
-        public static final int icon_rmb=0x7f020092;
-        public static final int icon_settings=0x7f020093;
-        public static final int icon_start=0x7f020094;
-        public static final int icon_wa=0x7f020095;
-        public static final int issue_frame=0x7f020096;
-        public static final int loading1=0x7f020097;
-        public static final int loading10=0x7f020098;
-        public static final int loading11=0x7f020099;
-        public static final int loading12=0x7f02009a;
-        public static final int loading2=0x7f02009b;
-        public static final int loading3=0x7f02009c;
-        public static final int loading4=0x7f02009d;
-        public static final int loading5=0x7f02009e;
-        public static final int loading6=0x7f02009f;
-        public static final int loading7=0x7f0200a0;
-        public static final int loading8=0x7f0200a1;
-        public static final int loading9=0x7f0200a2;
-        public static final int ns_big_frame=0x7f0200a3;
-        public static final int ns_cell=0x7f0200a4;
-        public static final int ns_frame=0x7f0200a5;
-        public static final int ns_legend=0x7f0200a6;
-        public static final int ns_table=0x7f0200a7;
-        public static final int rmb_cell=0x7f0200a8;
-        public static final int rmb_frame=0x7f0200a9;
-        public static final int rmb_next=0x7f0200aa;
-        public static final int rmb_page=0x7f0200ab;
-        public static final int rmb_previous=0x7f0200ac;
-        public static final int sc_legend=0x7f0200ad;
-        public static final int test_banner=0x7f0200ae;
-        public static final int test_flag=0x7f0200af;
-        public static final int wa_status=0x7f0200b0;
+        public static final int ic_menu_against=0x7f020089;
+        public static final int ic_menu_for=0x7f02008a;
+        public static final int ic_menu_moreoverflow=0x7f02008b;
+        public static final int ic_menu_refresh=0x7f02008c;
+        public static final int ic_menu_revert=0x7f02008d;
+        public static final int ic_menu_wa=0x7f02008e;
+        public static final int icon_dossier=0x7f02008f;
+        public static final int icon_embassies=0x7f020090;
+        public static final int icon_issues=0x7f020091;
+        public static final int icon_nation=0x7f020092;
+        public static final int icon_news=0x7f020093;
+        public static final int icon_region=0x7f020094;
+        public static final int icon_rmb=0x7f020095;
+        public static final int icon_settings=0x7f020096;
+        public static final int icon_start=0x7f020097;
+        public static final int icon_wa=0x7f020098;
+        public static final int issue_frame=0x7f020099;
+        public static final int loading1=0x7f02009a;
+        public static final int loading10=0x7f02009b;
+        public static final int loading11=0x7f02009c;
+        public static final int loading12=0x7f02009d;
+        public static final int loading2=0x7f02009e;
+        public static final int loading3=0x7f02009f;
+        public static final int loading4=0x7f0200a0;
+        public static final int loading5=0x7f0200a1;
+        public static final int loading6=0x7f0200a2;
+        public static final int loading7=0x7f0200a3;
+        public static final int loading8=0x7f0200a4;
+        public static final int loading9=0x7f0200a5;
+        public static final int ns_big_frame=0x7f0200a6;
+        public static final int ns_cell=0x7f0200a7;
+        public static final int ns_frame=0x7f0200a8;
+        public static final int ns_legend=0x7f0200a9;
+        public static final int ns_table=0x7f0200aa;
+        public static final int rmb_cell=0x7f0200ab;
+        public static final int rmb_frame=0x7f0200ac;
+        public static final int rmb_next=0x7f0200ad;
+        public static final int rmb_page=0x7f0200ae;
+        public static final int rmb_previous=0x7f0200af;
+        public static final int sc_legend=0x7f0200b0;
+        public static final int test_banner=0x7f0200b1;
+        public static final int test_flag=0x7f0200b2;
+        public static final int wa_status=0x7f0200b3;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f0b0022;
@@ -927,16 +938,16 @@ containing a value of this type.
         public static final int at_vote_text=0x7f0b00b5;
         public static final int at_vote_votes=0x7f0b00b8;
         public static final int at_vote_voting=0x7f0b00b6;
-        public static final int below_text=0x7f0b00c0;
+        public static final int below_text=0x7f0b00c1;
         public static final int bottom_layout=0x7f0b0042;
-        public static final int button_check=0x7f0b00c7;
-        public static final int button_select=0x7f0b00cc;
+        public static final int button_check=0x7f0b00c8;
+        public static final int button_select=0x7f0b00cd;
         public static final int category=0x7f0b00bc;
         public static final int center_point=0x7f0b009d;
-        public static final int chart=0x7f0b00bf;
+        public static final int chart=0x7f0b00c0;
         public static final int choice_index=0x7f0b0006;
         public static final int choice_type=0x7f0b0007;
-        public static final int context_menu_quote=0x7f0b00ce;
+        public static final int context_menu_quote=0x7f0b00cf;
         public static final int council_header=0x7f0b00ba;
         public static final int dimmer=0x7f0b00a7;
         public static final int disableHome=0x7f0b000b;
@@ -966,7 +977,7 @@ containing a value of this type.
         public static final int fieldset=0x7f0b00a2;
         public static final int freedom_label=0x7f0b005b;
         public static final int freedom_value=0x7f0b005c;
-        public static final int general_assembly=0x7f0b00c1;
+        public static final int general_assembly=0x7f0b00c2;
         public static final int government_chart=0x7f0b007a;
         public static final int government_legend=0x7f0b007b;
         public static final int government_percent=0x7f0b0079;
@@ -993,25 +1004,29 @@ containing a value of this type.
         public static final int loading_layout=0x7f0b006b;
         public static final int loading_post=0x7f0b009c;
         public static final int loading_text=0x7f0b006c;
-        public static final int menu_add_nation=0x7f0b00d4;
-        public static final int menu_add_nation_to_dossier=0x7f0b00d3;
-        public static final int menu_add_region_to_dossier=0x7f0b00d5;
-        public static final int menu_dismiss=0x7f0b00d0;
-        public static final int menu_dismiss_all=0x7f0b00d1;
-        public static final int menu_endorse_nation=0x7f0b00d2;
+        public static final int menu_add_nation=0x7f0b00d5;
+        public static final int menu_add_nation_to_dossier=0x7f0b00d4;
+        public static final int menu_add_region_to_dossier=0x7f0b00d6;
+        public static final int menu_dismiss=0x7f0b00d1;
+        public static final int menu_dismiss_all=0x7f0b00d2;
+        public static final int menu_endorse_nation=0x7f0b00d3;
         public static final int menu_item_image=0x7f0b0093;
         public static final int menu_item_text=0x7f0b0094;
-        public static final int menu_move_to_region=0x7f0b00d6;
+        public static final int menu_move_to_region=0x7f0b00d7;
         public static final int menu_nation=0x7f0b0052;
         public static final int menu_news=0x7f0b0059;
         public static final int menu_panel=0x7f0b0050;
-        public static final int menu_post=0x7f0b00d7;
-        public static final int menu_refresh=0x7f0b00cf;
+        public static final int menu_post=0x7f0b00d8;
+        public static final int menu_refresh=0x7f0b00d0;
         public static final int menu_region=0x7f0b0055;
         public static final int menu_settings=0x7f0b005a;
         public static final int menu_start=0x7f0b0051;
+        public static final int menu_vote_against=0x7f0b00da;
+        public static final int menu_vote_for=0x7f0b00d9;
+        public static final int menu_vote_none=0x7f0b00db;
         public static final int menu_wa=0x7f0b0058;
         public static final int name=0x7f0b0092;
+        public static final int nation=0x7f0b00be;
         public static final int nation_active=0x7f0b0040;
         public static final int nation_banner=0x7f0b007d;
         public static final int nation_category=0x7f0b0043;
@@ -1073,7 +1088,7 @@ containing a value of this type.
         public static final int rmb_previous=0x7f0b00b1;
         public static final int rmb_region_name=0x7f0b00b0;
         public static final int rmb_title=0x7f0b00af;
-        public static final int security_council=0x7f0b00c2;
+        public static final int security_council=0x7f0b00c3;
         public static final int showCustom=0x7f0b000d;
         public static final int showHome=0x7f0b000e;
         public static final int showTitle=0x7f0b000f;
@@ -1082,20 +1097,20 @@ containing a value of this type.
         public static final int submenu_issues=0x7f0b0053;
         public static final int submenu_rmb=0x7f0b0056;
         public static final int tabMode=0x7f0b000a;
-        public static final int text=0x7f0b00be;
+        public static final int text=0x7f0b00bf;
         public static final int title=0x7f0b00bb;
         public static final int top_layout=0x7f0b003d;
         public static final int useLogo=0x7f0b0010;
-        public static final int wa_happenings=0x7f0b00c3;
+        public static final int wa_happenings=0x7f0b00c4;
         public static final int web_view=0x7f0b0095;
-        public static final int welcome_flag=0x7f0b00c8;
-        public static final int welcome_frame=0x7f0b00c4;
-        public static final int welcome_info=0x7f0b00c5;
-        public static final int welcome_motto=0x7f0b00ca;
-        public static final int welcome_name=0x7f0b00c9;
-        public static final int welcome_nation=0x7f0b00c6;
-        public static final int welcome_region=0x7f0b00cb;
-        public static final int welcome_title=0x7f0b00cd;
+        public static final int welcome_flag=0x7f0b00c9;
+        public static final int welcome_frame=0x7f0b00c5;
+        public static final int welcome_info=0x7f0b00c6;
+        public static final int welcome_motto=0x7f0b00cb;
+        public static final int welcome_name=0x7f0b00ca;
+        public static final int welcome_nation=0x7f0b00c7;
+        public static final int welcome_region=0x7f0b00cc;
+        public static final int welcome_title=0x7f0b00ce;
         public static final int wfe=0x7f0b00a3;
         public static final int wfe_header=0x7f0b00a4;
         public static final int wrap_content=0x7f0b0011;
@@ -1182,6 +1197,7 @@ containing a value of this type.
         public static final int menu_nations_list=0x7f100007;
         public static final int menu_region=0x7f100008;
         public static final int menu_rmb=0x7f100009;
+        public static final int menu_wa=0x7f10000a;
     }
     public static final class plurals {
         public static final int days=0x7f0d0000;
@@ -1297,126 +1313,136 @@ containing a value of this type.
         public static final int menu_settings=0x7f0e0064;
         public static final int menu_start=0x7f0e0065;
         public static final int menu_unendorse_nation=0x7f0e0066;
-        public static final int menu_wa=0x7f0e0067;
-        public static final int message_deleted_by_author=0x7f0e0068;
-        public static final int message_error=0x7f0e0069;
-        public static final int message_here=0x7f0e006a;
-        public static final int message_posted=0x7f0e006b;
-        public static final int minus=0x7f0e006c;
-        public static final int moved_to_region=0x7f0e006d;
-        public static final int moved_to_region_failed=0x7f0e006e;
-        public static final int nation=0x7f0e006f;
-        public static final int nation_added_to_dossier=0x7f0e0070;
-        public static final int nation_already_added=0x7f0e0071;
-        public static final int nation_banner=0x7f0e0072;
-        public static final int nation_economy_gdp=0x7f0e0073;
-        public static final int nation_economy_gdppc=0x7f0e0074;
-        public static final int nation_economy_header=0x7f0e0075;
-        public static final int nation_economy_poorest=0x7f0e0076;
-        public static final int nation_economy_richest=0x7f0e0077;
-        public static final int nation_economy_title=0x7f0e0078;
-        public static final int nation_endorsed=0x7f0e0079;
-        public static final int nation_endorsed_msg=0x7f0e007a;
-        public static final int nation_flag=0x7f0e007b;
-        public static final int nation_government_header=0x7f0e007c;
-        public static final int nation_government_percent=0x7f0e007d;
-        public static final int nation_government_size=0x7f0e007e;
-        public static final int nation_government_title=0x7f0e007f;
-        public static final int nation_hint=0x7f0e0080;
-        public static final int nation_not_endorsed=0x7f0e0081;
-        public static final int nation_overview_header=0x7f0e0082;
-        public static final int nation_people_header=0x7f0e0083;
-        public static final int nation_people_title=0x7f0e0084;
-        public static final int nation_removed_from_dossier=0x7f0e0085;
-        public static final int nation_unendorsed_msg=0x7f0e0086;
-        public static final int nations=0x7f0e0087;
-        public static final int nations_current=0x7f0e0088;
-        public static final int nations_list_remove_message=0x7f0e0089;
-        public static final int nations_list_remove_title=0x7f0e008a;
-        public static final int nations_list_switch_message=0x7f0e008b;
-        public static final int nations_list_switch_title=0x7f0e008c;
-        public static final int nations_list_title=0x7f0e008d;
-        public static final int navigation_drawer_close=0x7f0e008e;
-        public static final int navigation_drawer_open=0x7f0e008f;
-        public static final int news=0x7f0e0090;
-        public static final int next_page=0x7f0e0091;
-        public static final int no=0x7f0e0092;
-        public static final int no_issues=0x7f0e0093;
-        public static final int no_nations=0x7f0e0094;
-        public static final int no_wad=0x7f0e0095;
-        public static final int none=0x7f0e0096;
-        public static final int notification_text=0x7f0e0097;
-        public static final int notification_text_rmb=0x7f0e0098;
-        public static final int notification_title=0x7f0e0099;
-        public static final int notification_title_rmb=0x7f0e009a;
-        public static final int ok=0x7f0e009b;
-        public static final int plus=0x7f0e009c;
-        public static final int political_freedoms=0x7f0e009d;
-        public static final int preference_locale=0x7f0e009e;
-        public static final int preference_nations=0x7f0e009f;
-        public static final int preference_rmb_update_interval=0x7f0e00a0;
-        public static final int preferences_summary=0x7f0e00a1;
-        public static final int preferences_title=0x7f0e00a2;
-        public static final int pretitle=0x7f0e00a3;
-        public static final int previous_choice=0x7f0e00a4;
-        public static final int previous_page=0x7f0e00a5;
-        public static final int previously_dismissed=0x7f0e00a6;
-        public static final int rate_limit_reached=0x7f0e00a7;
-        public static final int recent_happenings=0x7f0e00a8;
-        public static final int region=0x7f0e00a9;
-        public static final int region_added_to_dossier=0x7f0e00aa;
-        public static final int region_flag=0x7f0e00ab;
-        public static final int region_password_text=0x7f0e00ac;
-        public static final int region_password_title=0x7f0e00ad;
-        public static final int region_removed_from_dossier=0x7f0e00ae;
-        public static final int regional_happenings=0x7f0e00af;
-        public static final int remove_nation_failed=0x7f0e00b0;
-        public static final int restart=0x7f0e00b1;
-        public static final int rmb=0x7f0e00b2;
-        public static final int rmb_abbr=0x7f0e00b3;
-        public static final int rmb_context_menu_quote=0x7f0e00b4;
-        public static final int rmb_go_to_page_message=0x7f0e00b5;
-        public static final int rmb_go_to_page_title=0x7f0e00b6;
-        public static final int rmb_post_no_text=0x7f0e00b7;
-        public static final int rmb_title=0x7f0e00b8;
-        public static final int rmb_update_interval=0x7f0e00b9;
-        public static final int rmb_update_interval_summary_minutes=0x7f0e00ba;
-        public static final int rmb_update_interval_summary_never=0x7f0e00bb;
-        public static final int rmb_update_interval_title=0x7f0e00bc;
-        public static final int security_council=0x7f0e00bd;
-        public static final int select_nation=0x7f0e00be;
-        public static final int test_corrupted=0x7f0e00bf;
-        public static final int test_diplomat=0x7f0e00c0;
-        public static final int test_frightening=0x7f0e00c1;
-        public static final int test_nation_category=0x7f0e00c2;
-        public static final int test_nation_motto=0x7f0e00c3;
-        public static final int test_nation_name=0x7f0e00c4;
-        public static final int test_nation_pretitle=0x7f0e00c5;
-        public static final int test_superb=0x7f0e00c6;
-        public static final int the_debate=0x7f0e00c7;
-        public static final int the_issue=0x7f0e00c8;
-        public static final int time_passed=0x7f0e00c9;
-        public static final int time_passed_days_hours=0x7f0e00ca;
-        public static final int title_activity_nsdroid=0x7f0e00cb;
-        public static final int undefined_region=0x7f0e00cc;
-        public static final int unknown_nation=0x7f0e00cd;
-        public static final int unknown_region=0x7f0e00ce;
-        public static final int voting_ends=0x7f0e00cf;
-        public static final int wa_at_vote=0x7f0e00d0;
-        public static final int wa_delegate=0x7f0e00d1;
-        public static final int wa_member=0x7f0e00d2;
-        public static final int wa_proposed_by=0x7f0e00d3;
-        public static final int wa_recent=0x7f0e00d4;
-        public static final int wa_votes_against=0x7f0e00d5;
-        public static final int wa_votes_for=0x7f0e00d6;
-        public static final int wad=0x7f0e00d7;
-        public static final int welcome=0x7f0e00d8;
-        public static final int welcome_text=0x7f0e00d9;
-        public static final int welcome_title=0x7f0e00da;
-        public static final int wfe=0x7f0e00db;
-        public static final int wfe_title=0x7f0e00dc;
-        public static final int world_assembly=0x7f0e00dd;
-        public static final int yes=0x7f0e00de;
+        public static final int menu_vote_against=0x7f0e0067;
+        public static final int menu_vote_for=0x7f0e0068;
+        public static final int menu_vote_none=0x7f0e0069;
+        public static final int menu_wa=0x7f0e006a;
+        public static final int message_deleted_by_author=0x7f0e006b;
+        public static final int message_error=0x7f0e006c;
+        public static final int message_here=0x7f0e006d;
+        public static final int message_posted=0x7f0e006e;
+        public static final int minus=0x7f0e006f;
+        public static final int moved_to_region=0x7f0e0070;
+        public static final int moved_to_region_failed=0x7f0e0071;
+        public static final int nation=0x7f0e0072;
+        public static final int nation_added_to_dossier=0x7f0e0073;
+        public static final int nation_already_added=0x7f0e0074;
+        public static final int nation_banner=0x7f0e0075;
+        public static final int nation_economy_gdp=0x7f0e0076;
+        public static final int nation_economy_gdppc=0x7f0e0077;
+        public static final int nation_economy_header=0x7f0e0078;
+        public static final int nation_economy_poorest=0x7f0e0079;
+        public static final int nation_economy_richest=0x7f0e007a;
+        public static final int nation_economy_title=0x7f0e007b;
+        public static final int nation_endorsed=0x7f0e007c;
+        public static final int nation_endorsed_msg=0x7f0e007d;
+        public static final int nation_flag=0x7f0e007e;
+        public static final int nation_government_header=0x7f0e007f;
+        public static final int nation_government_percent=0x7f0e0080;
+        public static final int nation_government_size=0x7f0e0081;
+        public static final int nation_government_title=0x7f0e0082;
+        public static final int nation_hint=0x7f0e0083;
+        public static final int nation_not_endorsed=0x7f0e0084;
+        public static final int nation_overview_header=0x7f0e0085;
+        public static final int nation_people_header=0x7f0e0086;
+        public static final int nation_people_title=0x7f0e0087;
+        public static final int nation_removed_from_dossier=0x7f0e0088;
+        public static final int nation_unendorsed_msg=0x7f0e0089;
+        public static final int nations=0x7f0e008a;
+        public static final int nations_current=0x7f0e008b;
+        public static final int nations_list_remove_message=0x7f0e008c;
+        public static final int nations_list_remove_title=0x7f0e008d;
+        public static final int nations_list_switch_message=0x7f0e008e;
+        public static final int nations_list_switch_title=0x7f0e008f;
+        public static final int nations_list_title=0x7f0e0090;
+        public static final int navigation_drawer_close=0x7f0e0091;
+        public static final int navigation_drawer_open=0x7f0e0092;
+        public static final int news=0x7f0e0093;
+        public static final int next_page=0x7f0e0094;
+        public static final int no=0x7f0e0095;
+        public static final int no_issues=0x7f0e0096;
+        public static final int no_nations=0x7f0e0097;
+        public static final int no_wad=0x7f0e0098;
+        public static final int none=0x7f0e0099;
+        public static final int notification_text=0x7f0e009a;
+        public static final int notification_text_rmb=0x7f0e009b;
+        public static final int notification_title=0x7f0e009c;
+        public static final int notification_title_rmb=0x7f0e009d;
+        public static final int ok=0x7f0e009e;
+        public static final int plus=0x7f0e009f;
+        public static final int political_freedoms=0x7f0e00a0;
+        public static final int preference_locale=0x7f0e00a1;
+        public static final int preference_nations=0x7f0e00a2;
+        public static final int preference_rmb_update_interval=0x7f0e00a3;
+        public static final int preferences_summary=0x7f0e00a4;
+        public static final int preferences_title=0x7f0e00a5;
+        public static final int pretitle=0x7f0e00a6;
+        public static final int previous_choice=0x7f0e00a7;
+        public static final int previous_page=0x7f0e00a8;
+        public static final int previously_dismissed=0x7f0e00a9;
+        public static final int rate_limit_reached=0x7f0e00aa;
+        public static final int recent_happenings=0x7f0e00ab;
+        public static final int region=0x7f0e00ac;
+        public static final int region_added_to_dossier=0x7f0e00ad;
+        public static final int region_flag=0x7f0e00ae;
+        public static final int region_password_text=0x7f0e00af;
+        public static final int region_password_title=0x7f0e00b0;
+        public static final int region_removed_from_dossier=0x7f0e00b1;
+        public static final int regional_happenings=0x7f0e00b2;
+        public static final int remove_nation_failed=0x7f0e00b3;
+        public static final int restart=0x7f0e00b4;
+        public static final int rmb=0x7f0e00b5;
+        public static final int rmb_abbr=0x7f0e00b6;
+        public static final int rmb_context_menu_quote=0x7f0e00b7;
+        public static final int rmb_go_to_page_message=0x7f0e00b8;
+        public static final int rmb_go_to_page_title=0x7f0e00b9;
+        public static final int rmb_post_no_text=0x7f0e00ba;
+        public static final int rmb_title=0x7f0e00bb;
+        public static final int rmb_update_interval=0x7f0e00bc;
+        public static final int rmb_update_interval_summary_minutes=0x7f0e00bd;
+        public static final int rmb_update_interval_summary_never=0x7f0e00be;
+        public static final int rmb_update_interval_title=0x7f0e00bf;
+        public static final int security_council=0x7f0e00c0;
+        public static final int select_nation=0x7f0e00c1;
+        public static final int test_corrupted=0x7f0e00c2;
+        public static final int test_diplomat=0x7f0e00c3;
+        public static final int test_frightening=0x7f0e00c4;
+        public static final int test_nation_category=0x7f0e00c5;
+        public static final int test_nation_motto=0x7f0e00c6;
+        public static final int test_nation_name=0x7f0e00c7;
+        public static final int test_nation_pretitle=0x7f0e00c8;
+        public static final int test_superb=0x7f0e00c9;
+        public static final int the_debate=0x7f0e00ca;
+        public static final int the_issue=0x7f0e00cb;
+        public static final int time_passed=0x7f0e00cc;
+        public static final int time_passed_days_hours=0x7f0e00cd;
+        public static final int title_activity_nsdroid=0x7f0e00ce;
+        public static final int undefined_region=0x7f0e00cf;
+        public static final int unknown_nation=0x7f0e00d0;
+        public static final int unknown_region=0x7f0e00d1;
+        public static final int voting_ends=0x7f0e00d2;
+        public static final int wa_at_vote=0x7f0e00d3;
+        public static final int wa_delegate=0x7f0e00d4;
+        public static final int wa_member=0x7f0e00d5;
+        public static final int wa_proposed_by=0x7f0e00d6;
+        public static final int wa_recent=0x7f0e00d7;
+        public static final int wa_vote_dialog_against=0x7f0e00d8;
+        public static final int wa_vote_dialog_for=0x7f0e00d9;
+        public static final int wa_vote_dialog_message=0x7f0e00da;
+        public static final int wa_vote_dialog_none=0x7f0e00db;
+        public static final int wa_vote_dialog_title=0x7f0e00dc;
+        public static final int wa_voted=0x7f0e00dd;
+        public static final int wa_voted_error=0x7f0e00de;
+        public static final int wa_votes_against=0x7f0e00df;
+        public static final int wa_votes_for=0x7f0e00e0;
+        public static final int wad=0x7f0e00e1;
+        public static final int welcome=0x7f0e00e2;
+        public static final int welcome_text=0x7f0e00e3;
+        public static final int welcome_title=0x7f0e00e4;
+        public static final int wfe=0x7f0e00e5;
+        public static final int wfe_title=0x7f0e00e6;
+        public static final int world_assembly=0x7f0e00e7;
+        public static final int yes=0x7f0e00e8;
     }
     public static final class style {
         public static final int AppTheme=0x7f0f0000;
@@ -3424,6 +3450,33 @@ containing a value of this type.
           @attr name android:focusable
         */
         public static final int SherlockView_android_focusable = 0;
+        /** Attributes that can be used with a WACouncilFragment.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #WACouncilFragment_legend com.limewoodmedia.nsdroid:legend}</code></td><td></td></tr>
+           </table>
+           @see #WACouncilFragment_legend
+         */
+        public static final int[] WACouncilFragment = {
+            0x7f010063
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.limewoodmedia.nsdroid.R.attr#legend}
+          attribute's value can be found in the {@link #WACouncilFragment} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.limewoodmedia.nsdroid:legend
+        */
+        public static final int WACouncilFragment_legend = 0;
         /** Attributes that can be used with a issue_choice.
            <p>Includes the following attributes:</p>
            <table>
@@ -3435,7 +3488,7 @@ containing a value of this type.
            @see #issue_choice_state_dismissed
          */
         public static final int[] issue_choice = {
-            0x7f010063
+            0x7f010064
         };
         /**
           <p>This symbol is the offset where the {@link com.limewoodmedia.nsdroid.R.attr#state_dismissed}

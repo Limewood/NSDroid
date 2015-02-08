@@ -641,9 +641,10 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 		if(myNation || (data != null && (data.worldAssemblyStatus == WAStatus.NON_MEMBER ||
 				!data.region.equals(NationInfo.getInstance(this).getRegionId()))) ||
 				NationInfo.getInstance(this).getWAStatus() == WAStatus.NON_MEMBER) {
-			menu.getItem(0).setVisible(false);
+			menu.findItem(R.id.menu_endorse_nation).setVisible(false);
 		} else {
-			menu.getItem(0).setTitle(endoByYou ? R.string.menu_unendorse_nation : R.string.menu_endorse_nation).setVisible(true);
+			menu.findItem(R.id.menu_endorse_nation).setTitle(endoByYou ? R.string.menu_unendorse_nation : R.string.menu_endorse_nation).setVisible(true);
+            menu.findItem(R.id.menu_endorse_nation).setVisible(true);
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}

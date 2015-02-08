@@ -21,12 +21,15 @@
  */
 package com.limewoodmedia.nsdroid.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -42,6 +45,7 @@ import com.limewoodMedia.nsapi.enums.WACouncil;
 import com.limewoodMedia.nsapi.holders.WAData;
 import com.limewoodmedia.nsdroid.LoadingHelper;
 import com.limewoodmedia.nsdroid.R;
+import com.limewoodmedia.nsdroid.Utils;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
@@ -51,6 +55,7 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -75,6 +80,8 @@ public class WACouncilFragment extends SherlockFragment {
     private com.limewoodMedia.nsapi.enums.WACouncil council;
     private XYSeriesRenderer forRenderer;
     private XYSeriesRenderer againstRenderer;
+    private final NumberFormat format = NumberFormat.getPercentInstance();
+    private int legend;
 
 	public WACouncilFragment() {}
 	
@@ -89,6 +96,7 @@ public class WACouncilFragment extends SherlockFragment {
 		root = inflater.inflate(R.layout.wa_council, null, false);
 		atVote = (TextView) root.findViewById(R.id.at_vote_text);
         title = (TextView) root.findViewById(R.id.council_header);
+        title.setText(legend != -1 ? legend : R.string.general_assembly);
         votes = (TextView) root.findViewById(R.id.at_vote_votes);
         below = (TextView) root.findViewById(R.id.at_vote_below);
 		layout = (ViewGroup) root.findViewById(R.id.layout);
@@ -102,42 +110,60 @@ public class WACouncilFragment extends SherlockFragment {
                         layout.getPaddingBottom());
             }
         });
+        format.setMaximumFractionDigits(0);
 
         LoadingHelper.startLoading((com.limewoodmedia.nsdroid.views.LoadingView) root.findViewById(R.id.loading));
 		
 		return root;
 	}
-	
-	public void onBeforeLoading() {
+
+    @Override
+    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
+        super.onInflate(activity, attrs, savedInstanceState);
+
+        TypedArray a = activity.obtainStyledAttributes(attrs,R.styleable.WACouncilFragment);
+
+        legend = a.getResourceId(R.styleable.WACouncilFragment_legend, -1);
+
+        a.recycle();
+    }
+
+    public void onBeforeLoading() {
         if(root != null) {
+            root.findViewById(R.id.layout).setVisibility(View.GONE);
             LoadingHelper.startLoading((com.limewoodmedia.nsdroid.views.LoadingView) root.findViewById(R.id.loading));
         }
 	}
 
     public void onAfterLoading() {
         if(root != null) {
+            root.findViewById(R.id.layout).setVisibility(View.VISIBLE);
             LoadingHelper.stopLoading((com.limewoodmedia.nsdroid.views.LoadingView) root.findViewById(R.id.loading));
         }
     }
 	
-	public void setCouncil(WACouncil council, WAData data) {
-		this.council = council;
+	public void loadCouncil(WACouncil council, WAData data) {
+        setCouncil(council);
 
-        title.setText(council == WACouncil.GENERAL_ASSEMBLY ? R.string.general_assembly : R.string.security_council);
         if(data.resolution.name != null) {
             atVote.setText(Html.fromHtml("<b>" + getString(R.string.wa_at_vote) + ":</b> " + data.resolution.name));
-            votes.setText(Html.fromHtml("<b>" + getString(R.string.wa_votes_for) + ":</b> " + data.resolution.votes.forVotes + "<br/>"
-                    + "<b>" + getString(R.string.wa_votes_against) + ":</b> " + data.resolution.votes.againstVotes));
+            float total = data.resolution.votes.forVotes + data.resolution.votes.againstVotes;
+            votes.setText(Html.fromHtml("<b>" + getString(R.string.wa_votes_for) + ":</b> " + format.format(data.resolution.votes.forVotes/total) + "<br/>"
+                    + "<b>" + getString(R.string.wa_votes_against) + ":</b> " + format.format(data.resolution.votes.againstVotes/total)));
             Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-            cal.add(Calendar.DAY_OF_YEAR, 5);
-            long now = cal.getTimeInMillis() / 1000;
-            long seconds = now - data.resolution.created;
-            int hours = (int) seconds / 60 / 60;
-            int days = hours / 24;
+            cal.setTimeInMillis(data.resolution.created * 1000);
+            Log.d(TAG, "Created: " + cal.getTimeInMillis());
+            cal.add(Calendar.DAY_OF_YEAR, 7);
+            Log.d(TAG, "Ending: "+cal.getTimeInMillis());
+            int[] daysHours = Utils.getDaysHours((long) Math.floor(cal.getTimeInMillis()/1000f));
+            int days = daysHours[0];
+            int hours = daysHours[1];
             Resources r = getResources();
-            below.setText(Html.fromHtml(getString(R.string.voting_ends, days, hours,
-                    r.getQuantityString(R.plurals.days, days), r.getQuantityString(R.plurals.hours, hours))
-                    +"<br/><br/><b>" + getString(R.string.wa_recent) + ":</b> "+data.lastResolution));
+            // TODO Add when voting ends
+            below.setText(Html.fromHtml(
+//                    getString(R.string.voting_ends, days, hours,
+//                    r.getQuantityString(R.plurals.days, days), r.getQuantityString(R.plurals.hours, hours)) +
+                      "<br/><br/><b>" + getString(R.string.wa_recent) + ":</b> "+data.lastResolution));
 
             // Set up chart
             Log.d(TAG, "Set up values");
@@ -198,9 +224,10 @@ public class WACouncilFragment extends SherlockFragment {
         chartRenderer.setBarWidth(r.getDimensionPixelSize(R.dimen.wa_bar_width));
         chartRenderer.setGridColor(Color.WHITE);
         chartRenderer.setMarginsColor(Color.WHITE);
-        chartRenderer.setMargins(new int[]{0,0,0,0});
+        chartRenderer.setMargins(new int[]{0, 0, 0, 0});
         chartRenderer.setBackgroundColor(Color.WHITE);
         chartRenderer.setApplyBackgroundColor(true);
+        chartRenderer.removeAllRenderers();
         chartRenderer.addSeriesRenderer(forRenderer);
         chartRenderer.addSeriesRenderer(againstRenderer);
     }
@@ -213,5 +240,9 @@ public class WACouncilFragment extends SherlockFragment {
             Log.d(TAG, "Repaint chart");
             chart.repaint();
         }
+    }
+
+    public void setCouncil(WACouncil council) {
+        this.council = council;
     }
 }

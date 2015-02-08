@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Issue choice -->
     <declare-styleable name="issue_choice">
         <attr name="state_dismissed" format="boolean" />
+    </declare-styleable>
+
+    <!-- WACouncil fragment -->
+    <declare-styleable name="WACouncilFragment">
+        <attr name="legend" format="string" />
     </declare-styleable>
 </resources>

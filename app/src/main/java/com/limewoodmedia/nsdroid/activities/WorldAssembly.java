@@ -22,6 +22,8 @@
 
 package com.limewoodmedia.nsdroid.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -41,16 +43,26 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.limewoodMedia.nsapi.enums.WACouncil;
+import com.limewoodMedia.nsapi.enums.WAStatus;
+import com.limewoodMedia.nsapi.enums.WAVote;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
+import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
+import com.limewoodMedia.nsapi.holders.Happening;
+import com.limewoodMedia.nsapi.holders.NationData;
 import com.limewoodMedia.nsapi.holders.WAData;
+import com.limewoodMedia.nsapi.holders.WAHappening;
 import com.limewoodmedia.nsdroid.API;
 import com.limewoodmedia.nsdroid.LoadingHelper;
+import com.limewoodmedia.nsdroid.NationInfo;
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.TagParser;
 import com.limewoodmedia.nsdroid.Utils;
 import com.limewoodmedia.nsdroid.fragments.NavigationDrawerFragment;
 import com.limewoodmedia.nsdroid.fragments.WACouncilFragment;
+import com.limewoodmedia.nsdroid.views.LoadingView;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
@@ -58,6 +70,13 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
+
+import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * World Assembly
@@ -70,16 +89,20 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
     private ViewGroup overview;
     private WACouncilFragment generalAssembly;
     private WACouncilFragment securityCouncil;
+    private TextView happenings;
     private ViewPager viewPager;
 
+    private NationData nationData;
     private WAData gaData;
     private WAData scData;
     private String errorMessage;
+    private final NumberFormat format = NumberFormat.getPercentInstance();
 
     private ViewGroup gaPage;
     private TextView gaTitle;
     private TextView gaCategory;
     private TextView gaProposer;
+    private TextView gaNation;
     private TextView gaText;
     private TextView gaBelow;
     private GraphicalView gaChart;
@@ -92,6 +115,7 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
     private TextView scTitle;
     private TextView scCategory;
     private TextView scProposer;
+    private TextView scNation;
     private TextView scText;
     private TextView scBelow;
     private GraphicalView scChart;
@@ -109,6 +133,7 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
 
         // Fetch flag
         LoadingHelper.loadHomeFlag(this);
+        format.setMaximumFractionDigits(0);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
@@ -116,20 +141,38 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
         Utils.setupNavigationDrawer(this);
 
         viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                // Update context menu
+                supportInvalidateOptionsMenu();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
 
         overview = (ViewGroup) getLayoutInflater().inflate(R.layout.wa_overview, viewPager, false);
         generalAssembly = (WACouncilFragment) getSupportFragmentManager().findFragmentById(R.id.general_assembly);
+        generalAssembly.setCouncil(WACouncil.GENERAL_ASSEMBLY);
         securityCouncil = (WACouncilFragment) getSupportFragmentManager().findFragmentById(R.id.security_council);
+        securityCouncil.setCouncil(WACouncil.SECURITY_COUNCIL);
+        happenings = (TextView) overview.findViewById(R.id.wa_happenings);
         gaPage = (ViewGroup) getLayoutInflater().inflate(R.layout.wa_ga_sc, viewPager, false);
         gaTitle = (TextView) gaPage.findViewById(R.id.title);
         gaCategory = (TextView) gaPage.findViewById(R.id.category);
         gaProposer = (TextView) gaPage.findViewById(R.id.proposer);
+        gaNation = (TextView) gaPage.findViewById(R.id.nation);
         gaText = (TextView) gaPage.findViewById(R.id.text);
         gaBelow = (TextView) gaPage.findViewById(R.id.below_text);
         scPage = (ViewGroup) getLayoutInflater().inflate(R.layout.wa_ga_sc, viewPager, false);
         scTitle = (TextView) scPage.findViewById(R.id.title);
         scCategory = (TextView) scPage.findViewById(R.id.category);
         scProposer = (TextView) scPage.findViewById(R.id.proposer);
+        scNation = (TextView) scPage.findViewById(R.id.nation);
         scText = (TextView) scPage.findViewById(R.id.text);
         scBelow = (TextView) scPage.findViewById(R.id.below_text);
 
@@ -148,6 +191,11 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
             protected void onPreExecute() {
                 generalAssembly.onBeforeLoading();
                 securityCouncil.onBeforeLoading();
+                happenings.setText(R.string.loading);
+                gaPage.findViewById(R.id.layout).setVisibility(View.GONE);
+                LoadingHelper.startLoading((LoadingView) gaPage.findViewById(R.id.loading));
+                scPage.findViewById(R.id.layout).setVisibility(View.GONE);
+                LoadingHelper.startLoading((LoadingView) scPage.findViewById(R.id.loading));
             }
 
             protected Boolean doInBackground(Void...params) {
@@ -158,40 +206,36 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
                     scData = API.getInstance(WorldAssembly.this).getWAInfo(WACouncil.SECURITY_COUNCIL,
                             WAData.Shards.RESOLUTION, WAData.Shards.VOTETRACK, WAData.Shards.LAST_RESOLUTION);
 
+                    nationData = API.getInstance(WorldAssembly.this).getNationInfo(NationInfo.getInstance(WorldAssembly.this).getId(),
+                            NationData.Shards.NAME, NationData.Shards.GA_VOTE, NationData.Shards.SC_VOTE);
+
                     // Happenings - fetch nation and region names
-//                    Pattern nPattern = Pattern.compile("(.*?)@@([a-z\\d_]+)@@(.*?)");
-//                    Pattern rPattern = Pattern.compile("(.*?)%%([a-z\\d_]+)%%(.*?)");
-//                    Matcher matcher;
-//                    String n, r;
-//                    List<Happening> list = new ArrayList<Happening>(gaData.happenings);
-//                    list.addAll(gaData.happenings);
-//                    for(Happening event : list) {
-//                        event.text = event.text.replaceAll("@@("+info.getName().toLowerCase(Locale.getDefault()).replace(' ', '_')+")@@",
-//                                "<a href=\"com.limewoodMedia.nsdroid.nation://$1\">"+info.getName()+"</a>");
-//                        event.text = event.text.replaceAll("%%("+rData.name.toLowerCase(Locale.getDefault()).replace(' ', '_')+")%%",
-//                                "<a href=\"com.limewoodMedia.nsdroid.region://$1\">"+rData.name+"</a>");
-//                        event.text = event.text.replaceAll("%%([a-z\\d_]+)%rmb%%",
-//                                "<a href=\"com.limewoodMedia.nsdroid.region.rmb://$1\">Regional Message Board</a>");
-//
-//                        matcher = nPattern.matcher(event.text);
-//                        while(matcher.matches()) {
-//                            n = event.text.substring(matcher.start(2), matcher.end(2));
-//                            n = TagParser.idToName(n);
-//
-//                            event.text = matcher.replaceFirst("$1<a href=\"com.limewoodMedia.nsdroid.nation://$2\">" +
-//                                    n+"</a>$3");
-//                            matcher = nPattern.matcher(event.text);
-//                        }
-//                        matcher = rPattern.matcher(event.text);
-//                        while(matcher.matches()) {
-//                            r = event.text.substring(matcher.start(2), matcher.end(2));
-//                            r = TagParser.idToName(r);
-//
-//                            event.text = matcher.replaceFirst("$1<a href=\"com.limewoodMedia.nsdroid.region://$2\">" +
-//                                    r+"</a>$3");
-//                            matcher = rPattern.matcher(event.text);
-//                        }
-//                    }
+                    Pattern nPattern = Pattern.compile("(.*?)@@([a-z\\d_]+)@@(.*?)");
+                    Pattern rPattern = Pattern.compile("(.*?)%%([a-z\\d_]+)%%(.*?)");
+                    Matcher matcher;
+                    String n, r;
+                    List<Happening> list = new ArrayList<Happening>(gaData.happenings);
+                    list.addAll(gaData.happenings);
+                    for(Happening event : list) {
+                        matcher = nPattern.matcher(event.text);
+                        while(matcher.matches()) {
+                            n = event.text.substring(matcher.start(2), matcher.end(2));
+                            n = TagParser.idToName(n);
+
+                            event.text = matcher.replaceFirst("$1<a href=\"com.limewoodMedia.nsdroid.nation://$2\">" +
+                                    n+"</a>$3");
+                            matcher = nPattern.matcher(event.text);
+                        }
+                        matcher = rPattern.matcher(event.text);
+                        while(matcher.matches()) {
+                            r = event.text.substring(matcher.start(2), matcher.end(2));
+                            r = TagParser.idToName(r);
+
+                            event.text = matcher.replaceFirst("$1<a href=\"com.limewoodMedia.nsdroid.region://$2\">" +
+                                    r+"</a>$3");
+                            matcher = rPattern.matcher(event.text);
+                        }
+                    }
 
                     return true;
                 } catch (RateLimitReachedException e) {
@@ -200,6 +244,9 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
                 } catch (RuntimeException e) {
                     e.printStackTrace();
                     errorMessage = e.getMessage();
+                } catch (UnknownNationException e) {
+                    e.printStackTrace();
+                    errorMessage = getResources().getString(R.string.unknown_nation);
                 }
 
                 return false;
@@ -208,6 +255,10 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
             protected void onPostExecute(Boolean result) {
                 generalAssembly.onAfterLoading();
                 securityCouncil.onAfterLoading();
+                gaPage.findViewById(R.id.layout).setVisibility(View.VISIBLE);
+                LoadingHelper.stopLoading((LoadingView) gaPage.findViewById(R.id.loading));
+                scPage.findViewById(R.id.layout).setVisibility(View.VISIBLE);
+                LoadingHelper.stopLoading((LoadingView) scPage.findViewById(R.id.loading));
                 if(result) {
                     doSetup();
                 }
@@ -220,10 +271,27 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
 
     private void doSetup() {
         // General Assembly overview
-        generalAssembly.setCouncil(WACouncil.GENERAL_ASSEMBLY, gaData);
+        generalAssembly.loadCouncil(WACouncil.GENERAL_ASSEMBLY, gaData);
 
         // Security Council overview
-        securityCouncil.setCouncil(WACouncil.SECURITY_COUNCIL, scData);
+        securityCouncil.loadCouncil(WACouncil.SECURITY_COUNCIL, scData);
+
+        // Happenings
+        StringBuilder happText = null;
+        for(WAHappening happ : gaData.happenings) {
+            if(happText == null) {
+                happText = new StringBuilder();
+            } else {
+                happText.append("<br/><br/>");
+            }
+            happText.append("<i>" + TagParser.parseTimestamp(this, happ.timestamp) + ":</i> " + happ.text);
+        }
+        if(happText != null) {
+            happenings.setText(Html.fromHtml(happText.toString()));
+            happenings.setMovementMethod(LinkMovementMethod.getInstance());
+        } else {
+            happenings.setVisibility(View.GONE);
+        }
 
         Resources r = getResources();
 
@@ -240,8 +308,17 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
             gaProposer.setText(Html.fromHtml(getString(R.string.wa_proposed_by) + " <a href=\"com.limewoodMedia.nsdroid.nation://"
                     + gaData.resolution.proposedBy + "\">" + TagParser.idToName(gaData.resolution.proposedBy) +"</a>"));
             gaProposer.setMovementMethod(LinkMovementMethod.getInstance());
+            gaNation.setText(Html.fromHtml("<b>" + nationData.name + ":</b> " + nationData.generalAssemblyVote));
             gaText.setText(Html.fromHtml(TagParser.parseTags(gaData.resolution.desc.replace("\n", "<br/>"))));
-            gaBelow.setText(gaData.resolution.created + "");
+            float total = gaData.resolution.votes.forVotes + gaData.resolution.votes.againstVotes;
+            int[] daysHours = Utils.getDaysHours(gaData.resolution.created+7*24*60*60);
+            int days = daysHours[0];
+            int hours = daysHours[1];
+            gaBelow.setText(Html.fromHtml(getString(R.string.wa_votes_for) + ": " + gaData.resolution.votes.forVotes + " ("
+                    + format.format(gaData.resolution.votes.forVotes/total) + ")<br/>" + getString(R.string.wa_votes_against) + ": "
+                    + gaData.resolution.votes.againstVotes + " (" + format.format(gaData.resolution.votes.againstVotes/total) + ")<br/><br/>"));
+            // TODO Add when voting ends
+//                    + getString(R.string.voting_ends, days, hours, r.getQuantityString(R.plurals.days, days), r.getQuantityString(R.plurals.hours, hours))));
 
             // Chart
             gaSeries.clear();
@@ -302,10 +379,19 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
             scCategory.setText(Html.fromHtml(catText));
             scCategory.setMovementMethod(LinkMovementMethod.getInstance());
             scProposer.setText(Html.fromHtml(getString(R.string.wa_proposed_by) + " <a href=\"com.limewoodMedia.nsdroid.nation://"
-                    + scData.resolution.proposedBy + "\">" + TagParser.idToName(scData.resolution.proposedBy) +"</a>"));
+                    + scData.resolution.proposedBy + "\">" + TagParser.idToName(scData.resolution.proposedBy) + "</a>"));
             scProposer.setMovementMethod(LinkMovementMethod.getInstance());
+            scNation.setText(Html.fromHtml("<b>" + nationData.name + ":</b> " + nationData.securityCouncilVote));
             scText.setText(Html.fromHtml(TagParser.parseTags(scData.resolution.desc.replace("\n", "<br/>"))));
-            scBelow.setText(scData.resolution.created + "");
+            float total = scData.resolution.votes.forVotes + scData.resolution.votes.againstVotes;
+            int[] daysHours = Utils.getDaysHours(scData.resolution.created+7*24*60*60);
+            int days = daysHours[0];
+            int hours = daysHours[1];
+            scBelow.setText(Html.fromHtml("<b>" + getString(R.string.wa_votes_for) + ":</b> " + scData.resolution.votes.forVotes + " ("
+                    + format.format(scData.resolution.votes.forVotes/total) + ")<br/><b>" + getString(R.string.wa_votes_against) + ":</b> "
+                    + scData.resolution.votes.againstVotes + " (" + format.format(scData.resolution.votes.againstVotes/total) + ")<br/><br/>"));
+                    // TODO Add when voting ends
+//                    + getString(R.string.voting_ends, days, hours, r.getQuantityString(R.plurals.days, days), r.getQuantityString(R.plurals.hours, hours))));
 
             // Chart
             scSeries.clear();
@@ -348,6 +434,8 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
             scBelow.setVisibility(View.GONE);
             scPage.findViewById(R.id.chart).setVisibility(View.GONE);
         }
+
+        supportInvalidateOptionsMenu();
     }
 
     private void setUpChartRenderer(XYMultipleSeriesRenderer chartRenderer, XYSeriesRenderer forRenderer, XYSeriesRenderer againstRenderer) {
@@ -394,11 +482,138 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
         chartRenderer.setYLabels(0);
         chartRenderer.setGridColor(Color.WHITE);
         chartRenderer.setMarginsColor(Color.WHITE);
-        chartRenderer.setMargins(new int[]{0,0,r.getDimensionPixelSize(R.dimen.area_chart_margin_bottom),0});
+        chartRenderer.setMargins(new int[]{0, 0, r.getDimensionPixelSize(R.dimen.area_chart_margin_bottom), 0});
         chartRenderer.setBackgroundColor(Color.WHITE);
         chartRenderer.setApplyBackgroundColor(true);
+        chartRenderer.removeAllRenderers();
         chartRenderer.addSeriesRenderer(forRenderer);
         chartRenderer.addSeriesRenderer(againstRenderer);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.menu_wa, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        switch (viewPager.getCurrentItem()) {
+            case 0: // Overview
+                menu.findItem(R.id.menu_vote_for).setVisible(false);
+                menu.findItem(R.id.menu_vote_against).setVisible(false);
+                menu.findItem(R.id.menu_vote_none).setVisible(false);
+                break;
+            case 1: // GA
+            case 2: // SC
+                if(NationInfo.getInstance(this).getWAStatus() == WAStatus.NON_MEMBER) {
+                    menu.findItem(R.id.menu_vote_for).setVisible(false);
+                    menu.findItem(R.id.menu_vote_against).setVisible(false);
+                    menu.findItem(R.id.menu_vote_none).setVisible(false);
+                }
+                if(nationData != null) {
+                    Log.d(TAG, "Page: "+viewPager.getCurrentItem() + "; ga: "+nationData.generalAssemblyVote+"; sc: "+nationData.securityCouncilVote);
+                    WAVote vote = viewPager.getCurrentItem() == 1 ? nationData.generalAssemblyVote : nationData.securityCouncilVote;
+                    switch (vote) {
+                        case FOR:
+                            menu.findItem(R.id.menu_vote_for).setVisible(false);
+                            menu.findItem(R.id.menu_vote_against).setVisible(true);
+                            menu.findItem(R.id.menu_vote_none).setVisible(true);
+                            break;
+                        case AGAINST:
+                            menu.findItem(R.id.menu_vote_against).setVisible(false);
+                            menu.findItem(R.id.menu_vote_for).setVisible(true);
+                            menu.findItem(R.id.menu_vote_none).setVisible(true);
+                            break;
+                        case UNDECIDED:
+                            menu.findItem(R.id.menu_vote_none).setVisible(false);
+                            menu.findItem(R.id.menu_vote_against).setVisible(true);
+                            menu.findItem(R.id.menu_vote_for).setVisible(true);
+                            break;
+                    }
+                }
+                break;
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final WACouncil council = viewPager.getCurrentItem() == 1 ? WACouncil.GENERAL_ASSEMBLY : WACouncil.SECURITY_COUNCIL;
+        WAVote vote = null;
+        switch (item.getItemId()) {
+            case R.id.menu_vote_for:
+                vote = WAVote.FOR;
+                break;
+            case R.id.menu_vote_against: {
+                vote = WAVote.AGAINST;
+                break;
+            }
+            case R.id.menu_vote_none: {
+                vote = WAVote.UNDECIDED;
+                break;
+            }
+            case R.id.menu_refresh:
+                loadData();
+                break;
+        }
+        if(vote != null) {
+            final WAVote finalVote = vote;
+            new AlertDialog.Builder(this).setTitle(R.string.wa_vote_dialog_title)
+                    .setMessage(getString(R.string.wa_vote_dialog_message, vote == WAVote.FOR ? getString(R.string.wa_vote_dialog_for)
+                    : vote == WAVote.AGAINST ? getString(R.string.wa_vote_dialog_against) : getString(R.string.wa_vote_dialog_none)))
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            new AsyncTask<Void, Void, Void>() {
+                                @Override
+                                protected void onPreExecute() {
+                                    LoadingHelper.startLoading((LoadingView) (council == WACouncil.GENERAL_ASSEMBLY ? gaPage : scPage).findViewById(R.id.loading));
+                                }
+
+                                @Override
+                                protected Void doInBackground(Void... vote) {
+                                    if (API.getInstance(WorldAssembly.this).checkLogin(WorldAssembly.this)) {
+                                        try {
+                                            Log.d(TAG, "Vote: " + finalVote);
+                                            if (API.getInstance(WorldAssembly.this).voteOnWAProposal(council, finalVote)) {
+                                                runOnUiThread(new Runnable() {
+                                                    public void run() {
+                                                        Toast.makeText(WorldAssembly.this, R.string.wa_voted, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            } else {
+                                                runOnUiThread(new Runnable() {
+                                                    public void run() {
+                                                        Toast.makeText(WorldAssembly.this, R.string.wa_voted_error, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            }
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    return null;
+                                }
+
+                                @Override
+                                protected void onPostExecute(Void aVoid) {
+                                    LoadingHelper.stopLoading((LoadingView) (council == WACouncil.GENERAL_ASSEMBLY ? gaPage : scPage).findViewById(R.id.loading));
+                                    loadData();
+                                }
+                            }.execute();
+                        }
+                    })
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

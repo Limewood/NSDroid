@@ -175,6 +175,13 @@
     <string name="wa_votes_against">Against</string>
     <string name="wa_recent">Recent</string>
     <string name="wa_proposed_by">Proposed by</string>
+    <string name="wa_voted">Thank you! Your vote has been recorded.</string>
+    <string name="wa_voted_error">An unexpected error occurred. Please try again later.</string>
+    <string name="wa_vote_dialog_title">Vote on proposal</string>
+    <string name="wa_vote_dialog_message">Do you want to %s this proposal?</string>
+    <string name="wa_vote_dialog_for">VOTE FOR</string>
+    <string name="wa_vote_dialog_against">VOTE AGAINST</string>
+    <string name="wa_vote_dialog_none">WITHDRAW YOUR VOTE on</string>
 
     <!-- News -->
     <string name="news">News</string>
@@ -230,6 +237,11 @@
     <string name="menu_move_to_region">Move to region</string>
     <string name="menu_add_region_to_dossier">Add to dossier</string>
     <string name="menu_embassies">Embassies</string>
+
+    <!-- WA menu -->
+    <string name="menu_vote_for">For</string>
+    <string name="menu_vote_against">Against</string>
+    <string name="menu_vote_none">Withdraw</string>
 
     <!-- Preferences -->
     <string name="preferences_title">Preferences</string>

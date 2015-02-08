@@ -171,4 +171,17 @@ public class Utils {
         if(str == null) return null;
         return str.substring(0, 1).toUpperCase()+str.substring(1);
     }
+
+    /**
+     * Converts a timestamp (seconds) to days and hours
+     * @param timestamp the timestamp to convert
+     * @return an int array with {days, hours}
+     */
+    public static int[] getDaysHours(long timestamp) {
+        long seconds = (long) Math.floor((timestamp - System.currentTimeMillis() / 1000f));
+        int hours = (int) Math.floor(seconds / 3600f);
+        int days = (int) Math.floor(hours / 24f);
+        hours = hours - days*24;
+        return new int[]{days, hours};
+    }
 }

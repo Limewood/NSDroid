@@ -53,6 +53,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import com.limewoodMedia.nsapi.INSAPI;
 import com.limewoodMedia.nsapi.NSAPI;
 import com.limewoodMedia.nsapi.enums.WACouncil;
+import com.limewoodMedia.nsapi.enums.WAVote;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
@@ -745,6 +746,77 @@ public class API {
 	    }
 		return false;
 	}
+
+    /**
+     * Vote on a World Assembly proposal
+     * @param council the WACouncil
+     * @param vote the vote
+     * @return true if successful
+     * @throws IOException
+     */
+    public boolean voteOnWAProposal(WACouncil council, WAVote vote) throws IOException {
+        if(!isLoggedIn()) {
+            return false;
+        }
+
+        HttpClient client = getClient();
+        String page = "http://www.nationstates.net/page="+(council == WACouncil.GENERAL_ASSEMBLY ? "ga" : "sc");
+        HttpGet httpGet = new HttpGet(page);
+
+        try {
+            HttpResponse response = client.execute(httpGet, httpContext);
+            StringBuilder builder = new StringBuilder();
+            BufferedReader reader = null;
+            try {
+                reader = new BufferedReader(new InputStreamReader(response.getEntity()
+                        .getContent(), "UTF-8"));
+                for (String line; (line = reader.readLine()) != null;) {
+                    builder.append(line.trim());
+                }
+            } finally {
+                if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
+            }
+
+            String chkPrefix = "<input type=\"hidden\" name=\"localid\" value=\"";
+            String chk = builder.substring(builder.indexOf(chkPrefix)+chkPrefix.length());
+            chk = chk.substring(0, chk.indexOf("\">"));
+            Log.d(TAG, "Localid: "+chk);
+
+            // Post
+            HttpPost httpPost = new HttpPost(page);
+
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+            nameValuePairs.add(new BasicNameValuePair("localid", chk));
+            nameValuePairs.add(new BasicNameValuePair("vote", (vote == WAVote.FOR ? "Vote For" : vote == WAVote.AGAINST ? "Vote Against" : "Withdraw Vote")));
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "ISO-8859-1"));
+
+            response = client.execute(httpPost, httpContext);
+            builder = new StringBuilder();
+            reader = null;
+            try {
+                reader = new BufferedReader(new InputStreamReader(response.getEntity()
+                        .getContent(), "UTF-8"));
+                for (String line; (line = reader.readLine()) != null;) {
+                    builder.append(line.trim());
+                }
+            } finally {
+                if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
+            }
+            int index = builder.indexOf("<" + (council == WACouncil.GENERAL_ASSEMBLY ? "h4" : "p") + " class=\"info\">");
+            if(index > -1) {
+                String res = builder.substring(index);
+                res = res.substring(0, res.indexOf("</" + (council == WACouncil.GENERAL_ASSEMBLY ? "h4" : "p") + ">"));
+                if (res.toLowerCase().contains(vote == WAVote.FOR ? "'s vote for \"" : vote == WAVote.AGAINST ? "'s vote against \"" : "\" has been withdrawn.")) {
+                    return true;
+                }
+            }
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 	
 	/**
 	 * Performs login

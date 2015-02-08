@@ -27,49 +27,55 @@
 
     <!--  This is the main content -->
     <RelativeLayout
-        android:id="@+id/layout"
         android:layout_width="match_parent"
     	android:layout_height="match_parent"
-    	android:orientation="vertical"
-    	android:background="@drawable/ns_frame"
-    	android:layout_marginTop="15dp">
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ns_frame"
+    	android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/at_vote_text"
+        <RelativeLayout
+            android:id="@+id/layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:textSize="18sp"/>
-        
-        <LinearLayout
-            android:id="@+id/at_vote_voting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/at_vote_text">
-            
-            <LinearLayout
-                android:id="@+id/at_vote_chart"
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:orientation="horizontal"
-                android:layout_weight="1"/>
-            
+            android:layout_height="match_parent">
+
             <TextView
-                android:id="@+id/at_vote_votes"
-                android:layout_width="0dp"
+                android:id="@+id/at_vote_text"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_alignParentTop="true"
                 android:textSize="18sp"/>
-            
-            </LinearLayout>
-        
-        <TextView
-            android:id="@+id/at_vote_below"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/at_vote_voting"
-            android:textSize="16sp"/>
+
+            <LinearLayout
+                android:id="@+id/at_vote_voting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/at_vote_text">
+
+                <LinearLayout
+                    android:id="@+id/at_vote_chart"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/at_vote_votes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="18sp"/>
+
+                </LinearLayout>
+
+            <TextView
+                android:id="@+id/at_vote_below"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/at_vote_voting"
+                android:textSize="16sp"/>
+
+            </RelativeLayout>
 		    
         <include
             layout="@layout/loading"

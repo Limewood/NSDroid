@@ -100,7 +100,13 @@ public class TagParser {
         if(text == null) return "";
 		return text.replace("\n", "<br />");
 	}
-	
+
+    /**
+     * Parses a timestamp to a text form suitable for happenings, in the format "x days y hours ago"
+     * @param context the Context
+     * @param timestamp the timestamp
+     * @return a String representation
+     */
 	public static String parseTimestamp(Context context, long timestamp) {
 		Date now = new Date();
 		long diff = now.getTime() - timestamp * 1000;

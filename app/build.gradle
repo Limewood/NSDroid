@@ -8,8 +8,8 @@ android {
         applicationId "com.limewoodmedia.nsdroid"
         minSdkVersion 8
         targetSdkVersion 21
-        versionCode 28
-        versionName "1.8.4"
+        versionCode 29
+        versionName "1.9"
     }
 
     buildTypes {

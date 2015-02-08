@@ -21,9 +21,12 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    tools:ignore="MissingPrefix"
     android:background="@color/rmb_background">
 
     <ScrollView
@@ -38,28 +41,30 @@
             <fragment
                 android:id="@+id/general_assembly"
                 android:name="com.limewoodmedia.nsdroid.fragments.WACouncilFragment"
+                app:legend="@string/general_assembly"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp" />
+                android:layout_margin="5dp" />
 
             <fragment
                 android:id="@+id/security_council"
                 android:name="com.limewoodmedia.nsdroid.fragments.WACouncilFragment"
+                app:legend="@string/security_council"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginBottom="3dp" />
+                android:layout_marginBottom="5dp" />
 
             <TextView
                 android:id="@+id/wa_happenings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:textSize="16sp"
+                android:background="@drawable/ns_frame"
                 style="@style/Common" />
 
             </LinearLayout>
