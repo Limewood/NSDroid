@@ -184,4 +184,11 @@ public class Utils {
         hours = hours - days*24;
         return new int[]{days, hours};
     }
+
+    public static int[] getWADaysHoursLeft(int hoursPassed) {
+        int hours = 4*24-hoursPassed; // 4 days voting
+        int days = (int) Math.floor(hours / 24f);
+        hours = hours - days*24;
+        return new int[]{days, hours};
+    }
 }

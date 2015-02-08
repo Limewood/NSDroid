@@ -35,40 +35,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="06702933-6870-4bfb-a3ab-29680cb5f407" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_menu_against.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_menu_for.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_menu_revert.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_wa.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/generated/source/buildConfig/release/com/limewoodmedia/nsdroid/BuildConfig.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/generated/source/buildConfig/test/debug/com/limewoodmedia/nsdroid/test/BuildConfig.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/generated/source/r/release/com/actionbarsherlock/R.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/generated/source/r/release/com/limewoodmedia/nsdroid/R.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/intermediates/tmp/dex/release/inputList.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/icon_wa.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/icon_wa.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/icon_wa.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/icon_wa.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/icon_wa.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/API.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/API.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/com/limewoodmedia/nsdroid/BuildConfig.java" afterPath="$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/com/limewoodmedia/nsdroid/BuildConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app-release.apk" afterPath="$PROJECT_DIR$/app/app-release.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/NSAPI.java" afterPath="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/NSAPI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Nation.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Nation.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/limewoodmedia/nsdroid/R.java" afterPath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/limewoodmedia/nsdroid/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/TagParser.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/TagParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/Utils.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/Utils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/WACouncilFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/WACouncilFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/WorldAssembly.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/WorldAssembly.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/achartengine_1_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/achartengine_1_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradlew.bat" afterPath="$PROJECT_DIR$/gradlew.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/tmp/dex/debug/inputList.txt" afterPath="$PROJECT_DIR$/app/build/intermediates/tmp/dex/debug/inputList.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/menu/menu_nation.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_nation.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/wa_council.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/wa_council.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/wa_ga_sc.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/wa_ga_sc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/wa_overview.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/wa_overview.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="NSDroid.iws" />
@@ -95,8 +69,8 @@
       <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.6" vertical-offset="2205" max-vertical-offset="4455">
-              <caret line="178" column="60" selection-start-line="178" selection-start-column="60" selection-end-line="178" selection-end-column="60" />
+            <state vertical-scroll-proportion="-22.2" vertical-offset="2205" max-vertical-offset="4470">
+              <caret line="184" column="36" selection-start-line="184" selection-start-column="36" selection-end-line="184" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -112,10 +86,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.18665159" vertical-offset="0" max-vertical-offset="884">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
               <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
               <folding />
             </state>
@@ -125,10 +99,10 @@
       <file leaf-file-name="WorldAssembly.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/WorldAssembly.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1929" max-vertical-offset="10260">
-              <caret line="159" column="28" selection-start-line="159" selection-start-column="28" selection-end-line="159" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="4314" max-vertical-offset="10230">
+              <caret line="317" column="137" selection-start-line="317" selection-start-column="137" selection-end-line="317" selection-end-column="137" />
               <folding>
-                <element signature="e#0#32004#0" expanded="true" />
+                <element signature="e#0#31949#0" expanded="true" />
                 <element signature="imports" expanded="true" />
                 <element signature="e#3541#3568#0" expanded="true" />
                 <element signature="e#7783#7831#0" expanded="true" />
@@ -137,46 +111,92 @@
                 <element signature="e#10942#10995#0" expanded="true" />
                 <element signature="e#11265#11314#0" expanded="true" />
                 <element signature="e#13579#13613#0" expanded="true" />
-                <element signature="e#14391#14423#0" expanded="true" />
-                <element signature="e#14562#14598#0" expanded="true" />
-                <element signature="e#16251#16304#0" expanded="true" />
-                <element signature="e#16385#16409#0" expanded="true" />
-                <element signature="e#17000#17026#0" expanded="true" />
-                <element signature="e#17228#17254#0" expanded="true" />
-                <element signature="e#17650#17684#0" expanded="true" />
-                <element signature="e#18471#18503#0" expanded="true" />
-                <element signature="e#18649#18685#0" expanded="true" />
-                <element signature="e#20350#20403#0" expanded="true" />
-                <element signature="e#20484#20508#0" expanded="true" />
-                <element signature="e#21084#21130#0" expanded="true" />
-                <element signature="e#21162#21207#0" expanded="true" />
-                <element signature="e#22935#22973#0" expanded="true" />
-                <element signature="e#23173#23230#0" expanded="true" />
-                <element signature="e#26684#26713#0" expanded="true" />
-                <element signature="e#26747#26982#0" expanded="true" />
-                <element signature="e#26811#26849#0" expanded="true" />
-                <element signature="e#26897#26939#0" expanded="true" />
-                <element signature="e#26942#26981#0" expanded="true" />
-                <element signature="e#27023#27035#0" expanded="true" />
-                <element signature="e#27037#29725#0" expanded="true" />
-                <element signature="e#28147#28477#0" expanded="true" />
-                <element signature="e#28327#28344#0" expanded="true" />
-                <element signature="e#28426#28427#0" expanded="true" />
-                <element signature="e#28595#28931#0" expanded="true" />
-                <element signature="e#28775#28798#0" expanded="true" />
-                <element signature="e#28880#28881#0" expanded="true" />
-                <element signature="e#29702#29703#0" expanded="true" />
-                <element signature="e#29766#29777#0" expanded="true" />
-                <element signature="e#29779#30027#0" expanded="true" />
-                <element signature="e#30004#30005#0" expanded="true" />
-                <element signature="e#31349#31350#0" expanded="true" />
-                <element signature="e#31381#31382#0" expanded="true" />
-                <element signature="e#31468#31469#0" expanded="true" />
-                <element signature="e#31513#31514#0" expanded="true" />
-                <element signature="e#31680#31714#0" expanded="true" />
-                <element signature="e#31774#31810#0" expanded="true" />
-                <element signature="e#31876#31912#0" expanded="true" />
+                <element signature="e#14412#14444#0" expanded="true" />
+                <element signature="e#14590#14626#0" expanded="true" />
+                <element signature="e#14802#14934#0" expanded="true" />
+                <element signature="e#14847#14888#0" expanded="true" />
+                <element signature="e#14890#14933#0" expanded="true" />
+                <element signature="e#16237#16290#0" expanded="true" />
+                <element signature="e#16371#16395#0" expanded="true" />
+                <element signature="e#16986#17012#0" expanded="true" />
+                <element signature="e#17214#17240#0" expanded="true" />
+                <element signature="e#17636#17670#0" expanded="true" />
+                <element signature="e#18470#18502#0" expanded="true" />
+                <element signature="e#18648#18684#0" expanded="true" />
+                <element signature="e#18860#18992#0" expanded="true" />
+                <element signature="e#18905#18946#0" expanded="true" />
+                <element signature="e#18948#18991#0" expanded="true" />
+                <element signature="e#20295#20348#0" expanded="true" />
+                <element signature="e#20429#20453#0" expanded="true" />
+                <element signature="e#21029#21075#0" expanded="true" />
+                <element signature="e#21107#21152#0" expanded="true" />
+                <element signature="e#22880#22918#0" expanded="true" />
+                <element signature="e#23118#23175#0" expanded="true" />
+                <element signature="e#26629#26658#0" expanded="true" />
+                <element signature="e#26692#26927#0" expanded="true" />
+                <element signature="e#26756#26794#0" expanded="true" />
+                <element signature="e#26842#26884#0" expanded="true" />
+                <element signature="e#26887#26926#0" expanded="true" />
+                <element signature="e#26968#26980#0" expanded="true" />
+                <element signature="e#26982#29670#0" expanded="true" />
+                <element signature="e#28092#28422#0" expanded="true" />
+                <element signature="e#28272#28289#0" expanded="true" />
+                <element signature="e#28371#28372#0" expanded="true" />
+                <element signature="e#28540#28876#0" expanded="true" />
+                <element signature="e#28720#28743#0" expanded="true" />
+                <element signature="e#28825#28826#0" expanded="true" />
+                <element signature="e#29647#29648#0" expanded="true" />
+                <element signature="e#29711#29722#0" expanded="true" />
+                <element signature="e#29724#29972#0" expanded="true" />
+                <element signature="e#29949#29950#0" expanded="true" />
+                <element signature="e#31294#31295#0" expanded="true" />
+                <element signature="e#31326#31327#0" expanded="true" />
+                <element signature="e#31413#31414#0" expanded="true" />
+                <element signature="e#31458#31459#0" expanded="true" />
+                <element signature="e#31625#31659#0" expanded="true" />
+                <element signature="e#31719#31755#0" expanded="true" />
+                <element signature="e#31821#31857#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WACouncilFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/WACouncilFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="945" max-vertical-offset="2880">
+              <caret line="157" column="96" selection-start-line="157" selection-start-column="96" selection-end-line="157" selection-end-column="96" />
+              <folding>
+                <element signature="e#6954#7106#0" expanded="true" />
+                <element signature="e#7019#7060#0" expanded="true" />
+                <element signature="e#7062#7105#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wa_ga_sc.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/wa_ga_sc.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.4755245" vertical-offset="927" max-vertical-offset="1965">
+              <caret line="89" column="55" selection-start-line="89" selection-start-column="55" selection-end-line="89" selection-end-column="55" />
+              <folding>
+                <element signature="e#3491#3520#0" expanded="true" />
+                <element signature="e#4444#4462#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Utils.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/Utils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1426" max-vertical-offset="2385">
+              <caret line="190" column="32" selection-start-line="190" selection-start-column="32" selection-end-line="190" selection-end-column="32" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -885,21 +905,21 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/colours.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ns_big_frame.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/Utils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/TagParser.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_wa.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_nation.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Nation.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/wa_ga_sc.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/wa_council.xml" />
-        <option value="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/NSAPI.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/API.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/WorldAssembly.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/WACouncilFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/wa_overview.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/Utils.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/WACouncilFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/WorldAssembly.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/wa_ga_sc.xml" />
+        <option value="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/NSAPI.java" />
       </list>
     </option>
   </component>
@@ -1086,12 +1106,12 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="drawable" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+              <option name="myItemId" value="nsdroid" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -1110,6 +1130,10 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="nsdroid" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fragments" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -1418,7 +1442,11 @@
       <created>1423336993024</created>
       <updated>1423336993024</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Finished implementing WA.">
+      <created>1423419616770</created>
+      <updated>1423419616770</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1435,7 +1463,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3441034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34371185" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930845" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1479,7 +1507,8 @@
     <MESSAGE value="Added &quot;previous issue choice&quot; feature.&#10;Fixed bugs with login, rejected embassies, missing &quot;sunburn&quot; CoD, HTML in answered issue title and dossier only showing first page." />
     <MESSAGE value="Small fixes." />
     <MESSAGE value="Partial implementation of WA." />
-    <option name="LAST_COMMIT_MESSAGE" value="Partial implementation of WA." />
+    <MESSAGE value="Finished implementing WA." />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished implementing WA." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1487,34 +1516,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/choice_background_disabled.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14423077" vertical-offset="0" max-vertical-offset="416">
-          <caret line="4" column="48" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/choice_background_focused.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14423077" vertical-offset="0" max-vertical-offset="416">
-          <caret line="4" column="46" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/choice_background_pressed.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14423077" vertical-offset="0" max-vertical-offset="416">
-          <caret line="4" column="47" selection-start-line="4" selection-start-column="47" selection-end-line="4" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/choice_background.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25240386" vertical-offset="0" max-vertical-offset="416">
-          <caret line="7" column="39" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/db/NationsDatabase.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.28391168" vertical-offset="0" max-vertical-offset="3135">
@@ -1651,14 +1652,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ns_frame.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="195">
-          <caret line="4" column="104" selection-start-line="4" selection-start-column="104" selection-end-line="4" selection-end-column="104" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ns_big_frame.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
@@ -1678,14 +1671,6 @@
     <entry file="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/drawable-hdpi/abs__ic_search_api_holo_light.png">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8133484" vertical-offset="1396" max-vertical-offset="2280">
-          <caret line="182" column="19" selection-start-line="182" selection-start-column="19" selection-end-line="182" selection-end-column="19" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colours.xml">
@@ -1786,19 +1771,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/wa_ga_sc.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.423077" vertical-offset="90" max-vertical-offset="1785">
-          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding>
-            <element signature="e#3967#3996#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/wa_council.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="5.6538463" vertical-offset="687" max-vertical-offset="1545">
@@ -1818,31 +1790,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.6" vertical-offset="2205" max-vertical-offset="4455">
-          <caret line="178" column="60" selection-start-line="178" selection-start-column="60" selection-end-line="178" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/API.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-26.11111" vertical-offset="10215" max-vertical-offset="19095">
           <caret line="807" column="68" selection-start-line="807" selection-start-column="68" selection-end-line="807" selection-end-column="68" />
           <folding>
-            <element signature="e#24397#24412#0" expanded="true" />
-            <element signature="e#26962#26977#0" expanded="true" />
-            <element signature="e#37679#37708#0" expanded="true" />
-            <element signature="e#37914#37943#0" expanded="true" />
-            <element signature="e#37966#37994#0" expanded="true" />
-            <element signature="e#38346#38357#0" expanded="true" />
-            <element signature="e#38883#38898#0" expanded="true" />
-            <element signature="e#47818#47847#0" expanded="true" />
-            <element signature="e#48060#48090#0" expanded="true" />
-            <element signature="e#48113#48142#0" expanded="true" />
-            <element signature="e#48493#48504#0" expanded="true" />
-            <element signature="e#49040#49055#0" expanded="true" />
+            <element signature="e#24397#24412#0" expanded="false" />
+            <element signature="e#26962#26977#0" expanded="false" />
+            <element signature="e#37679#37708#0" expanded="false" />
+            <element signature="e#37914#37943#0" expanded="false" />
+            <element signature="e#37966#37994#0" expanded="false" />
+            <element signature="e#38346#38357#0" expanded="false" />
+            <element signature="e#38883#38898#0" expanded="false" />
+            <element signature="e#47818#47847#0" expanded="false" />
+            <element signature="e#48060#48090#0" expanded="false" />
+            <element signature="e#48113#48142#0" expanded="false" />
+            <element signature="e#48493#48504#0" expanded="false" />
+            <element signature="e#49040#49055#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1857,7 +1821,7 @@
         <state vertical-scroll-proportion="0.52797204" vertical-offset="312" max-vertical-offset="1185">
           <caret line="51" column="52" selection-start-line="51" selection-start-column="52" selection-end-line="51" selection-end-column="52" />
           <folding>
-            <element signature="e#1996#2022#0" expanded="true" />
+            <element signature="e#1996#2022#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1873,42 +1837,83 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
+          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1426" max-vertical-offset="2385">
+          <caret line="190" column="32" selection-start-line="190" selection-start-column="32" selection-end-line="190" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/WACouncilFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6617647" vertical-offset="405" max-vertical-offset="2925">
-          <caret line="125" column="74" selection-start-line="125" selection-start-column="74" selection-end-line="125" selection-end-column="74" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="945" max-vertical-offset="2880">
+          <caret line="157" column="96" selection-start-line="157" selection-start-column="96" selection-end-line="157" selection-end-column="96" />
           <folding>
-            <element signature="e#2585#2612#0" expanded="true" />
-            <element signature="e#3892#3917#0" expanded="true" />
-            <element signature="e#5924#5954#0" expanded="true" />
-            <element signature="e#6135#6167#0" expanded="true" />
-            <element signature="e#6273#6309#0" expanded="true" />
-            <element signature="e#7193#7222#0" expanded="true" />
-            <element signature="e#8201#8253#0" expanded="true" />
-            <element signature="e#8331#8344#0" expanded="true" />
-            <element signature="e#8525#8554#0" expanded="true" />
-            <element signature="e#8796#8840#0" expanded="true" />
-            <element signature="e#9999#10044#0" expanded="true" />
-            <element signature="e#10707#10708#0" expanded="true" />
-            <element signature="e#10745#10746#0" expanded="true" />
+            <element signature="e#6954#7106#0" expanded="true" />
+            <element signature="e#7019#7060#0" expanded="true" />
+            <element signature="e#7062#7105#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/NSAPI.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3150525" vertical-offset="2970" max-vertical-offset="16275">
-          <caret line="299" column="82" selection-start-line="299" selection-start-column="82" selection-end-line="299" selection-end-column="82" />
+        <state vertical-scroll-proportion="-22.2" vertical-offset="2205" max-vertical-offset="4470">
+          <caret line="184" column="36" selection-start-line="184" selection-start-column="36" selection-end-line="184" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rmb_cell.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/rmb_post.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1923077" vertical-offset="0" max-vertical-offset="858">
+          <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ns_frame.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.06787331" vertical-offset="0" max-vertical-offset="884">
+          <caret line="4" column="104" selection-start-line="4" selection-start-column="104" selection-end-line="4" selection-end-column="104" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ns_legend.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/WorldAssembly.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1929" max-vertical-offset="10260">
-          <caret line="159" column="28" selection-start-line="159" selection-start-column="28" selection-end-line="159" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="4314" max-vertical-offset="10230">
+          <caret line="317" column="137" selection-start-line="317" selection-start-column="137" selection-end-line="317" selection-end-column="137" />
           <folding>
-            <element signature="e#0#32004#0" expanded="true" />
+            <element signature="e#0#31949#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#3541#3568#0" expanded="true" />
             <element signature="e#7783#7831#0" expanded="true" />
@@ -1917,55 +1922,83 @@
             <element signature="e#10942#10995#0" expanded="true" />
             <element signature="e#11265#11314#0" expanded="true" />
             <element signature="e#13579#13613#0" expanded="true" />
-            <element signature="e#14391#14423#0" expanded="true" />
-            <element signature="e#14562#14598#0" expanded="true" />
-            <element signature="e#16251#16304#0" expanded="true" />
-            <element signature="e#16385#16409#0" expanded="true" />
-            <element signature="e#17000#17026#0" expanded="true" />
-            <element signature="e#17228#17254#0" expanded="true" />
-            <element signature="e#17650#17684#0" expanded="true" />
-            <element signature="e#18471#18503#0" expanded="true" />
-            <element signature="e#18649#18685#0" expanded="true" />
-            <element signature="e#20350#20403#0" expanded="true" />
-            <element signature="e#20484#20508#0" expanded="true" />
-            <element signature="e#21084#21130#0" expanded="true" />
-            <element signature="e#21162#21207#0" expanded="true" />
-            <element signature="e#22935#22973#0" expanded="true" />
-            <element signature="e#23173#23230#0" expanded="true" />
-            <element signature="e#26684#26713#0" expanded="true" />
-            <element signature="e#26747#26982#0" expanded="true" />
-            <element signature="e#26811#26849#0" expanded="true" />
-            <element signature="e#26897#26939#0" expanded="true" />
-            <element signature="e#26942#26981#0" expanded="true" />
-            <element signature="e#27023#27035#0" expanded="true" />
-            <element signature="e#27037#29725#0" expanded="true" />
-            <element signature="e#28147#28477#0" expanded="true" />
-            <element signature="e#28327#28344#0" expanded="true" />
-            <element signature="e#28426#28427#0" expanded="true" />
-            <element signature="e#28595#28931#0" expanded="true" />
-            <element signature="e#28775#28798#0" expanded="true" />
-            <element signature="e#28880#28881#0" expanded="true" />
-            <element signature="e#29702#29703#0" expanded="true" />
-            <element signature="e#29766#29777#0" expanded="true" />
-            <element signature="e#29779#30027#0" expanded="true" />
-            <element signature="e#30004#30005#0" expanded="true" />
-            <element signature="e#31349#31350#0" expanded="true" />
-            <element signature="e#31381#31382#0" expanded="true" />
-            <element signature="e#31468#31469#0" expanded="true" />
-            <element signature="e#31513#31514#0" expanded="true" />
-            <element signature="e#31680#31714#0" expanded="true" />
-            <element signature="e#31774#31810#0" expanded="true" />
-            <element signature="e#31876#31912#0" expanded="true" />
+            <element signature="e#14412#14444#0" expanded="true" />
+            <element signature="e#14590#14626#0" expanded="true" />
+            <element signature="e#14802#14934#0" expanded="true" />
+            <element signature="e#14847#14888#0" expanded="true" />
+            <element signature="e#14890#14933#0" expanded="true" />
+            <element signature="e#16237#16290#0" expanded="true" />
+            <element signature="e#16371#16395#0" expanded="true" />
+            <element signature="e#16986#17012#0" expanded="true" />
+            <element signature="e#17214#17240#0" expanded="true" />
+            <element signature="e#17636#17670#0" expanded="true" />
+            <element signature="e#18470#18502#0" expanded="true" />
+            <element signature="e#18648#18684#0" expanded="true" />
+            <element signature="e#18860#18992#0" expanded="true" />
+            <element signature="e#18905#18946#0" expanded="true" />
+            <element signature="e#18948#18991#0" expanded="true" />
+            <element signature="e#20295#20348#0" expanded="true" />
+            <element signature="e#20429#20453#0" expanded="true" />
+            <element signature="e#21029#21075#0" expanded="true" />
+            <element signature="e#21107#21152#0" expanded="true" />
+            <element signature="e#22880#22918#0" expanded="true" />
+            <element signature="e#23118#23175#0" expanded="true" />
+            <element signature="e#26629#26658#0" expanded="true" />
+            <element signature="e#26692#26927#0" expanded="true" />
+            <element signature="e#26756#26794#0" expanded="true" />
+            <element signature="e#26842#26884#0" expanded="true" />
+            <element signature="e#26887#26926#0" expanded="true" />
+            <element signature="e#26968#26980#0" expanded="true" />
+            <element signature="e#26982#29670#0" expanded="true" />
+            <element signature="e#28092#28422#0" expanded="true" />
+            <element signature="e#28272#28289#0" expanded="true" />
+            <element signature="e#28371#28372#0" expanded="true" />
+            <element signature="e#28540#28876#0" expanded="true" />
+            <element signature="e#28720#28743#0" expanded="true" />
+            <element signature="e#28825#28826#0" expanded="true" />
+            <element signature="e#29647#29648#0" expanded="true" />
+            <element signature="e#29711#29722#0" expanded="true" />
+            <element signature="e#29724#29972#0" expanded="true" />
+            <element signature="e#29949#29950#0" expanded="true" />
+            <element signature="e#31294#31295#0" expanded="true" />
+            <element signature="e#31326#31327#0" expanded="true" />
+            <element signature="e#31413#31414#0" expanded="true" />
+            <element signature="e#31458#31459#0" expanded="true" />
+            <element signature="e#31625#31659#0" expanded="true" />
+            <element signature="e#31719#31755#0" expanded="true" />
+            <element signature="e#31821#31857#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+    <entry file="file://$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/holders/Embassy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18665159" vertical-offset="0" max-vertical-offset="884">
-          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.033936653" vertical-offset="0" max-vertical-offset="884">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/NSAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24737456" vertical-offset="15403" max-vertical-offset="16260">
+          <caret line="1124" column="43" selection-start-line="1124" selection-start-column="43" selection-end-line="1124" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/wa_ga_sc.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4755245" vertical-offset="927" max-vertical-offset="1965">
+          <caret line="89" column="55" selection-start-line="89" selection-start-column="55" selection-end-line="89" selection-end-column="55" />
+          <folding>
+            <element signature="e#3491#3520#0" expanded="true" />
+            <element signature="e#4444#4462#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
   </component>

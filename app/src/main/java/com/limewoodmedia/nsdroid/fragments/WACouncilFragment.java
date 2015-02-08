@@ -155,14 +155,13 @@ public class WACouncilFragment extends SherlockFragment {
             Log.d(TAG, "Created: " + cal.getTimeInMillis());
             cal.add(Calendar.DAY_OF_YEAR, 7);
             Log.d(TAG, "Ending: "+cal.getTimeInMillis());
-            int[] daysHours = Utils.getDaysHours((long) Math.floor(cal.getTimeInMillis()/1000f));
+            int[] daysHours = Utils.getWADaysHoursLeft(data.resolution.voteTrack.forVotes.length);
             int days = daysHours[0];
             int hours = daysHours[1];
             Resources r = getResources();
-            // TODO Add when voting ends
             below.setText(Html.fromHtml(
-//                    getString(R.string.voting_ends, days, hours,
-//                    r.getQuantityString(R.plurals.days, days), r.getQuantityString(R.plurals.hours, hours)) +
+                    getString(R.string.voting_ends, days, hours,
+                    r.getQuantityString(R.plurals.days, days), r.getQuantityString(R.plurals.hours, hours)) +
                       "<br/><br/><b>" + getString(R.string.wa_recent) + ":</b> "+data.lastResolution));
 
             // Set up chart

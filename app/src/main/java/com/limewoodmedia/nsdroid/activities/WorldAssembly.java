@@ -311,14 +311,13 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
             gaNation.setText(Html.fromHtml("<b>" + nationData.name + ":</b> " + nationData.generalAssemblyVote));
             gaText.setText(Html.fromHtml(TagParser.parseTags(gaData.resolution.desc.replace("\n", "<br/>"))));
             float total = gaData.resolution.votes.forVotes + gaData.resolution.votes.againstVotes;
-            int[] daysHours = Utils.getDaysHours(gaData.resolution.created+7*24*60*60);
+            int[] daysHours = Utils.getWADaysHoursLeft(gaData.resolution.voteTrack.forVotes.length);
             int days = daysHours[0];
             int hours = daysHours[1];
-            gaBelow.setText(Html.fromHtml(getString(R.string.wa_votes_for) + ": " + gaData.resolution.votes.forVotes + " ("
-                    + format.format(gaData.resolution.votes.forVotes/total) + ")<br/>" + getString(R.string.wa_votes_against) + ": "
-                    + gaData.resolution.votes.againstVotes + " (" + format.format(gaData.resolution.votes.againstVotes/total) + ")<br/><br/>"));
-            // TODO Add when voting ends
-//                    + getString(R.string.voting_ends, days, hours, r.getQuantityString(R.plurals.days, days), r.getQuantityString(R.plurals.hours, hours))));
+            gaBelow.setText(Html.fromHtml("<b>" + getString(R.string.wa_votes_for) + ":</b> " + gaData.resolution.votes.forVotes + " ("
+                    + format.format(gaData.resolution.votes.forVotes/total) + ")<br/><b>" + getString(R.string.wa_votes_against) + ":</b> "
+                    + gaData.resolution.votes.againstVotes + " (" + format.format(gaData.resolution.votes.againstVotes/total) + ")<br/><br/>"
+                    + getString(R.string.voting_ends, days, hours, r.getQuantityString(R.plurals.days, days), r.getQuantityString(R.plurals.hours, hours))));
 
             // Chart
             gaSeries.clear();
@@ -384,14 +383,13 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
             scNation.setText(Html.fromHtml("<b>" + nationData.name + ":</b> " + nationData.securityCouncilVote));
             scText.setText(Html.fromHtml(TagParser.parseTags(scData.resolution.desc.replace("\n", "<br/>"))));
             float total = scData.resolution.votes.forVotes + scData.resolution.votes.againstVotes;
-            int[] daysHours = Utils.getDaysHours(scData.resolution.created+7*24*60*60);
+            int[] daysHours = Utils.getWADaysHoursLeft(scData.resolution.voteTrack.forVotes.length);
             int days = daysHours[0];
             int hours = daysHours[1];
             scBelow.setText(Html.fromHtml("<b>" + getString(R.string.wa_votes_for) + ":</b> " + scData.resolution.votes.forVotes + " ("
                     + format.format(scData.resolution.votes.forVotes/total) + ")<br/><b>" + getString(R.string.wa_votes_against) + ":</b> "
-                    + scData.resolution.votes.againstVotes + " (" + format.format(scData.resolution.votes.againstVotes/total) + ")<br/><br/>"));
-                    // TODO Add when voting ends
-//                    + getString(R.string.voting_ends, days, hours, r.getQuantityString(R.plurals.days, days), r.getQuantityString(R.plurals.hours, hours))));
+                    + scData.resolution.votes.againstVotes + " (" + format.format(scData.resolution.votes.againstVotes/total) + ")<br/><br/>"
+                    + getString(R.string.voting_ends, days, hours, r.getQuantityString(R.plurals.days, days), r.getQuantityString(R.plurals.hours, hours))));
 
             // Chart
             scSeries.clear();

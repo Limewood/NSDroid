@@ -182,6 +182,7 @@
     <string name="wa_vote_dialog_for">VOTE FOR</string>
     <string name="wa_vote_dialog_against">VOTE AGAINST</string>
     <string name="wa_vote_dialog_none">WITHDRAW YOUR VOTE on</string>
+    <string name="proposal">Proposal</string>
 
     <!-- News -->
     <string name="news">News</string>
