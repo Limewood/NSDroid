@@ -65,15 +65,9 @@ public class UpdateService extends IntentService {
         	if(intent.getStringExtra("region").equalsIgnoreCase("-1")) {
 	        	if(intent.getStringExtra("shard").equalsIgnoreCase("messages")) {
 	        		// Check for new messages
-                    NationData nData = null;
                     try {
-                        nData = API.getInstance(this).getNationInfo(
-                                NationInfo.getInstance(this).getName(), NationData.Shards.REGION);
-                        rData = API.getInstance(this).getRegionInfo(nData.region, RegionData.Shards.MESSAGES);
+                        rData = API.getInstance(this).getRegionInfo(NationInfo.getInstance(this).getRegionId(), RegionData.Shards.MESSAGES);
                     } catch (RateLimitReachedException e) {
-                        e.printStackTrace();
-                        return;
-                    } catch (UnknownNationException e) {
                         e.printStackTrace();
                         return;
                     } catch (UnknownRegionException e) {
@@ -120,7 +114,9 @@ public class UpdateService extends IntentService {
 	    	// Show notification icon
 	    	Intent i;
 			try {
+                // Start activity with class name
 				i = new Intent(this, Class.forName(intent.getStringExtra("class")));
+                i.putExtra("page", 1); // RMB page
 	            Log.d(TAG, "Build notification to update "+intent.getStringExtra("class"));
 		    	i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		    	PendingIntent pi = PendingIntent.getActivity(this, intent.getIntExtra("notification_id", NOTIFICATION_ID), i, PendingIntent.FLAG_UPDATE_CURRENT);

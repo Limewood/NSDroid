@@ -400,12 +400,9 @@ public class API {
 			issue.name = text;
 		    
 		    // Issue text
-			prefix = "<form method=\"POST\" action=\"page=show_dilemma/dilemma=";
+			prefix = "<h5>The Issue</h5>";
 			text = builder.substring(builder.indexOf(prefix)+prefix.length());
-			text = text.substring(0, text.indexOf("</p>"));
-			
-			Pattern pattern = Pattern.compile("(\\d+)\"\\>\\<p\\>(.+)", Pattern.DOTALL);
-			text = pattern.matcher(text).replaceAll("$2");
+			text = text.substring(3, text.indexOf("</p>"));
 			issue.text = text;
 			
 			// Issue choices
@@ -414,7 +411,7 @@ public class API {
 			text = text.substring(0, text.indexOf("</ol>"));
 			
 			String[] items = text.split("\\<li( class=\"chosendiloption\")?\\>");
-			pattern = Pattern.compile(
+			Pattern pattern = Pattern.compile(
 					"\\<p\\>(.+?)\\n?(\\<p\\>)(\\<button type=\"submit\" name=\"choice-(\\d+)\")?(.+)",
 					Pattern.DOTALL);
 			List<String> choices = new ArrayList<String>();
