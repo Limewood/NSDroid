@@ -195,7 +195,7 @@ public class NSAPI implements INSAPI {
 	 */
 	@Override
 	public NationData getNationInfo(String name, NationData.Shards...shards)
-			throws RateLimitReachedException, UnknownNationException {
+            throws RateLimitReachedException, UnknownNationException, IOException, XmlPullParserException {
 		if (!makeCall()) {
 			throw new RateLimitReachedException();
 		}
@@ -375,10 +375,6 @@ public class NSAPI implements INSAPI {
 				}
 			}
 			return nation;
-		} catch(XmlPullParserException e) {
-			throw new RuntimeException("Failed to parse XML", e);
-		} catch(IOException e) {
-			throw new RuntimeException("IOException parsing XML", e);
 		}
 		finally {
 			if (data != null) {
@@ -603,7 +599,7 @@ public class NSAPI implements INSAPI {
 	 */
 	@Override
 	public RegionData getRegionInfo(String name, RegionData.Shards...shards)
-		throws RateLimitReachedException, UnknownRegionException {
+            throws RateLimitReachedException, UnknownRegionException, IOException, XmlPullParserException {
 		if (!makeCall()) {
 			throw new RateLimitReachedException();
 		}
@@ -673,10 +669,6 @@ public class NSAPI implements INSAPI {
 					break;
 				}
 			return region;
-		} catch(XmlPullParserException e) {
-			throw new RuntimeException("Failed to parse XML", e);
-		} catch(IOException e) {
-			throw new RuntimeException("IOException parsing XML", e);
 		}
 		finally {
 			if(data != null) {
@@ -838,7 +830,7 @@ public class NSAPI implements INSAPI {
 	 * @see com.limewoodMedia.nsapi.INSAPI#getWorldInfo(WorldData.Shards[])
 	 */
 	@Override
-	public WorldData getWorldInfo(WorldData.Shards...shards) throws RateLimitReachedException {
+	public WorldData getWorldInfo(WorldData.Shards...shards) throws RateLimitReachedException, IOException, XmlPullParserException {
 		if (!makeCall()) {
 			throw new RateLimitReachedException();
 		}
@@ -890,10 +882,6 @@ public class NSAPI implements INSAPI {
 				}
 			}
 			return world;
-		} catch (XmlPullParserException e) {
-			throw new RuntimeException("Failed to parse XML", e);
-		} catch (IOException e) {
-			throw new RuntimeException("IOException parsing XML", e);
 		}
 		finally {
 			if (data != null) {
@@ -912,7 +900,7 @@ public class NSAPI implements INSAPI {
 	 * @see com.limewoodMedia.nsapi.INSAPI#getWorldInfo(WorldData.Shards[])
 	 */
 	@Override
-	public WAData getWAInfo(WACouncil council, WAData.Shards...shards) throws RateLimitReachedException {
+	public WAData getWAInfo(WACouncil council, WAData.Shards...shards) throws RateLimitReachedException, IOException, XmlPullParserException {
 		if (!makeCall()) {
 			throw new RateLimitReachedException();
 		}
@@ -976,10 +964,6 @@ public class NSAPI implements INSAPI {
 				}
 			}
 			return wa;
-		} catch (XmlPullParserException e) {
-			throw new RuntimeException("Failed to parse XML", e);
-		} catch (IOException e) {
-			throw new RuntimeException("IOException parsing XML", e);
 		}
 		finally {
 			if (data != null) {

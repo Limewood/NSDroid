@@ -70,6 +70,7 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
+import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -247,6 +248,12 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
                 } catch (UnknownNationException e) {
                     e.printStackTrace();
                     errorMessage = getResources().getString(R.string.unknown_nation);
+                } catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                    errorMessage = getResources().getString(R.string.xml_parser_exception);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    errorMessage = getResources().getString(R.string.api_io_exception);
                 }
 
                 return false;
@@ -508,26 +515,31 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
                     menu.findItem(R.id.menu_vote_for).setVisible(false);
                     menu.findItem(R.id.menu_vote_against).setVisible(false);
                     menu.findItem(R.id.menu_vote_none).setVisible(false);
-                }
-                if(nationData != null) {
+                } else if(nationData != null) {
                     Log.d(TAG, "Page: "+viewPager.getCurrentItem() + "; ga: "+nationData.generalAssemblyVote+"; sc: "+nationData.securityCouncilVote);
                     WAVote vote = viewPager.getCurrentItem() == 1 ? nationData.generalAssemblyVote : nationData.securityCouncilVote;
-                    switch (vote) {
-                        case FOR:
-                            menu.findItem(R.id.menu_vote_for).setVisible(false);
-                            menu.findItem(R.id.menu_vote_against).setVisible(true);
-                            menu.findItem(R.id.menu_vote_none).setVisible(true);
-                            break;
-                        case AGAINST:
-                            menu.findItem(R.id.menu_vote_against).setVisible(false);
-                            menu.findItem(R.id.menu_vote_for).setVisible(true);
-                            menu.findItem(R.id.menu_vote_none).setVisible(true);
-                            break;
-                        case UNDECIDED:
-                            menu.findItem(R.id.menu_vote_none).setVisible(false);
-                            menu.findItem(R.id.menu_vote_against).setVisible(true);
-                            menu.findItem(R.id.menu_vote_for).setVisible(true);
-                            break;
+                    if(vote == null) {
+                        menu.findItem(R.id.menu_vote_for).setVisible(false);
+                        menu.findItem(R.id.menu_vote_against).setVisible(false);
+                        menu.findItem(R.id.menu_vote_none).setVisible(false);
+                    } else {
+                        switch (vote) {
+                            case FOR:
+                                menu.findItem(R.id.menu_vote_for).setVisible(false);
+                                menu.findItem(R.id.menu_vote_against).setVisible(true);
+                                menu.findItem(R.id.menu_vote_none).setVisible(true);
+                                break;
+                            case AGAINST:
+                                menu.findItem(R.id.menu_vote_against).setVisible(false);
+                                menu.findItem(R.id.menu_vote_for).setVisible(true);
+                                menu.findItem(R.id.menu_vote_none).setVisible(true);
+                                break;
+                            case UNDECIDED:
+                                menu.findItem(R.id.menu_vote_none).setVisible(false);
+                                menu.findItem(R.id.menu_vote_against).setVisible(true);
+                                menu.findItem(R.id.menu_vote_for).setVisible(true);
+                                break;
+                        }
                     }
                 }
                 break;

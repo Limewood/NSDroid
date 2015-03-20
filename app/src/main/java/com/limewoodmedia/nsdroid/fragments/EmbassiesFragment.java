@@ -22,6 +22,7 @@
  */
 package com.limewoodmedia.nsdroid.fragments;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +58,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.xmlpull.v1.XmlPullParserException;
 
 public class EmbassiesFragment extends SherlockFragment implements OnClickListener, OnItemSelectedListener {
 	private static final String TAG = EmbassiesFragment.class.getName();
@@ -207,9 +210,15 @@ public class EmbassiesFragment extends SherlockFragment implements OnClickListen
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
-				}
-				
-				return false;
+				} catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                    errorMessage = getResources().getString(R.string.xml_parser_exception);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    errorMessage = getResources().getString(R.string.api_io_exception);
+                }
+
+                return false;
         	};
         	
         	protected void onPostExecute(Boolean result) {

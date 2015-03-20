@@ -141,7 +141,7 @@ public class API {
 	 * @throws UnknownNationException if the nation was not found
 	 */
 	public synchronized NationDataParcelable getNationInfo(String nation, NationData.Shards...shards)
-			throws RateLimitReachedException, UnknownNationException {
+            throws RateLimitReachedException, UnknownNationException, IOException, XmlPullParserException {
         return new NationDataParcelable(nsapi.getNationInfo(nation, shards));
 	}
 	
@@ -156,7 +156,7 @@ public class API {
 	 * @throws RateLimitReachedException if the rate limit was reached
 	 */
 	public synchronized RegionDataParcelable getRegionInfo(String region, RegionData.Shards...shards)
-			throws RateLimitReachedException, UnknownRegionException {
+            throws RateLimitReachedException, UnknownRegionException, IOException, XmlPullParserException {
 
         return new RegionDataParcelable(nsapi.getRegionInfo(region, shards));
 	}
@@ -172,13 +172,13 @@ public class API {
      * @throws RateLimitReachedException if the rate limit was reached
      */
     public synchronized WADataParcelable getWAInfo(WACouncil council, WAData.Shards...shards)
-            throws RateLimitReachedException {
+            throws RateLimitReachedException, IOException, XmlPullParserException {
 
         return new WADataParcelable(nsapi.getWAInfo(council, shards));
     }
 	
 	public synchronized RegionDataParcelable getHomeRegionInfo(Context context, RegionData.Shards...shards)
-            throws RateLimitReachedException, UnknownRegionException, UnknownNationException {
+            throws RateLimitReachedException, UnknownRegionException, UnknownNationException, IOException, XmlPullParserException {
 		// Check if region is cached
 		NationInfo info = NationInfo.getInstance(context);
 		String region = info.getRegionId();
@@ -360,7 +360,7 @@ public class API {
 	 * @param id the id of the issue
 	 * @return the issue or null if not found
 	 */
-	public Issue getIssue(int id) {
+	public Issue getIssue(int id) throws IOException {
 		if(!isLoggedIn()) {
 			return null;
 		}
@@ -448,11 +448,10 @@ public class API {
 			issue.selectedChoice = selected;
 			return issue;
 	    } catch (ClientProtocolException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-		return null;
+	        throw new IOException(e);
+	    } catch (StringIndexOutOfBoundsException e) {
+            throw new IOException(e);
+        }
 	}
 	
 	/**

@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.http.client.ClientProtocolException;
+import org.xmlpull.v1.XmlPullParserException;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.limewoodMedia.nsapi.enums.WAStatus;
@@ -150,8 +151,12 @@ public class NationInfo {
 					e.printStackTrace();
 				} catch (RuntimeException e) {
 					e.printStackTrace();
-				}
-			} else {
+				} catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
 				try {
 					flagBitmap = LoadingHelper.loadFlag(uri, activity);
 				} catch (ClientProtocolException e) {

@@ -82,6 +82,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 public class Region extends SherlockFragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 	public static final String TAG = Region.class.getName();
     public static boolean shouldUpdate = false;
@@ -302,6 +304,12 @@ public class Region extends SherlockFragmentActivity implements NavigationDrawer
 				} catch (UnknownNationException e) {
                     e.printStackTrace();
                     errorMessage = getResources().getString(R.string.unknown_nation, e.getNation());
+                } catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                    errorMessage = getResources().getString(R.string.xml_parser_exception);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    errorMessage = getResources().getString(R.string.api_io_exception);
                 }
 
                 return false;

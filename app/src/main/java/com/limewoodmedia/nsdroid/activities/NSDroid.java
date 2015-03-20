@@ -22,6 +22,7 @@
  */
 package com.limewoodmedia.nsdroid.activities;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -71,6 +72,8 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 public class NSDroid extends SherlockFragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 	private static final String TAG = NSDroid.class.getName();
 	public static boolean shouldUpdate = false;
@@ -109,22 +112,42 @@ public class NSDroid extends SherlockFragmentActivity implements NavigationDrawe
         	startActivity(i);
         	return;
         } else {
-			new AsyncTask<Void, Void, Void>() {
+			new AsyncTask<Void, Void, Exception>() {
 				@Override
-				protected Void doInBackground(Void... params) {
+				protected Exception doInBackground(Void... params) {
                     try {
                         NationData nData = API.getInstance(NSDroid.this).getNationInfo(info.getId(), NationData.Shards.WA_STATUS);
                         info.setWAStatus(nData.worldAssemblyStatus);
                     } catch (UnknownNationException e) {
                         e.printStackTrace();
-                        Toast.makeText(NSDroid.this, getString(R.string.unknown_nation, e.getNation()), Toast.LENGTH_LONG).show();
+                        return e;
                     } catch (RateLimitReachedException e) {
                         e.printStackTrace();
-                        Toast.makeText(NSDroid.this, R.string.rate_limit_reached, Toast.LENGTH_LONG).show();
+                        return e;
+                    } catch (XmlPullParserException e) {
+                        e.printStackTrace();
+                        return e;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return e;
                     }
-					return null;
+                    return null;
 				}
-			}.execute();
+
+                @Override
+                protected void onPostExecute(Exception e) {
+                    if(e == null) return;
+                    if(e.getClass() == UnknownNationException.class) {
+                        Toast.makeText(NSDroid.this, getString(R.string.unknown_nation, ((UnknownNationException)e).getNation()), Toast.LENGTH_LONG).show();
+                    } else if(e.getClass() == RateLimitReachedException.class) {
+                        Toast.makeText(NSDroid.this, R.string.rate_limit_reached, Toast.LENGTH_LONG).show();
+                    } else if(e.getClass() == XmlPullParserException.class) {
+                        Toast.makeText(NSDroid.this, R.string.xml_parser_exception, Toast.LENGTH_LONG).show();
+                    } else if(e.getClass() == IOException.class) {
+                        Toast.makeText(NSDroid.this, R.string.api_io_exception, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }.execute();
 		}
 		setTitle(NationInfo.getInstance(NSDroid.this).getName());
         
@@ -189,7 +212,9 @@ public class NSDroid extends SherlockFragmentActivity implements NavigationDrawe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_refresh:
-            	loadData();
+                if(nationalHappenings != null && regionalHappenings != null) {
+                    loadData();
+                }
             	break;
         }
         return super.onOptionsItemSelected(item);
@@ -284,9 +309,15 @@ public class NSDroid extends SherlockFragmentActivity implements NavigationDrawe
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
-				}
-				
-				return false;
+				} catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                    errorMessage = getResources().getString(R.string.xml_parser_exception);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    errorMessage = getResources().getString(R.string.api_io_exception);
+                }
+
+                return false;
         	}
         	
         	protected void onPostExecute(Boolean result) {

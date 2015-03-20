@@ -69,6 +69,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 public class RMBFragment extends SherlockFragment implements OnClickListener {
 	@SuppressWarnings("unused")
 	private static final String TAG = RMBFragment.class.getName();
@@ -324,9 +326,15 @@ public class RMBFragment extends SherlockFragment implements OnClickListener {
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
-				}
-				
-				return false;
+				} catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                    errorMessage = getResources().getString(R.string.xml_parser_exception);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    errorMessage = getResources().getString(R.string.api_io_exception);
+                }
+
+                return false;
         	}
         	
         	protected void onPostExecute(Boolean result) {

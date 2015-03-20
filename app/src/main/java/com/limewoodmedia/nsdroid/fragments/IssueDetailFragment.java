@@ -53,6 +53,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.xml.sax.XMLReader;
 
@@ -128,8 +129,13 @@ public class IssueDetailFragment extends SherlockFragment implements OnClickList
 				if(API.getInstance(context).checkLogin(getActivity())) {
                     // Get previous choice
                     previous = db.getPreviousIssueChoiceIndex(id);
-					return API.getInstance(getActivity()).getIssue(id);
-				}
+                    try {
+                        return API.getInstance(getActivity()).getIssue(id);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
 				return null;
 			}
 			
@@ -186,7 +192,9 @@ public class IssueDetailFragment extends SherlockFragment implements OnClickList
 							choicesArea.addView(cText, params);
 							i++;
 						}
-					}
+					} else {
+                        Toast.makeText(getActivity(), R.string.api_io_exception, Toast.LENGTH_SHORT).show();
+                    }
 				}
 			}
 		}.execute();

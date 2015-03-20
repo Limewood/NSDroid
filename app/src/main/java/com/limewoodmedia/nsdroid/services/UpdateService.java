@@ -27,6 +27,10 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+
 public class UpdateService extends IntentService {
 	private static final String TAG = UpdateService.class.getName();
 	private static final int NOTIFICATION_ID = 12402;
@@ -71,6 +75,12 @@ public class UpdateService extends IntentService {
                         e.printStackTrace();
                         return;
                     } catch (UnknownRegionException e) {
+                        e.printStackTrace();
+                        return;
+                    } catch (XmlPullParserException e) {
+                        e.printStackTrace();
+                        return;
+                    } catch (IOException e) {
                         e.printStackTrace();
                         return;
                     }

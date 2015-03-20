@@ -1,5 +1,6 @@
 package com.limewoodmedia.nsdroid.activities;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -32,6 +33,8 @@ import com.limewoodmedia.nsdroid.API;
 import com.limewoodmedia.nsdroid.NationInfo;
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.db.NationsDatabase;
+
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
  * Lists all saved nations
@@ -161,6 +164,10 @@ public class NationsList extends SherlockListActivity {
                                                 e.printStackTrace();
                                             } catch (UnknownNationException e) {
                                                 e.printStackTrace();
+                                            } catch (XmlPullParserException e) {
+                                                e.printStackTrace();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
                                             }
 											return null;
 										}
@@ -259,6 +266,12 @@ public class NationsList extends SherlockListActivity {
                         } catch (UnknownRegionException e) {
                             e.printStackTrace();
                             errorMessage = getString(R.string.unknown_region, e.getRegion());
+                        } catch (XmlPullParserException e) {
+                            e.printStackTrace();
+                            errorMessage = getResources().getString(R.string.xml_parser_exception);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            errorMessage = getResources().getString(R.string.api_io_exception);
                         }
                         return null;
 					}

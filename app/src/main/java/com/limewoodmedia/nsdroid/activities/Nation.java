@@ -77,6 +77,7 @@ import org.achartengine.model.CategorySeries;
 import org.achartengine.model.SeriesSelection;
 import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
  * Main activity for nation information
@@ -380,9 +381,15 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
-				}
-				
-				return false;
+				} catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                    errorMessage = getResources().getString(R.string.xml_parser_exception);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    errorMessage = getResources().getString(R.string.api_io_exception);
+                }
+
+                return false;
         	}
         	
         	protected void onPostExecute(Boolean result) {

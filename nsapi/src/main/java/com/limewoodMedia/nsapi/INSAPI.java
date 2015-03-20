@@ -31,6 +31,10 @@ import com.limewoodMedia.nsapi.holders.RegionData;
 import com.limewoodMedia.nsapi.holders.WAData;
 import com.limewoodMedia.nsapi.holders.WorldData;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+
 /**
  * Interface for Java API for NationStates API
  * @author Joakim Lindskog
@@ -93,7 +97,7 @@ public interface INSAPI {
 	 * @throws com.limewoodMedia.nsapi.exceptions.UnknownNationException if the nation could not be found
 	 */
 	public NationData getNationInfo(String name, NationData.Shards... shards)
-		throws RateLimitReachedException, UnknownNationException;
+            throws RateLimitReachedException, UnknownNationException, IOException, XmlPullParserException;
 
 	/**
 	 * Fetches information on a region
@@ -104,7 +108,7 @@ public interface INSAPI {
 	 * @throws com.limewoodMedia.nsapi.exceptions.UnknownRegionException if the region could not be found
 	 */
 	public RegionData getRegionInfo(String name, RegionData.Shards... shards)
-			throws RateLimitReachedException, UnknownRegionException;
+            throws RateLimitReachedException, UnknownRegionException, IOException, XmlPullParserException;
 	
 	/**
      * Fetches information on the world
@@ -113,7 +117,7 @@ public interface INSAPI {
      * @throws com.limewoodMedia.nsapi.exceptions.RateLimitReachedException if the rate limit was reached (but not exceeded)
      */
 	public WorldData getWorldInfo(WorldData.Shards... shards)
-			throws RateLimitReachedException;
+            throws RateLimitReachedException, IOException, XmlPullParserException;
 	
 	/**
 	 * Fetches information on the World Assembly
@@ -123,5 +127,5 @@ public interface INSAPI {
 	 * @throws com.limewoodMedia.nsapi.exceptions.RateLimitReachedException if the rate limit was reached (but not exceeded)
 	 */
 	public WAData getWAInfo(WACouncil council, WAData.Shards... shards)
-			throws RateLimitReachedException;
+            throws RateLimitReachedException, IOException, XmlPullParserException;
 }

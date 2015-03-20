@@ -57,6 +57,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 public class Welcome extends SherlockActivity implements OnClickListener {
 	@SuppressWarnings("unused")
 	private static final String TAG = Welcome.class.getName();
@@ -124,7 +126,7 @@ public class Welcome extends SherlockActivity implements OnClickListener {
 					nation.setEnabled(false);
 					checkButton.setEnabled(false);
 					selectButton.setEnabled(false);
-				};
+				}
 				
 	        	protected Boolean doInBackground(Void...params) {
 					try {
@@ -151,13 +153,16 @@ public class Welcome extends SherlockActivity implements OnClickListener {
 					} catch (RuntimeException e) {
 						e.printStackTrace();
 						errorMessage = e.getMessage();
-					} catch (IOException e) {
-						e.printStackTrace();
-						errorMessage = e.getMessage();
-					}
+					} catch (XmlPullParserException e) {
+                        e.printStackTrace();
+                        errorMessage = getResources().getString(R.string.xml_parser_exception);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        errorMessage = getResources().getString(R.string.api_io_exception);
+                    }
 					
 					return false;
-	        	};
+	        	}
 	        	
 	        	protected void onPostExecute(Boolean result) {
 	        		// Remove loading animation
