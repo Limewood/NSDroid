@@ -1,2 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/home/joakim/.gradle/caches/modules-2/files-2.1/com.nostra13.universalimageloader/universal-image-loader/1.9.3/a85588bec3e2c4584d593d3f15df1677321bca72/universal-image-loader-1.9.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a85588bec3e2c4584d593d3f15df1677321bca72">
+        <dex dex="/home/joakim/android-studio/NSDroid/app/build/intermediates/pre-dexed/release/universal-image-loader-1.9.3_aac911bf9d2090dce41fa5cd367689a4ec55f79c.jar" />
+    </item>
+    <item
+        jar="/home/joakim/android-studio/NSDroid/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/home/joakim/android-studio/NSDroid/app/build/intermediates/pre-dexed/release/internal_impl-23.1.1_5324aec42f3b5aeb64647ac88671a6817d139529.jar" />
+    </item>
+    <item
+        jar="/home/joakim/android-studio/NSDroid/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/home/joakim/android-studio/NSDroid/app/build/intermediates/pre-dexed/release/com.android.support-support-v4-23.1.1_4d6809f21babbd1fd3dcd7a1d66b657cd2ebddf1.jar" />
+    </item>
+    <item
+        jar="/home/joakim/.gradle/caches/modules-2/files-2.1/org.achartengine/achartengine/1.2.0/a4acb01a4c267ba52f6b91037d4af2ee8064d941/achartengine-1.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a4acb01a4c267ba52f6b91037d4af2ee8064d941">
+        <dex dex="/home/joakim/android-studio/NSDroid/app/build/intermediates/pre-dexed/release/achartengine-1.2.0_1aa22f2722afbe3bb74de123fa3af3c9dbcc51c6.jar" />
+    </item>
+    <item
+        jar="/home/joakim/.gradle/caches/modules-2/files-2.1/httpcomponents-httpcore/httpcore/4.0-alpha6/2233eb91f0ca8ed6f81f62217d0e1ea9796e5f99/httpcore-4.0-alpha6.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2233eb91f0ca8ed6f81f62217d0e1ea9796e5f99">
+        <dex dex="/home/joakim/android-studio/NSDroid/app/build/intermediates/pre-dexed/release/httpcore-4.0-alpha6_f725d40fb8f38c213048a24a0056bfb63fdb8b7a.jar" />
+    </item>
+    <item
+        jar="/home/joakim/android-studio/NSDroid/nsapi/build/libs/nsapi.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="61a9daf7ee75232e2168b7f014fac4d440006c2a">
+        <dex dex="/home/joakim/android-studio/NSDroid/app/build/intermediates/pre-dexed/release/nsapi_66ad685b14a97f8091466b83f34959d5713bf825.jar" />
+    </item>
+    <item
+        jar="/home/joakim/android-studio/NSDroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="/home/joakim/android-studio/NSDroid/app/build/intermediates/pre-dexed/release/com.android.support-appcompat-v7-23.1.1_9bc2aa61ad36b048446803904344fe7748e8c553.jar" />
+    </item>
+    <item
+        jar="/home/joakim/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/home/joakim/android-studio/NSDroid/app/build/intermediates/pre-dexed/release/support-annotations-23.1.1_c6521cda677335d26663913d1dfde255045424ac.jar" />
+    </item>
+
+</items>

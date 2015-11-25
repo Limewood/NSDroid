@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     package="com.limewoodmedia.nsdroid"
     android:versionCode="19"
-    android:versionName="1.5.2" >
+    android:versionName="1.5.2">
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -22,14 +23,14 @@
         android:name=".NSApplication"
         android:icon="@drawable/app_icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
+        android:theme="@style/NSAppTheme"
         android:allowBackup="true" >
         
         <!-- Activities -->
         <activity
             android:name=".activities.NSDroid"
             android:label="@string/title_activity_nsdroid"
-        	android:theme="@style/AppTheme"
+        	android:theme="@style/NSAppTheme"
         	android:configChanges="locale" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,7 +42,7 @@
             android:name=".activities.Nation"
             android:label="@string/nation"
             android:exported="false"
-        	android:theme="@style/AppTheme" >
+        	android:theme="@style/NSAppTheme" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="android.intent.action.VIEW" />
@@ -53,7 +54,7 @@
  			android:name=".activities.Region"
             android:label="@string/region"
             android:exported="false"
-        	android:theme="@style/AppTheme" >
+        	android:theme="@style/NSAppTheme" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="android.intent.action.VIEW" />
@@ -68,20 +69,20 @@
             android:label="@string/welcome"
             android:excludeFromRecents="true"
             android:noHistory="true"
-        	android:theme="@style/AppTheme">
+        	android:theme="@style/NSAppTheme">
         </activity>
 
         <activity
  			android:name=".activities.Issues"
             android:label="@string/issues"
-        	android:theme="@style/AppTheme" >
+        	android:theme="@style/NSAppTheme" >
         </activity>
         
         <activity
  			android:name=".activities.IssueDetail"
             android:label="@string/issue_detail"
             android:exported="false"
-        	android:theme="@style/AppTheme" >
+        	android:theme="@style/NSAppTheme">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="android.intent.action.VIEW" />
@@ -92,31 +93,31 @@
         <activity
  			android:name=".activities.Dossier"
             android:label="@string/dossier"
-        	android:theme="@style/AppTheme" >
+        	android:theme="@style/NSAppTheme" >
         </activity>
         
         <activity
             android:name=".activities.Preferences"
             android:label="@string/preferences_title"
-        	android:theme="@style/AppTheme" >
+        	android:theme="@style/NSAppTheme" >
         </activity>
         
         <activity
             android:name=".activities.NationsList"
             android:label="@string/nations_list_title"
-        	android:theme="@style/AppTheme" >
+        	android:theme="@style/NSAppTheme" >
         </activity>
 
         <activity
             android:name=".activities.WorldAssembly"
             android:label="@string/world_assembly"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/NSAppTheme" >
         </activity>
 
         <activity
             android:name=".activities.News"
             android:label="@string/news"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/NSAppTheme" >
         </activity>
         
         <!-- Receivers -->

@@ -39,6 +39,7 @@ import com.limewoodmedia.nsdroid.views.LoadingView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.xmlpull.v1.XmlPullParser;
@@ -55,7 +56,7 @@ import java.util.Date;
  */
 public class News extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 	private static final String TAG = News.class.getName();
-    private static final String NEWS_URL = "https://www.nationstates.net/pages/news/index.rss";
+    private static final String NEWS_URL = "http://www.nationstates.net/pages/news/index.rss";
 	
 	private WebView webView;
     private String errorMessage;
@@ -120,7 +121,7 @@ public class News extends AppCompatActivity implements NavigationDrawerFragment.
                     XmlPullParser xpp = factory.newPullParser();
 
                     HttpGet get = new HttpGet(NEWS_URL);
-                    DefaultHttpClient client = new DefaultHttpClient();
+                    HttpClient client = new DefaultHttpClient();
                     HttpResponse response = client.execute(get);
 
 	                xpp.setInput(response.getEntity().getContent(), "UTF-8");

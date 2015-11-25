@@ -41,6 +41,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 public class LoadingHelper {
@@ -79,24 +80,28 @@ public class LoadingHelper {
 	}
 	
 	public static void loadHomeFlag(final AppCompatActivity activity) {
-		new AsyncTask<Void, Void, Bitmap>() {
-			@Override
-			protected Bitmap doInBackground(Void... params) {
-				try {
-					return NationInfo.getInstance(activity).getFlagBitmap(activity);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-        	
-			protected void onPostExecute(Bitmap result) {
-				if(result != null) {
-					activity.getSupportActionBar().setIcon(new BitmapDrawable(activity.getResources(), result));
-				}
-			};
-        }.execute();
+//		new AsyncTask<Void, Void, Bitmap>() {
+//			@Override
+//			protected Bitmap doInBackground(Void... params) {
+//				try {
+//					return NationInfo.getInstance(activity).getFlagBitmap(activity);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				} catch (ExecutionException e) {
+//					e.printStackTrace();
+//				}
+//				return null;
+//			}
+//
+//			protected void onPostExecute(Bitmap result) {
+//				if(result != null) {
+//					ActionBar actionBar = activity.getSupportActionBar();
+//					actionBar.setDisplayUseLogoEnabled(true);
+//					actionBar.setDisplayHomeAsUpEnabled(true);
+//					actionBar.setHomeButtonEnabled(true);
+//					actionBar.setLogo(new BitmapDrawable(activity.getResources(), result));
+//				}
+//			};
+//        }.execute();
 	}
 }

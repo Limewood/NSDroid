@@ -29,7 +29,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -303,7 +303,7 @@ public class NavigationDrawerFragment extends Fragment {
         public NSActionBarDrawerToggle(Activity activity, DrawerLayout drawerLayout,
                                        @DrawableRes int drawerImageRes, @StringRes int openDrawerContentDescRes,
                                        @StringRes int closeDrawerContentDescRes) {
-            super(activity, drawerLayout, drawerImageRes, openDrawerContentDescRes, closeDrawerContentDescRes);
+            super(activity, drawerLayout, null, openDrawerContentDescRes, closeDrawerContentDescRes);
         }
 
         @Override

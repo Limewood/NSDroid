@@ -24,13 +24,17 @@ package com.limewoodmedia.nsdroid.activities;
 
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.PreferenceChangedListener;
+import com.limewoodmedia.nsdroid.Utils;
+import com.limewoodmedia.nsdroid.fragments.NavigationDrawerFragment;
 import com.limewoodmedia.nsdroid.fragments.PreferencesFragment;
 
 import android.annotation.TargetApi;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.view.MenuItem;
 
 public class Preferences extends AppCompatPreferenceActivity {
 	@SuppressWarnings("deprecation")
@@ -61,5 +65,15 @@ public class Preferences extends AppCompatPreferenceActivity {
 		PreferencesFragment pref = new PreferencesFragment();
 		pref.setArguments(bundle);
 		getFragmentManager().beginTransaction().replace(android.R.id.content, pref).commit();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				finish();
+				break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

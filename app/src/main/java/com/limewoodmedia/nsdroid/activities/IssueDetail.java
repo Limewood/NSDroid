@@ -86,6 +86,9 @@ public class IssueDetail extends AppCompatActivity {
             case R.id.menu_refresh:
             	issueDetailFragment.reloadIssue();
             	break;
+            case android.R.id.home:
+                finish();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
