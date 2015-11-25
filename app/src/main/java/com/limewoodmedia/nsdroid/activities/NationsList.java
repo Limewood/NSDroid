@@ -11,7 +11,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,10 +25,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockListActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
@@ -41,18 +41,20 @@ import org.xmlpull.v1.XmlPullParserException;
  * @author Joakim Lindskog
  *
  */
-public class NationsList extends SherlockListActivity {
+public class NationsList extends AppCompatActivity {
 	private static final String TAG = NationsList.class.getName();
 	
 	private ArrayAdapter<String> adapter;
 	private List<String> nations;
+	private ListView listView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.nations_list);
-		
+
+		this.listView = (ListView) findViewById(R.id.list);
 		this.nations = new ArrayList<String>();
 		adapter = new ArrayAdapter<String>(this, 0, nations) {
 			@Override
@@ -83,13 +85,13 @@ public class NationsList extends SherlockListActivity {
         		return view;
 			}
 		};
-		setListAdapter(adapter);
+		listView.setAdapter(adapter);
 		
-		this.getListView().setLongClickable(true);
-		this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+		listView.setLongClickable(true);
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
 				final String name = (String) v.getTag();
-				
+
 				AlertDialog.Builder builder = new AlertDialog.Builder(NationsList.this);
 				builder.setTitle(R.string.nations_list_remove_title);
 				builder.setMessage(R.string.nations_list_remove_message);
@@ -110,15 +112,15 @@ public class NationsList extends SherlockListActivity {
 							protected Integer doInBackground(Void... params) {
 								NationsDatabase db = NationsDatabase.getInstance(NationsList.this);
 								boolean removed = db.removeNation(name);
-								if(!removed) {
+								if (!removed) {
 									return -1;
 								}
 								List<String> nations = db.getAllNations();
 								NationInfo info = NationInfo.getInstance(NationsList.this);
-								if(name.equals(info.getName())) {
+								if (name.equals(info.getName())) {
 									info.setName(null);
 									info.setFlag(null);
-									if(nations.size() == 0) {
+									if (nations.size() == 0) {
 										// No more nations
 										return -2;
 									} else {
@@ -126,67 +128,75 @@ public class NationsList extends SherlockListActivity {
 										return 1;
 									}
 								}
-								
+
 								return 0;
 							}
-							
+
 							protected void onPostExecute(Integer result) {
 								dialog.dismiss();
-								switch(result) {
-								case -1: // Failed to remove nation
-									Toast.makeText(NationsList.this, R.string.remove_nation_failed, Toast.LENGTH_SHORT).show();
-									break;
-									
-								case -2: {// No more nations
-									Intent i = new Intent(NationsList.this, Welcome.class);
-									i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-									i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						        	startActivity(i);
-									break;
+								switch (result) {
+									case -1: // Failed to remove nation
+										Toast.makeText(NationsList.this, R.string.remove_nation_failed, Toast.LENGTH_SHORT).show();
+										break;
+
+									case -2: {// No more nations
+										Intent i = new Intent(NationsList.this, Welcome.class);
+										i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+										i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+										startActivity(i);
+										break;
+									}
+
+									case 0: // Success
+										listNations();
+										break;
+
+									case 1: {
+										listNations(true);
+										final NationInfo info = NationInfo.getInstance(NationsList.this);
+										info.setName(nations.get(0));
+										new AsyncTask<Void, Void, Void>() {
+											@Override
+											protected Void doInBackground(Void... params) {
+												NationData nData = null;
+												try {
+													nData = API.getInstance(NationsList.this).getNationInfo(info.getId(), NationData.Shards.WA_STATUS);
+													info.setWAStatus(nData.worldAssemblyStatus);
+												} catch (RateLimitReachedException e) {
+													e.printStackTrace();
+												} catch (UnknownNationException e) {
+													e.printStackTrace();
+												} catch (XmlPullParserException e) {
+													e.printStackTrace();
+												} catch (IOException e) {
+													e.printStackTrace();
+												}
+												return null;
+											}
+										}.execute();
+
+										Intent i = new Intent(NationsList.this, NSDroid.class);
+										i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+										i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+										startActivity(i);
+										break;
+									}
 								}
-									
-								case 0: // Success
-									listNations();
-									break;
-									
-								case 1: {
-									listNations(true);
-									final NationInfo info = NationInfo.getInstance(NationsList.this);
-									info.setName(nations.get(0));
-									new AsyncTask<Void, Void, Void>() {
-										@Override
-										protected Void doInBackground(Void... params) {
-                                            NationData nData = null;
-                                            try {
-                                                nData = API.getInstance(NationsList.this).getNationInfo(info.getId(), NationData.Shards.WA_STATUS);
-                                                info.setWAStatus(nData.worldAssemblyStatus);
-                                            } catch (RateLimitReachedException e) {
-                                                e.printStackTrace();
-                                            } catch (UnknownNationException e) {
-                                                e.printStackTrace();
-                                            } catch (XmlPullParserException e) {
-                                                e.printStackTrace();
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-											return null;
-										}
-									}.execute();
-									
-									Intent i = new Intent(NationsList.this, NSDroid.class);
-									i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-									i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-									startActivity(i);
-									break;
-								}
-								}
-							};
+							}
+
+							;
 						}.execute();
 					}
 				});
 				builder.show();
-				
+
 				return true;
+			}
+		});
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				onListItemClick(listView, view, position, id);
 			}
 		});
 
@@ -226,11 +236,8 @@ public class NationsList extends SherlockListActivity {
 			e.printStackTrace();
 		}
 	}
-	
-	@Override
+
 	protected void onListItemClick(ListView l, final View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
-		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.nations_list_switch_title);
 		builder.setMessage(R.string.nations_list_switch_message);
@@ -297,7 +304,7 @@ public class NationsList extends SherlockListActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.menu_nations_list, menu);
+		getMenuInflater().inflate(R.menu.menu_nations_list, menu);
 		return true;
 	}
 	

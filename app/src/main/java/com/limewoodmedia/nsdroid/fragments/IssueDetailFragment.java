@@ -24,8 +24,6 @@ package com.limewoodmedia.nsdroid.fragments;
 
 import java.io.IOException;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragment;
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.API;
 import com.limewoodmedia.nsdroid.CustomAlertDialogBuilder;
@@ -39,6 +37,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.util.Log;
@@ -60,7 +61,7 @@ import org.xml.sax.XMLReader;
 /**
  * Fragment for showing a specific issue
  */
-public class IssueDetailFragment extends SherlockFragment implements OnClickListener {
+public class IssueDetailFragment extends Fragment implements OnClickListener {
 	private static final String TAG = IssueDetailFragment.class.getName();
 	
 	private View root;
@@ -104,7 +105,7 @@ public class IssueDetailFragment extends SherlockFragment implements OnClickList
 		scrollView = (ScrollView) root.findViewById(R.id.issue_scroll_view);
 		layout = (ViewGroup) root.findViewById(R.id.layout);
 
-        ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 		

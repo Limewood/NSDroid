@@ -29,13 +29,13 @@ import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import com.limewoodMedia.nsapi.DescriptionMapEntry;
 import com.limewoodMedia.nsapi.enums.CauseOfDeath;
 import com.limewoodMedia.nsapi.enums.Department;
+import com.limewoodMedia.nsapi.enums.IDescriptable;
+import com.limewoodMedia.nsapi.enums.IndustrySector;
 import com.limewoodMedia.nsapi.enums.WAStatus;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
@@ -61,9 +61,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -83,7 +87,7 @@ import org.xmlpull.v1.XmlPullParserException;
  * Main activity for nation information
  * @author Joakim Lindskog
  */
-public class Nation extends SherlockFragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class Nation extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 	public static final String TAG = Nation.class.getName();
 
     private RelativeLayout overview;
@@ -104,6 +108,7 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 	private TextView description;
 	private TextView endorsements;
 
+    // TODO Set standard colours for government and economy
     /** Colors to be used for the pie slices. */
     private static int[] CHART_COLOURS = new int[] {
             android.graphics.Color.parseColor("#4572A7"),
@@ -162,7 +167,6 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTheme(R.style.Theme_Sherlock_Light_DarkActionBar);
         setContentView(R.layout.nation);
 		imageLoader = Utils.getImageLoader(this);
 		this.options = Utils.getImageLoaderDisplayOptions();
@@ -368,7 +372,7 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 							BANNERS, FREEDOM_SCORES, ENDORSEMENTS,
                             DEATHS, // People
                             GOVERNMENT_BUDGET, DEMONYM, // Government
-                            PUBLIC_SECTOR // Economy
+                            SECTORS, GDP, INCOME, POOREST, RICHEST // Economy
                     );
 	                
 	                return true;
@@ -551,19 +555,27 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 
     private void doGovernmentSetup() {
         governmentTitle.setText(getString(R.string.nation_government_title, Utils.capitalize(data.demonym)));
-        // TODO Add government size and percent
-//        governmentSize.setText(getString(R.string.nation_government_size, 0, data.currency));
-//        governmentPercent.setText(getString(R.string.nation_government_percent, 0));
+        // Government size and percent
+        double gov = 0;
+        if(data.sectors.containsKey(IndustrySector.GOVERNMENT)) {
+            gov = data.sectors.get(IndustrySector.GOVERNMENT);
+        }
+        governmentSize.setText(getString(R.string.nation_government_size, Utils.formatCurrencyAmount(this, Math.round(data.gdp*(gov/100d))), data.currency));
+        governmentPercent.setText(getString(R.string.nation_government_percent, String.format("%.1f", gov)));
         governmentSeries.clear();
         governmentRenderer.removeAllRenderers();
-        Set<Map.Entry<Department, Float>> departments = data.governmentBudget.entrySet();
+        Set<Map.Entry<Department, Float>> depts = data.governmentBudget.entrySet();
+        TreeSet<Map.Entry<IDescriptable, Float>> departments = new TreeSet<>();
+        for(Map.Entry<Department, Float> d : depts) {
+            departments.add(new DescriptionMapEntry(d));
+        }
         NumberFormat format = NumberFormat.getPercentInstance();
         format.setMaximumFractionDigits(1);
-        Map<Department, String> legends = new HashMap<Department, String>();
+        Map<IDescriptable, String> legends = new HashMap<>();
         StringBuilder legend;
         String desc;
         int colour;
-        for(Map.Entry<Department, Float> d : departments) {
+        for(Map.Entry<IDescriptable, Float> d : departments) {
             if(d.getValue() == 0) continue;
             desc = d.getKey().getDescription();
             governmentSeries.add(desc, d.getValue()/100f);
@@ -595,37 +607,53 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 
     private void doEconomySetup() {
         economyTitle.setText(getString(R.string.nation_economy_title, Utils.capitalize(data.demonym)));
-        // TODO Add GDP, GDPPC, Poorest and Richest
-//        economyGDP.setText(getString(R.string.nation_economy_gdp, 0, data.currency));
-//        economyGDPPC.setText(getString(R.string.nation_economy_gdppc, 0, data.currency));
-//        economyPoorest.setText(getString(R.string.nation_economy_poorest, 0, data.currency));
-//        economyRichest.setText(getString(R.string.nation_economy_richest, 0, data.currency));
+        // GDP, GDPPC, Poorest and Richest
+        economyGDP.setText(getString(R.string.nation_economy_gdp, Utils.formatCurrencyAmount(this, data.gdp), data.currency));
+        economyGDPPC.setText(getString(R.string.nation_economy_gdppc, Utils.formatCurrencyAmount(this, Math.round(data.gdp/(data.population*1000000f))), data.currency));
+        economyPoorest.setText(getString(R.string.nation_economy_poorest, Utils.formatCurrencyAmount(this, data.poorest), data.currency));
+        economyRichest.setText(getString(R.string.nation_economy_richest, Utils.formatCurrencyAmount(this, data.richest), data.currency));
+
         economySeries.clear();
         economyRenderer.removeAllRenderers();
-        float publicSector = data.publicSector;
+        Set<Map.Entry<IndustrySector, Float>> secs = data.sectors.entrySet();
+        TreeSet<Map.Entry<IDescriptable, Float>> sectors = new TreeSet<>();
+        for(Map.Entry<IndustrySector, Float> d : secs) {
+            sectors.add(new DescriptionMapEntry(d, false));
+        }
         NumberFormat format = NumberFormat.getPercentInstance();
         format.setMaximumFractionDigits(1);
 
-        economySeries.add("Public Sector", publicSector/100f);
-        SimpleSeriesRenderer renderer = new SimpleSeriesRenderer();
-        renderer.setColor(CHART_COLOURS[(economySeries.getItemCount() - 1) % CHART_COLOURS.length]);
-        renderer.setChartValuesFormat(format);
-        economyRenderer.addSeriesRenderer(renderer);
-
-        economySeries.add("Private Sector", 1-(publicSector/100f));
-        renderer = new SimpleSeriesRenderer();
-        renderer.setColor(CHART_COLOURS[(economySeries.getItemCount() - 1) % CHART_COLOURS.length]);
-        renderer.setChartValuesFormat(format);
-        economyRenderer.addSeriesRenderer(renderer);
-
+        Map<IDescriptable, String> legends = new HashMap<>();
+        StringBuilder legend;
+        String desc;
+        int colour;
+        for(Map.Entry<IDescriptable, Float> s : sectors) {
+            if(s.getValue() == 0) continue;
+            desc = s.getKey().getDescription();
+            economySeries.add(desc, s.getValue()/100f);
+            SimpleSeriesRenderer renderer = new SimpleSeriesRenderer();
+            colour = CHART_COLOURS[(economySeries.getItemCount() - 1) % CHART_COLOURS.length];
+            renderer.setColor(colour);
+            renderer.setChartValuesFormat(format);
+            economyRenderer.addSeriesRenderer(renderer);
+            legend = new StringBuilder();
+            legend.append("<b><font color='").append(Integer.toString(colour)).append("'>").append(desc);
+            legends.put(s.getKey(), legend.toString());
+        }
         economyChart.repaint();
 
         // Legend
-        StringBuilder legend = new StringBuilder();
-        legend.append("<b><font color='").append(Integer.toString(CHART_COLOURS[0])).append("'>").append("Public Sector")
-            .append(": ").append(format.format(publicSector/100f)).append("</font></b>");
-        legend.append("<br/><b><font color='").append(Integer.toString(CHART_COLOURS[1])).append("'>").append("Private Sector")
-                .append(": ").append(format.format(1-publicSector/100f)).append("</font></b>");
+        legend = new StringBuilder();
+        for(IndustrySector sector : IndustrySector.values()) {
+            if(legend.length() > 0) {
+                legend.append("<br/>");
+            }
+            if(legends.containsKey(sector)) {
+                legend.append(legends.get(sector)).append(": ").append(Float.toString(data.sectors.get(sector))).append("%</font></b>");
+            } else {
+                legend.append("<font color='grey'>").append(sector.getDescription()).append(": ").append("0%</font>");
+            }
+        }
         economyLegend.setText(Html.fromHtml(legend.toString()), TextView.BufferType.SPANNABLE);
     }
     
@@ -638,7 +666,7 @@ public class Nation extends SherlockFragmentActivity implements NavigationDrawer
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.menu_nation, menu);
+        getMenuInflater().inflate(R.menu.menu_nation, menu);
         return true;
     }
 

@@ -27,7 +27,6 @@ import static com.limewoodMedia.nsapi.holders.NationData.Shards.*;
 import java.io.IOException;
 import java.net.URL;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
 import com.limewoodMedia.nsapi.holders.NationData;
@@ -38,7 +37,6 @@ import com.limewoodmedia.nsdroid.NationInfo;
 import com.limewoodmedia.nsdroid.db.NationsDatabase;
 import com.limewoodmedia.nsdroid.views.LoadingView;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -46,6 +44,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -59,7 +58,7 @@ import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-public class Welcome extends SherlockActivity implements OnClickListener {
+public class Welcome extends AppCompatActivity implements OnClickListener {
 	@SuppressWarnings("unused")
 	private static final String TAG = Welcome.class.getName();
 	
@@ -84,7 +83,6 @@ public class Welcome extends SherlockActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-        setTheme(R.style.Theme_Sherlock_Light_DarkActionBar);
 		setContentView(R.layout.welcome);
 		
 		info = NationInfo.getInstance(this);
@@ -121,23 +119,23 @@ public class Welcome extends SherlockActivity implements OnClickListener {
 	    	errorMessage = getResources().getString(R.string.general_error);
 	    	// Check if nation is in database
 			// Check if nation exists, if so get info
-			new AsyncTask<Void, Void, Boolean>() {
+			new AsyncTask<String, Void, Boolean>() {
 				protected void onPreExecute() {
 					nation.setEnabled(false);
 					checkButton.setEnabled(false);
 					selectButton.setEnabled(false);
 				}
 				
-	        	protected Boolean doInBackground(Void...params) {
+	        	protected Boolean doInBackground(String...params) {
 					try {
 						if(NationsDatabase.getInstance(Welcome.this).nationExists(
-								nation.getText().toString().replace(' ', '_'))) {
+								params[0])) {
 							errorMessage = getResources().getString(R.string.nation_already_added);
 							return false;
 						}
 						
 		                data = API.getInstance(Welcome.this).getNationInfo(
-		                		nation.getText().toString().replace(' ', '_'),
+		                		params[0],
 		                		NAME, FULL_NAME, FLAG, MOTTO, REGION, WA_STATUS);
 		                
 		                URL imageURL = new URL(data.flagURL);
@@ -201,7 +199,7 @@ public class Welcome extends SherlockActivity implements OnClickListener {
 	        			Toast.makeText(Welcome.this, errorMessage, Toast.LENGTH_SHORT).show();
 	        		}
 	        	};
-	        }.execute();
+	        }.execute(nation.getText().toString().replace(' ', '_'));
 		}
 		else if(v == selectButton) {
 			if(!adding) {

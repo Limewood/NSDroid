@@ -26,13 +26,7 @@ import static com.limewoodMedia.nsapi.holders.RegionData.Shards.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
@@ -60,20 +54,22 @@ import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.text.style.StyleSpan;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -84,7 +80,7 @@ import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-public class Region extends SherlockFragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class Region extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 	public static final String TAG = Region.class.getName();
     public static boolean shouldUpdate = false;
 
@@ -122,7 +118,6 @@ public class Region extends SherlockFragmentActivity implements NavigationDrawer
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTheme(R.style.Theme_Sherlock_Light_DarkActionBar);
         setContentView(R.layout.region);
 
         // Fetch flag
@@ -398,7 +393,7 @@ public class Region extends SherlockFragmentActivity implements NavigationDrawer
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.menu_region, menu);
+        getMenuInflater().inflate(R.menu.menu_region, menu);
         return true;
     }
 

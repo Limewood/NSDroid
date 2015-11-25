@@ -28,6 +28,9 @@
     <string name="none">None</string>
     <string name="xml_parser_exception">Error in XML. Please try again or report to android@limewoodmedia.com.</string>
     <string name="api_io_exception">Unknown error! Probably something changed on the NationStates website. Please report to android@limewoodmedia.com.</string>
+    <string name="trillion">%1$s trillion</string>
+    <string name="billion">%1$s billion</string>
+    <string name="million">%1$s million</string>
     
     <!-- Welcome activity -->
     <string name="welcome">Welcome to NSDroid!</string>

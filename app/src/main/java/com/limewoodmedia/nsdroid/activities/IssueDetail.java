@@ -22,19 +22,18 @@
  */
 package com.limewoodmedia.nsdroid.activities;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.LoadingHelper;
 import com.limewoodmedia.nsdroid.fragments.IssueDetailFragment;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
-public class IssueDetail extends SherlockFragmentActivity {
+public class IssueDetail extends AppCompatActivity {
 	public static final String TAG = IssueDetail.class.getName();
 
 	private IssueDetailFragment issueDetailFragment;
@@ -43,7 +42,6 @@ public class IssueDetail extends SherlockFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTheme(R.style.Theme_Sherlock_Light_DarkActionBar);
         setContentView(R.layout.issue_detail_single);
 
         // Fetch flag
@@ -74,7 +72,7 @@ public class IssueDetail extends SherlockFragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.menu_issue_detail, menu);
+        getMenuInflater().inflate(R.menu.menu_issue_detail, menu);
         return true;
     }
 

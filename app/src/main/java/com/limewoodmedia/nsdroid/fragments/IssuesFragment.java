@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.API;
 import com.limewoodmedia.nsdroid.CustomAlertDialogBuilder;
@@ -39,6 +38,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -53,7 +53,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class IssuesFragment extends SherlockFragment {
+public class IssuesFragment extends Fragment {
 	private static final String TAG = IssuesFragment.class.getName();
 	
 	private View root;

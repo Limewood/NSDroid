@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="Theme.Sherlock.Light.DarkActionBar">
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="android:listViewStyle">@style/CommonList</item>
         <item name="android:textViewStyle">@style/CommonTextView</item>
 		<item name="android:background">@android:color/transparent</item>
@@ -93,9 +93,10 @@
     </style>
 
     <style name="NationGraphsText">
-        <item name="android:textSize">19sp</item>
+        <item name="android:textSize">17sp</item>
         <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:visibility">gone</item><!-- TODO Show graph texts -->
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_margin">3dp</item>
     </style>
 
     <style name="NationChartLegend">

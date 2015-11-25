@@ -34,11 +34,13 @@ import android.os.Parcelable;
 
 import com.limewoodMedia.nsapi.enums.CauseOfDeath;
 import com.limewoodMedia.nsapi.enums.Department;
+import com.limewoodMedia.nsapi.enums.IndustrySector;
 import com.limewoodMedia.nsapi.enums.WAStatus;
 import com.limewoodMedia.nsapi.enums.WAVote;
 import com.limewoodMedia.nsapi.holders.NationData;
 import com.limewoodMedia.nsapi.holders.NationFreedoms;
 import com.limewoodMedia.nsapi.holders.NationHappening;
+import com.limewoodMedia.nsapi.holders.ZombieNationData;
 
 public class NationDataParcelable extends NationData implements Parcelable {
 	public Bitmap flagBitmap;
@@ -89,6 +91,12 @@ public class NationDataParcelable extends NationData implements Parcelable {
         this.demonym = data.demonym;
         this.demonym2 = data.demonym2;
         this.demonym2Plural = data.demonym2Plural;
+		this.gdp = data.gdp;
+		this.income = data.income;
+		this.poorest = data.poorest;
+		this.richest = data.richest;
+		this.sectors = data.sectors;
+		this.zombie = data.zombie;
 	}
 	
 	public static final Parcelable.Creator<NationDataParcelable> CREATOR
@@ -163,6 +171,16 @@ public class NationDataParcelable extends NationData implements Parcelable {
                 data.demonym = in.readString();
                 data.demonym2 = in.readString();
                 data.demonym2Plural = in.readString();
+				data.sectors = new HashMap<IndustrySector, Float>();
+				num = in.readInt();
+				for(int i=0; i<num; i++) {
+					data.sectors.put(IndustrySector.parse(in.readString()), in.readFloat());
+				}
+				data.zombie = new ZombieNationData();
+				data.zombie.action = in.readString();
+				data.zombie.survivors = in.readInt();
+				data.zombie.zombies = in.readInt();
+				data.zombie.dead = in.readInt();
 				
 				// Read flag bitmap
 				byte[] bArr = in.createByteArray();
@@ -267,6 +285,31 @@ public class NationDataParcelable extends NationData implements Parcelable {
         dest.writeString(demonym);
         dest.writeString(demonym2);
         dest.writeString(demonym2Plural);
+		dest.writeLong(gdp);
+		dest.writeInt(income);
+		dest.writeInt(poorest);
+		dest.writeInt(richest);
+		if(sectors != null) {
+			dest.writeInt(sectors.size());
+			for(Entry<IndustrySector, Float> e : sectors.entrySet()) {
+				dest.writeString(e.getKey().getDescription());
+				dest.writeFloat(e.getValue());
+			}
+		} else {
+			dest.writeInt(0);
+		}
+		if(zombie != null) {
+			// Write one entry for each value in zombie
+			dest.writeString(zombie.action);
+			dest.writeInt(zombie.survivors);
+			dest.writeInt(zombie.zombies);
+			dest.writeInt(zombie.dead);
+		} else {
+			dest.writeString(null);
+			dest.writeInt(0);
+			dest.writeInt(0);
+			dest.writeInt(0);
+		}
 		
 		// Write flag bitmap
 		if(flagBitmap != null) {

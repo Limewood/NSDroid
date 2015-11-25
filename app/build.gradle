@@ -1,15 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 23
     buildToolsVersion "21.1.2"
+    useLibrary  'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.limewoodmedia.nsdroid"
         minSdkVersion 8
-        targetSdkVersion 21
-        versionCode 31
-        versionName "1.9.2"
+        targetSdkVersion 23
+        versionCode 32
+        versionName "1.9.3"
     }
 
     buildTypes {
@@ -21,8 +22,8 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:21+'
-    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
+    compile 'com.android.support:support-v4:23.1.1'
+    compile "com.android.support:appcompat-v7:23.1.1"
     compile project(':nsapi')
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile 'org.achartengine:achartengine:1.2.0'

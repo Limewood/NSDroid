@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
 import com.limewoodMedia.nsapi.holders.Embassy;
@@ -45,6 +44,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -61,7 +61,7 @@ import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-public class EmbassiesFragment extends SherlockFragment implements OnClickListener, OnItemSelectedListener {
+public class EmbassiesFragment extends Fragment implements OnClickListener, OnItemSelectedListener {
 	private static final String TAG = EmbassiesFragment.class.getName();
 	
 	private View root;

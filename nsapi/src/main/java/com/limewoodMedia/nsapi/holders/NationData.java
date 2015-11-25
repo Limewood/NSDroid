@@ -27,6 +27,7 @@ import com.limewoodMedia.nsapi.enums.CauseOfDeath;
 import com.limewoodMedia.nsapi.enums.Department;
 import com.limewoodMedia.nsapi.enums.IArguments;
 import com.limewoodMedia.nsapi.enums.IShards;
+import com.limewoodMedia.nsapi.enums.IndustrySector;
 import com.limewoodMedia.nsapi.enums.WAStatus;
 import com.limewoodMedia.nsapi.enums.WAVote;
 import com.limewoodMedia.nsapi.holders.RegionData.Shards.Arguments;
@@ -100,7 +101,13 @@ public class NationData {
 		BANNERS("banners"),
         DEMONYM("demonym"),
         DEMONYM2("demonym2"),
-        DEMONYM2_PLURAL("demonym2plural");
+        DEMONYM2_PLURAL("demonym2plural"),
+		GDP("gdp"),
+		INCOME("income"),
+		POOREST("poorest"),
+		RICHEST("richest"),
+		SECTORS("sectors"),
+		ZOMBIE("zombie");
 
 		private String name;
 		private String tag;
@@ -185,13 +192,13 @@ public class NationData {
 			}
 		}
 
-		public static enum Attributes {
+		public enum Attributes {
 			DEATHS_CAUSE_TYPE("type"),
 			CENSUS_SCORE_ID("id");
 
 			private String name;
 
-			private Attributes(String name) {
+			Attributes(String name) {
 				this.name = name;
 			}
 
@@ -200,7 +207,7 @@ public class NationData {
 			}
 		}
 
-		public static enum SubTags {
+		public enum SubTags {
 			HAPPENINGS_EVENT("event"),
 			FREEDOMS_CIVIL_RIGHTS("civilrights"),
 			FREEDOMS_ECONOMY("economy"),
@@ -219,11 +226,19 @@ public class NationData {
 			BUDGET_COMMERCE("commerce"),
             BUDGET_INTERNATIONAL_AID("internationalaid"),
 			DEATHS_CAUSE("cause"),
-			BANNERS_BANNER("banner");
+			BANNERS_BANNER("banner"),
+			SECTORS_BLACKMARKET("blackmarket"),
+			SECTORS_GOVERNMENT("government"),
+			SECTORS_INDUSTRY("industry"),
+			SECTORS_PUBLIC("public"),
+			ZOMBIE_ACTION("zaction"),
+			ZOMBIE_SURVIVORS("survivors"),
+			ZOMBIE_ZOMBIES("zombies"),
+			ZOMBIE_DEAD("dead");
 
 			private String tag;
 
-			private SubTags(String tag) {
+			SubTags(String tag) {
 				this.tag = tag;
 			}
 
@@ -278,6 +293,12 @@ public class NationData {
     public String demonym;
     public String demonym2;
     public String demonym2Plural;
+	public long gdp;
+	public int income;
+	public int poorest;
+	public int richest;
+	public Map<IndustrySector, Float> sectors;
+	public ZombieNationData zombie;
 
 	public String getDescription() {
 		String size;

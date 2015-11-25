@@ -32,19 +32,19 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.limewoodMedia.nsapi.enums.WACouncil;
 import com.limewoodMedia.nsapi.enums.WAStatus;
 import com.limewoodMedia.nsapi.enums.WAVote;
@@ -83,7 +83,7 @@ import java.util.regex.Pattern;
  * World Assembly
  * Created by Joakim Lindskog on 2015-02-01.
  */
-public class WorldAssembly extends SherlockFragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class WorldAssembly extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     @SuppressWarnings("unused")
     private static final String TAG = Welcome.class.getName();
 
@@ -129,7 +129,6 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTheme(R.style.Theme_Sherlock_Light_DarkActionBar);
         setContentView(R.layout.wa);
 
         // Fetch flag
@@ -142,7 +141,7 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
         Utils.setupNavigationDrawer(this);
 
         viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
@@ -497,7 +496,7 @@ public class WorldAssembly extends SherlockFragmentActivity implements Navigatio
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.menu_wa, menu);
+        getMenuInflater().inflate(R.menu.menu_wa, menu);
         return true;
     }
 

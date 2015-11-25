@@ -34,7 +34,6 @@ import org.apache.http.client.params.ClientPNames;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.limewoodmedia.nsdroid.views.LoadingView;
 
 import android.content.Context;
@@ -42,6 +41,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
 
 public class LoadingHelper {
 	public static void startLoading(final LoadingView view, String text) {
@@ -78,7 +78,7 @@ public class LoadingHelper {
 		return BitmapFactory.decodeStream(stream);
 	}
 	
-	public static void loadHomeFlag(final SherlockFragmentActivity activity) {
+	public static void loadHomeFlag(final AppCompatActivity activity) {
 		new AsyncTask<Void, Void, Bitmap>() {
 			@Override
 			protected Bitmap doInBackground(Void... params) {

@@ -25,7 +25,6 @@ package com.limewoodmedia.nsdroid.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.limewoodMedia.nsapi.holders.RegionHappening;
 import com.limewoodmedia.nsdroid.LoadingHelper;
 import com.limewoodmedia.nsdroid.R;
@@ -33,6 +32,7 @@ import com.limewoodmedia.nsdroid.TagParser;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
@@ -45,7 +45,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class RegionalHappenings extends SherlockFragment {
+public class RegionalHappenings extends Fragment {
 	@SuppressWarnings("unused")
 	private static final String TAG = RegionalHappenings.class.getName();
 	

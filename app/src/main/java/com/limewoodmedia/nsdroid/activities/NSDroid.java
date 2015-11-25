@@ -29,9 +29,6 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
@@ -66,15 +63,18 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-public class NSDroid extends SherlockFragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class NSDroid extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 	private static final String TAG = NSDroid.class.getName();
 	public static boolean shouldUpdate = false;
 	
@@ -94,7 +94,6 @@ public class NSDroid extends SherlockFragmentActivity implements NavigationDrawe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTheme(R.style.Theme_Sherlock_Light_DarkActionBar);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String languageToLoad  = prefs.getString(getString(R.string.preference_locale), "");
         Locale locale = new Locale(languageToLoad); 
@@ -150,7 +149,7 @@ public class NSDroid extends SherlockFragmentActivity implements NavigationDrawe
             }.execute();
 		}
 		setTitle(NationInfo.getInstance(NSDroid.this).getName());
-        
+
         setContentView(R.layout.overview);
 
         Utils.setupNavigationDrawer(this);
@@ -203,7 +202,7 @@ public class NSDroid extends SherlockFragmentActivity implements NavigationDrawe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

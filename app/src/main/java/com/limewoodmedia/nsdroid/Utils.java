@@ -25,10 +25,10 @@ package com.limewoodmedia.nsdroid;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.limewoodmedia.nsdroid.activities.Dossier;
 import com.limewoodmedia.nsdroid.activities.Issues;
 import com.limewoodmedia.nsdroid.activities.NSDroid;
@@ -45,11 +45,15 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
+import java.text.DecimalFormat;
+
 /**
  * @author Joakim Lindskog
  *         2014-12-16
  */
 public class Utils {
+    public static String NUMBER_FORMAT = "%,d";
+
 	public static ImageLoaderConfiguration getImageLoaderConfig(Context context) {
 		return new ImageLoaderConfiguration.Builder(context)
 				.threadPriority(Thread.NORM_PRIORITY - 2)
@@ -93,7 +97,7 @@ public class Utils {
      * @param activity the Activity
      * @return the navigation drawer fragment
      */
-    public static NavigationDrawerFragment setupNavigationDrawer(SherlockFragmentActivity activity) {
+    public static NavigationDrawerFragment setupNavigationDrawer(AppCompatActivity activity) {
         NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)
                 activity.getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
@@ -190,5 +194,22 @@ public class Utils {
         int days = (int) Math.floor(hours / 24f);
         hours = hours - days*24;
         return new int[]{days, hours};
+    }
+
+    public static String formatCurrencyAmount(Context context, long amount) {
+        int len = String.valueOf(amount).length()-1;
+
+        String formatted = null;
+        if(len >= 12) { // Trillion
+            formatted = context.getString(R.string.trillion, String.format(NUMBER_FORMAT, Math.round(amount/1000000000000d)));
+        } else if(len >= 9) { // Billion
+            formatted = context.getString(R.string.billion, String.format(NUMBER_FORMAT, Math.round(amount/1000000000d)));
+        } else if(len >= 6) { // Million
+            formatted = context.getString(R.string.million, String.format(NUMBER_FORMAT, Math.round(amount/1000000d)));
+        } else {
+            formatted = String.format(NUMBER_FORMAT, amount);
+        }
+
+        return formatted;
     }
 }

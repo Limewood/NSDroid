@@ -28,19 +28,19 @@ import com.limewoodMedia.nsapi.holders.NationData;
  * An enum of government departments in a nation
  * Created by Joakim Lindskog on 2015-01-31.
  */
-public enum Department {
-    ENVIRONMENT("Environment", NationData.Shards.SubTags.BUDGET_ENVIRONMENT),
-    SOCIAL_EQUALITY("Social Policy", NationData.Shards.SubTags.BUDGET_SOCIAL_EQUALITY),
-    EDUCATION("Education", NationData.Shards.SubTags.BUDGET_EDUCATION),
-    LAW_AND_ORDER("Law & Order", NationData.Shards.SubTags.BUDGET_LAW_AND_ORDER),
+public enum Department implements IDescriptable {
     ADMINISTRATION("Administration", NationData.Shards.SubTags.BUDGET_ADMINISTRATION),
-    WELFARE("Welfare", NationData.Shards.SubTags.BUDGET_WELFARE),
-    SPIRITUALITY("Spirituality", NationData.Shards.SubTags.BUDGET_SPIRITUALITY),
     DEFENCE("Defence", NationData.Shards.SubTags.BUDGET_DEFENCE),
-    PUBLIC_TRANSPORT("Public Transport", NationData.Shards.SubTags.BUDGET_PUBLIC_TRANSPORT),
+    EDUCATION("Education", NationData.Shards.SubTags.BUDGET_EDUCATION),
+    ENVIRONMENT("Environment", NationData.Shards.SubTags.BUDGET_ENVIRONMENT),
     HEALTHCARE("Healthcare", NationData.Shards.SubTags.BUDGET_HEALTHCARE),
     COMMERCE("Industry", NationData.Shards.SubTags.BUDGET_COMMERCE),
-    INTERNATIONAL_AID("International Aid", NationData.Shards.SubTags.BUDGET_INTERNATIONAL_AID);
+    INTERNATIONAL_AID("International Aid", NationData.Shards.SubTags.BUDGET_INTERNATIONAL_AID),
+    LAW_AND_ORDER("Law & Order", NationData.Shards.SubTags.BUDGET_LAW_AND_ORDER),
+    PUBLIC_TRANSPORT("Public Transport", NationData.Shards.SubTags.BUDGET_PUBLIC_TRANSPORT),
+    SOCIAL_EQUALITY("Social Policy", NationData.Shards.SubTags.BUDGET_SOCIAL_EQUALITY),
+    SPIRITUALITY("Spirituality", NationData.Shards.SubTags.BUDGET_SPIRITUALITY),
+    WELFARE("Welfare", NationData.Shards.SubTags.BUDGET_WELFARE);
 
     private String description;
     private NationData.Shards.SubTags subTag;

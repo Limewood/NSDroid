@@ -22,10 +22,6 @@
  */
 package com.limewoodmedia.nsdroid.activities;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.LoadingHelper;
 import com.limewoodmedia.nsdroid.NationInfo;
@@ -33,11 +29,14 @@ import com.limewoodmedia.nsdroid.Utils;
 import com.limewoodmedia.nsdroid.fragments.IssuesFragment;
 import com.limewoodmedia.nsdroid.fragments.NavigationDrawerFragment;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
-public class Issues extends SherlockFragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class Issues extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 	public static final String TAG = Issues.class.getName();
 
 	private TextView issuesHeader;
@@ -47,7 +46,6 @@ public class Issues extends SherlockFragmentActivity implements NavigationDrawer
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTheme(R.style.Theme_Sherlock_Light_DarkActionBar);
         setContentView(R.layout.issues_single);
 
         // Fetch flag
@@ -65,7 +63,7 @@ public class Issues extends SherlockFragmentActivity implements NavigationDrawer
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.menu_issues, menu);
+        getMenuInflater().inflate(R.menu.menu_issues, menu);
         return true;
     }
 

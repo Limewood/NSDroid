@@ -23,14 +23,14 @@ package com.limewoodmedia.nsdroid.activities;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.limewoodmedia.nsdroid.LoadingHelper;
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.Utils;
@@ -53,7 +53,7 @@ import java.util.Date;
 /**
  * News activity
  */
-public class News extends SherlockFragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class News extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 	private static final String TAG = News.class.getName();
     private static final String NEWS_URL = "https://www.nationstates.net/pages/news/index.rss";
 	
@@ -65,8 +65,6 @@ public class News extends SherlockFragmentActivity implements NavigationDrawerFr
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setTheme(R.style.Theme_Sherlock_Light_DarkActionBar);
         
         setContentView(R.layout.news);
 
@@ -85,7 +83,7 @@ public class News extends SherlockFragmentActivity implements NavigationDrawerFr
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

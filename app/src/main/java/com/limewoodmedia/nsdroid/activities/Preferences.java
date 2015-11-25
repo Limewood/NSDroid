@@ -22,25 +22,22 @@
  */
 package com.limewoodmedia.nsdroid.activities;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.PreferenceChangedListener;
-import com.limewoodmedia.nsdroid.Utils;
 import com.limewoodmedia.nsdroid.fragments.PreferencesFragment;
 
 import android.annotation.TargetApi;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 
-public class Preferences extends SherlockPreferenceActivity {
+public class Preferences extends AppCompatPreferenceActivity {
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-        setTheme(R.style.Theme_Sherlock_Light_DarkActionBar);
         // Portrait orientation only
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         

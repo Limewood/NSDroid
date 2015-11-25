@@ -26,6 +26,7 @@ import com.limewoodMedia.nsapi.enums.CauseOfDeath;
 import com.limewoodMedia.nsapi.enums.Department;
 import com.limewoodMedia.nsapi.enums.IArguments;
 import com.limewoodMedia.nsapi.enums.IShards;
+import com.limewoodMedia.nsapi.enums.IndustrySector;
 import com.limewoodMedia.nsapi.enums.WACouncil;
 import com.limewoodMedia.nsapi.enums.WAStatus;
 import com.limewoodMedia.nsapi.enums.WAVote;
@@ -46,6 +47,7 @@ import com.limewoodMedia.nsapi.holders.WAHappening;
 import com.limewoodMedia.nsapi.holders.WAMemberLogHappening;
 import com.limewoodMedia.nsapi.holders.WAVotes;
 import com.limewoodMedia.nsapi.holders.WorldData;
+import com.limewoodMedia.nsapi.holders.ZombieNationData;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -368,6 +370,24 @@ public class NSAPI implements INSAPI {
                     else if (tagName.equals(NationData.Shards.DEMONYM2_PLURAL.getTag())) {
                         nation.demonym2Plural = xpp.nextText();
                     }
+					else if (tagName.equals(NationData.Shards.GDP.getTag())) {
+						nation.gdp = Long.parseLong(xpp.nextText());
+					}
+					else if (tagName.equals(NationData.Shards.INCOME.getTag())) {
+						nation.income = Integer.parseInt(xpp.nextText());
+					}
+					else if (tagName.equals(NationData.Shards.POOREST.getTag())) {
+						nation.poorest = Integer.parseInt(xpp.nextText());
+					}
+					else if (tagName.equals(NationData.Shards.RICHEST.getTag())) {
+						nation.richest = Integer.parseInt(xpp.nextText());
+					}
+					else if (tagName.equals(NationData.Shards.SECTORS.getTag())) {
+						nation.sectors = parseSectors(xpp);
+					}
+					else if (tagName.equals(NationData.Shards.ZOMBIE.getTag())) {
+						nation.zombie = parseZombie(xpp, nation.zombie);
+					}
 					else if (!tagName.equals(NationData.ROOT_TAG)) {
 						System.err.println("Unknown nation tag: " + tagName);
 					}
@@ -591,6 +611,66 @@ public class NSAPI implements INSAPI {
 			}
 		}
 		return banners.toArray(new String[banners.size()]);
+	}
+
+	private Map<IndustrySector, Float> parseSectors(XmlPullParser xpp)
+			throws XmlPullParserException, IOException {
+		String tagName = null;
+		String str = null;
+		float value = -1;
+		HashMap<IndustrySector, Float> sectors = new HashMap<IndustrySector, Float>();
+		IndustrySector sector = null;
+		loop: while (xpp.next() != XmlPullParser.END_DOCUMENT)
+			switch (xpp.getEventType()) {
+				case XmlPullParser.START_TAG:
+					tagName = xpp.getName().toLowerCase();
+					if ((sector = IndustrySector.parseTag(tagName)) != null) {
+						str = xpp.nextText();
+						value = Float.parseFloat(str);
+						sectors.put(sector, value);
+					}
+					break;
+				case XmlPullParser.END_TAG:
+					tagName = xpp.getName().toLowerCase();
+					if (tagName.equals(NationData.Shards.SECTORS.getTag())) {
+						break loop;
+					}
+					break;
+			}
+		return sectors;
+	}
+
+	private ZombieNationData parseZombie(XmlPullParser xpp, ZombieNationData zombies)
+			throws XmlPullParserException, IOException {
+		String tagName = null;
+		if (zombies == null) {
+			zombies = new ZombieNationData();
+		}
+		loop: while (xpp.next() != XmlPullParser.END_DOCUMENT) {
+			switch (xpp.getEventType()) {
+				case XmlPullParser.START_TAG:
+					tagName = xpp.getName().toLowerCase();
+					if (tagName.equals(NationData.Shards.SubTags.ZOMBIE_ACTION.getTag())) {
+						zombies.action = xpp.nextText();
+					}
+					else if (tagName.equals(NationData.Shards.SubTags.ZOMBIE_SURVIVORS.getTag())) {
+						zombies.survivors = Integer.parseInt(xpp.nextText());
+					}
+					else if (tagName.equals(NationData.Shards.SubTags.ZOMBIE_ZOMBIES.getTag())) {
+						zombies.zombies = Integer.parseInt(xpp.nextText());
+					}
+					else if (tagName.equals(NationData.Shards.SubTags.ZOMBIE_DEAD.getTag())) {
+						zombies.dead = Integer.parseInt(xpp.nextText());
+					}
+					break;
+				case XmlPullParser.END_TAG:
+					tagName = xpp.getName().toLowerCase();
+					if (tagName.equals(NationData.Shards.ZOMBIE.getTag())) {
+						break loop;
+					}
+			}
+		}
+		return zombies;
 	}
 
 	/*

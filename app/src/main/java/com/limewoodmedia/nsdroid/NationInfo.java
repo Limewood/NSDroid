@@ -30,13 +30,13 @@ import java.util.concurrent.ExecutionException;
 import org.apache.http.client.ClientProtocolException;
 import org.xmlpull.v1.XmlPullParserException;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.limewoodMedia.nsapi.enums.WAStatus;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
 import com.limewoodMedia.nsapi.holders.NationData;
 import com.limewoodmedia.nsdroid.db.NationsDatabase;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
@@ -126,7 +126,7 @@ public class NationInfo {
 	 * @throws ExecutionException 
 	 * @throws InterruptedException 
 	 */
-	public Bitmap getFlagBitmap(final SherlockFragmentActivity activity) throws InterruptedException, ExecutionException {
+	public Bitmap getFlagBitmap(final Activity activity) throws InterruptedException, ExecutionException {
 		Log.d(TAG, "Flag bitmap: "+flagBitmap);
 		if(flagBitmap == null) {
 			String uri = getFlag();

@@ -28,6 +28,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -40,7 +41,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.limewoodMedia.nsapi.enums.WACouncil;
 import com.limewoodMedia.nsapi.holders.WAData;
 import com.limewoodmedia.nsdroid.LoadingHelper;
@@ -62,7 +62,7 @@ import java.util.Locale;
 /**
  * Fragment showing overview of WA Council
  */
-public class WACouncilFragment extends SherlockFragment {
+public class WACouncilFragment extends Fragment {
 	@SuppressWarnings("unused")
 	private static final String TAG = WACouncilFragment.class.getName();
     private static final long RESOLUTION_TIME = 60*60*24*5; // Five days

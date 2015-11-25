@@ -26,8 +26,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.internal.widget.IcsAdapterView;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
 import com.limewoodMedia.nsapi.holders.RMBMessage;
@@ -50,6 +48,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.text.method.TextKeyListener;
@@ -71,7 +70,7 @@ import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-public class RMBFragment extends SherlockFragment implements OnClickListener {
+public class RMBFragment extends Fragment implements OnClickListener {
 	@SuppressWarnings("unused")
 	private static final String TAG = RMBFragment.class.getName();
 	
@@ -224,13 +223,13 @@ public class RMBFragment extends SherlockFragment implements OnClickListener {
 	    	messageBox.setEnabled(false);
 	    	postClose.setEnabled(false);
 	    	postSend.setEnabled(false);
-			new AsyncTask<Void, Void, Boolean>() {
+			new AsyncTask<String, Void, Boolean>() {
 				@Override
-				protected Boolean doInBackground(Void... params) {
+				protected Boolean doInBackground(String... params) {
 					try {
 						if(API.getInstance(context).checkLogin(getActivity())) {
 							return API.getInstance(context).postToRMB(
-									region, messageBox.getText().toString());
+									region, params[0]);
 						}
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -254,7 +253,7 @@ public class RMBFragment extends SherlockFragment implements OnClickListener {
 						Toast.makeText(context, R.string.message_error, Toast.LENGTH_SHORT).show();
 					}
 				}
-        	}.execute();
+        	}.execute(messageBox.getText().toString());
 			break;
 		}
 	}
@@ -356,7 +355,7 @@ public class RMBFragment extends SherlockFragment implements OnClickListener {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getSherlockActivity().getMenuInflater();
+        MenuInflater inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.context_menu_rmb, menu);
     }
 

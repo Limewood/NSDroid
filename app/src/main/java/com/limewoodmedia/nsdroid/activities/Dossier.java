@@ -24,10 +24,6 @@ package com.limewoodmedia.nsdroid.activities;
 
 import java.io.IOException;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.limewoodmedia.nsdroid.API;
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.LoadingHelper;
@@ -44,15 +40,19 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Dossier extends SherlockFragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class Dossier extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 	public static final String TAG = Dossier.class.getName();
 	
 	private ViewGroup layout;
@@ -62,7 +62,6 @@ public class Dossier extends SherlockFragmentActivity implements NavigationDrawe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTheme(R.style.Theme_Sherlock_Light_DarkActionBar);
         setContentView(R.layout.dossier);
 
         // Fetch flag
@@ -175,14 +174,14 @@ public class Dossier extends SherlockFragmentActivity implements NavigationDrawe
 					builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							new AsyncTask<Void, Void, Void>() {
+							new AsyncTask<String, Void, Void>() {
 								@SuppressLint("DefaultLocale")
 								@Override
-								protected Void doInBackground(Void... params) {
+								protected Void doInBackground(String... params) {
 									if(API.getInstance(Dossier.this).checkLogin(Dossier.this)) {
 										try {
 											if(API.getInstance(Dossier.this).removeNationFromDossier(
-													((String)v.getTag()).replace(' ', '_').toLowerCase())) {
+													params[0].replace(' ', '_').toLowerCase())) {
 												runOnUiThread(new Runnable() {
 													public void run() {
 														Toast.makeText(Dossier.this, R.string.nation_removed_from_dossier, Toast.LENGTH_SHORT).show();
@@ -196,7 +195,7 @@ public class Dossier extends SherlockFragmentActivity implements NavigationDrawe
 									}
 									return null;
 								}
-							}.execute();
+							}.execute((String) v.getTag());
 						}
 					});
 					builder.show();
@@ -246,13 +245,13 @@ public class Dossier extends SherlockFragmentActivity implements NavigationDrawe
 					builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							new AsyncTask<Void, Void, Void>() {
+							new AsyncTask<String, Void, Void>() {
 								@Override
-								protected Void doInBackground(Void... params) {
+								protected Void doInBackground(String... params) {
 									if(API.getInstance(Dossier.this).checkLogin(Dossier.this)) {
 										try {
 											if(API.getInstance(Dossier.this).removeRegionFromDossier(
-													((String)v.getTag()))) {
+													params[0])) {
 												runOnUiThread(new Runnable() {
 													public void run() {
 														Toast.makeText(Dossier.this, R.string.region_removed_from_dossier, Toast.LENGTH_SHORT).show();
@@ -266,7 +265,7 @@ public class Dossier extends SherlockFragmentActivity implements NavigationDrawe
 									}
 									return null;
 								}
-							}.execute();
+							}.execute((String)v.getTag());
 						}
 					});
 					builder.show();
@@ -281,7 +280,7 @@ public class Dossier extends SherlockFragmentActivity implements NavigationDrawe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.menu_dossier, menu);
+        getMenuInflater().inflate(R.menu.menu_dossier, menu);
         return true;
     }
     

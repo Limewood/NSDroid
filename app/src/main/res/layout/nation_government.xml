@@ -47,12 +47,14 @@
                 android:id="@+id/government_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/nation_government_size"
                 style="@style/NationGraphsText"/>
 
             <TextView
                 android:id="@+id/government_percent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/nation_government_percent"
                 style="@style/NationGraphsText"/>
 
             <LinearLayout
