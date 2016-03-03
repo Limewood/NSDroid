@@ -229,7 +229,9 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
                             Log.d(TAG, "Result: " + result);
                             // Go back to list
                             dialog.dismiss();
-							getFragmentManager().popBackStack();
+							if(isAdded()) {
+								getActivity().finish();
+							}
                         }
                     }.execute(-1);
                 }

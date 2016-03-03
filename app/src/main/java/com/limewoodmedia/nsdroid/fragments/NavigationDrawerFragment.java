@@ -111,6 +111,7 @@ public class NavigationDrawerFragment extends Fragment {
                 new MenuItemHolder(R.id.submenu_dossier, R.drawable.icon_dossier, R.string.menu_dossier),
 				new MenuItemHolder(R.id.menu_region, R.drawable.icon_region, R.string.menu_region),
                 new MenuItemHolder(R.id.submenu_rmb, R.drawable.icon_rmb, R.string.menu_rmb),
+                new MenuItemHolder(R.id.submenu_officers, R.drawable.icon_officers, R.string.menu_officers),
                 new MenuItemHolder(R.id.submenu_embassies, R.drawable.icon_embassies, R.string.menu_embassies),
                 new MenuItemHolder(R.id.menu_wa, R.drawable.icon_wa, R.string.menu_wa),
                 new MenuItemHolder(R.id.menu_news, R.drawable.icon_news, R.string.menu_news),

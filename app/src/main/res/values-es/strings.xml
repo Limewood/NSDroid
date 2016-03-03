@@ -96,9 +96,6 @@
     <string name="issue_choose_text">¿Quieres elegir la opción %1$d?</string>
     <string name="issue_dismiss_title">Ignorar asunto</string>
     <string name="issue_dismiss_text">¿Quieres ignorar este asunto?</string>
-    <string name="issue_position_choice">El gobierno ha indicado su intención de seguir las recomendaciones de la Opción %1$d.</string>
-    <string name="issue_position_dismiss">El gobierno se está preparando para ignorar este asunto.</string>
-    <string name="issue_position_undecided">El gobierno tiene que adoptar una postura en relación a este asunto.</string>
     <string name="loading_issue">Momento de emoción&#8230;</string>
     
     <!-- Embassies -->

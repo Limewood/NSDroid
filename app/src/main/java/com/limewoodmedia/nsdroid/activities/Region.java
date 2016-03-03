@@ -30,6 +30,7 @@ import java.util.Comparator;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
+import com.limewoodMedia.nsapi.holders.Embassy;
 import com.limewoodMedia.nsapi.holders.RegionData;
 import com.limewoodmedia.nsdroid.AlphabeticComparator;
 import com.limewoodmedia.nsdroid.NationInfo;
@@ -42,6 +43,7 @@ import com.limewoodmedia.nsdroid.TagParser;
 import com.limewoodmedia.nsdroid.Utils;
 import com.limewoodmedia.nsdroid.fragments.EmbassiesFragment;
 import com.limewoodmedia.nsdroid.fragments.NavigationDrawerFragment;
+import com.limewoodmedia.nsdroid.fragments.OfficersFragment;
 import com.limewoodmedia.nsdroid.fragments.RMBFragment;
 import com.limewoodmedia.nsdroid.holders.RegionDataParcelable;
 import com.limewoodmedia.nsdroid.views.LoadingView;
@@ -101,6 +103,10 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
     private ImageView page;
     private ImageView next;
 
+    private ViewGroup officers;
+    private OfficersFragment officersInner;
+    private TextView officersTitle;
+
     private ViewGroup embassies;
     private EmbassiesFragment embassiesInner;
     private TextView embassiesTitle;
@@ -146,14 +152,14 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
         header = (TextView) wfe.findViewById(R.id.wfe_header);
         ViewTreeObserver observer = header.getViewTreeObserver();
 		observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-		    @Override
-		    public void onGlobalLayout() {
-		    	fieldset.setPadding(fieldset.getPaddingLeft(), header.getHeight() -
-						(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15,
-							getResources().getDisplayMetrics()), fieldset.getPaddingRight(),
-							fieldset.getPaddingBottom());
-		    }
-		});
+            @Override
+            public void onGlobalLayout() {
+                fieldset.setPadding(fieldset.getPaddingLeft(), header.getHeight() -
+                                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15,
+                                        getResources().getDisplayMetrics()), fieldset.getPaddingRight(),
+                        fieldset.getPaddingBottom());
+            }
+        });
         layout = (ViewGroup) wfe.findViewById(R.id.region_layout);
 
         // RMB
@@ -168,6 +174,11 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
         next = (ImageView) rmb.findViewById(R.id.rmb_next);
         next.setOnClickListener(rmbClickListener);
 
+        // Officers
+        officers = (ViewGroup) getLayoutInflater().inflate(R.layout.officers_single, viewPager, false);
+        officersTitle = (TextView) officers.findViewById(R.id.officers_title);
+        officersInner = (OfficersFragment) getSupportFragmentManager().findFragmentById(R.id.officers);
+
         // Embassies
         embassies = (ViewGroup) getLayoutInflater().inflate(R.layout.embassies_single, viewPager, false);
         embassiesTitle = (TextView) embassies.findViewById(R.id.embassies_title);
@@ -177,7 +188,8 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
         viewPager.setAdapter(new RegionPagerAdapter());
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
             public void onPageSelected(int position) {
@@ -186,7 +198,8 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
 
         // Check if going straight to RMB / Embassies
@@ -194,7 +207,7 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
             viewPager.setCurrentItem(getIntent().getIntExtra("page", 0), false);
         }
 
-        Log.d(TAG, "DATA "+getIntent().getDataString());
+        Log.d(TAG, "DATA " + getIntent().getDataString());
         if(getIntent().getData() == null) {
             // Get user's region
             homeRegion = true;
@@ -213,6 +226,7 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
             }
         }
         rmbInner.setRegionName(region);
+        officersInner.setRegionName(region);
         embassiesInner.setRegionName(region);
 
 //        if(savedInstanceState == null) {
@@ -250,7 +264,7 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
     }
 
     public void showPage(int page) {
-        page = Math.max(0, Math.min(2, page));
+        page = Math.max(0, Math.min(3, page));
         if(viewPager != null) {
             viewPager.setCurrentItem(page, true);
         }
@@ -260,13 +274,14 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
         loadRegion(0);
     }
 
-    private void loadRegion(int offsetPage) {
+    private void loadRegion(final int offsetPage) {
     	layout.setVisibility(View.GONE);
     	final LoadingView loadingView = (LoadingView) wfe.findViewById(R.id.loading);
     	LoadingHelper.startLoading(loadingView, R.string.loading_region, this);
         // Don't update automatically if we're reading back in history
         shouldUpdate = offsetPage == 0 && homeRegion;
         rmbInner.onBeforeLoad();
+        officersInner.onBeforeLoad();
         embassiesInner.onBeforeLoad();
     	errorMessage = getResources().getString(R.string.general_error);
         new ParallelTask<Void, Void, Boolean>() {
@@ -274,17 +289,19 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
 				try {
 					RegionData.Shards[] shards = new RegionData.Shards[]{
 							NAME, FACTBOOK, DELEGATE, FOUNDER, FLAG,
-                            EMBASSIES,
+                            EMBASSIES, OFFICERS,
                             NATIONS, MESSAGES // Messages last, because it has ;offset=0
 					};
 					if(homeRegion) {
 						data = API.getInstance(Region.this).getHomeRegionInfo(Region.this, shards);
                         region = TagParser.nameToId(data.name);
                         rmbInner.setRegionName(region);
+                        officersInner.setRegionName(region);
                         embassiesInner.setRegionName(region);
 					} else {
 						data = API.getInstance(Region.this).getRegionInfo(region, shards);
 					}
+                    Log.d(TAG, "Data Officers: "+data.officers.size());
 
 	                return true;
 				} catch (RateLimitReachedException e) {
@@ -359,6 +376,8 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
 
         doRMBSetup();
 
+        doOfficersSetup();
+
         doEmbassiesSetup();
     }
 
@@ -369,12 +388,27 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
         rmbInner.setMessages(data.messages, 0, homeRegion);
 
         Comparator<String> comparator = new AlphabeticComparator();
-        Log.d(TAG, "Nations: " + data.nations);
         Arrays.sort(data.nations, comparator);
-        if(Arrays.binarySearch(data.nations, NationInfo.getInstance(this).getId(), comparator) > -1) {
+        String region = TagParser.nameToId(NationInfo.getInstance(this).getRegionId());
+        boolean hasEmbassyWithYourRegion = false;
+        for(Embassy e : data.embassies) {
+            if(TagParser.nameToId(e.region).equals(region)) {
+                hasEmbassyWithYourRegion = true;
+                break;
+            }
+        }
+        if(Arrays.binarySearch(data.nations, NationInfo.getInstance(this).getId(), comparator) > -1 // You are a resident in the region
+                || hasEmbassyWithYourRegion) {
             allowPosting = true;
             supportInvalidateOptionsMenu();
         }
+    }
+
+    private void doOfficersSetup() {
+        // Region name
+        officersTitle.setText(data.name);
+
+        officersInner.setOfficers(data.officers);
     }
 
     private void doEmbassiesSetup() {
@@ -418,7 +452,12 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
                 menu.findItem(R.id.menu_add_region_to_dossier).setVisible(false);
                 menu.findItem(R.id.menu_move_to_region).setVisible(false);
                 break;
-            case 2: // Embassies
+            case 2: // Officers
+                menu.findItem(R.id.menu_post).setVisible(false);
+                menu.findItem(R.id.menu_add_region_to_dossier).setVisible(false);
+                menu.findItem(R.id.menu_move_to_region).setVisible(false);
+                break;
+            case 3: // Embassies
                 menu.findItem(R.id.menu_post).setVisible(false);
                 menu.findItem(R.id.menu_add_region_to_dossier).setVisible(false);
                 menu.findItem(R.id.menu_move_to_region).setVisible(false);
@@ -460,7 +499,10 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
                     case 1: // RMB
                         rmbInner.loadMessages();
                         break;
-                    case 2: // Embassies
+                    case 2: // Officers
+                        officersInner.updateOfficers();
+                        break;
+                    case 3: // Embassies
                         embassiesInner.updateEmbassies();
                         break;
                 }
@@ -553,7 +595,12 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
                         container.addView(rmb);
                     }
                     return rmb;
-                case 2: // Embassies
+                case 2: // Officers
+                    if(officers.getParent() == null) {
+                        container.addView(officers);
+                    }
+                    return officers;
+                case 3: // Embassies
                     if(embassies.getParent() == null) {
                         container.addView(embassies);
                     }
@@ -570,7 +617,7 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override
@@ -585,7 +632,9 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
                     return getString(R.string.wfe_title);
                 case 1: // RMB
                     return getString(R.string.rmb_title);
-                case 2: // Embassies
+                case 2: // Officers
+                    return getString(R.string.officers_title);
+                case 3: // Embassies
                     return getString(R.string.embassies_title);
                 default:
                     return null;

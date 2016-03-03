@@ -57,6 +57,9 @@
             android:id="@+id/submenu_rmb" />
 
         <include layout="@layout/nav_submenu_item"
+            android:id="@+id/submenu_officers" />
+
+        <include layout="@layout/nav_submenu_item"
             android:id="@+id/submenu_embassies" />
 
         <!--<include layout="@layout/nav_menu_item"

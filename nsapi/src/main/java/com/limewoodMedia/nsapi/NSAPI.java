@@ -38,6 +38,7 @@ import com.limewoodMedia.nsapi.holders.NSData;
 import com.limewoodMedia.nsapi.holders.NationData;
 import com.limewoodMedia.nsapi.holders.NationFreedoms;
 import com.limewoodMedia.nsapi.holders.NationHappening;
+import com.limewoodMedia.nsapi.holders.Officer;
 import com.limewoodMedia.nsapi.holders.RMBMessage;
 import com.limewoodMedia.nsapi.holders.RegionData;
 import com.limewoodMedia.nsapi.holders.RegionHappening;
@@ -743,6 +744,9 @@ public class NSAPI implements INSAPI {
 					else if (tagName.equals(RegionData.Shards.TAGS.getTag())) {
 						region.tags = parseTags(xpp);
 					}
+					else if(tagName.equals(RegionData.Shards.OFFICERS.getTag())) {
+						region.officers = parseOfficers(xpp);
+					}
 					else if (!tagName.equals(RegionData.ROOT_TAG)) {
 						System.err.println("Unknown region tag: " + tagName);
 					}
@@ -903,6 +907,71 @@ public class NSAPI implements INSAPI {
 			}
 		}
 		return tags;
+	}
+
+	private List<Officer> parseOfficers(XmlPullParser xpp)
+			throws NumberFormatException, XmlPullParserException, IOException {
+		String tagName = null;
+		List<Officer> officers = new ArrayList<Officer>();
+		loop: while (xpp.next() != XmlPullParser.END_DOCUMENT) {
+			switch (xpp.getEventType()) {
+				case XmlPullParser.START_TAG:
+					tagName = xpp.getName().toLowerCase();
+					if (tagName.equals(RegionData.Shards.SubTags.OFFICERS_OFFICER.getTag())) {
+						officers.add(parseOfficer(xpp));
+					}
+					break;
+				case XmlPullParser.END_TAG:
+					tagName = xpp.getName().toLowerCase();
+					if (tagName.equals(RegionData.Shards.OFFICERS.getTag())) {
+						break loop;
+					}
+			}
+		}
+		return officers;
+	}
+
+	private Officer parseOfficer(XmlPullParser xpp)
+			throws NumberFormatException, XmlPullParserException, IOException {
+		String tagName = null;
+		Officer officer = new Officer();
+		loop: while (xpp.next() != XmlPullParser.END_DOCUMENT) {
+			switch (xpp.getEventType()) {
+				case XmlPullParser.START_TAG:
+					tagName = xpp.getName().toLowerCase();
+					if (tagName.equals(RegionData.Shards.SubTags.OFFICER_NATION.getTag())) {
+						officer.nation = xpp.nextText();
+					}
+					else if (tagName.equals(RegionData.Shards.SubTags.OFFICER_OFFICE.getTag())) {
+						officer.office = xpp.nextText();
+					}
+					else if (tagName.equals(RegionData.Shards.SubTags.OFFICER_AUTHORITY.getTag())) {
+						char[] auths = xpp.nextText().toCharArray();
+						Officer.Authority a;
+						for(char c : auths) {
+							if((a = Officer.Authority.getByCode(c)) != null) {
+								officer.authority.add(a);
+							}
+						}
+					}
+					else if (tagName.equals(RegionData.Shards.SubTags.OFFICER_TIME.getTag())) {
+						officer.appointed = Long.parseLong(xpp.nextText());
+					}
+					else if (tagName.equals(RegionData.Shards.SubTags.OFFICER_BY.getTag())) {
+						officer.appointer = xpp.nextText();
+					}
+					else if (tagName.equals(RegionData.Shards.SubTags.OFFICER_ORDER.getTag())) {
+						officer.order = Integer.parseInt(xpp.nextText());
+					}
+					break;
+				case XmlPullParser.END_TAG:
+					tagName = xpp.getName().toLowerCase();
+					if (tagName.equals(RegionData.Shards.SubTags.OFFICERS_OFFICER.getTag())) {
+						break loop;
+					}
+			}
+		}
+		return officer;
 	}
 	
 	/*

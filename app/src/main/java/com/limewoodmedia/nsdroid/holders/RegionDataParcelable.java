@@ -31,6 +31,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.limewoodMedia.nsapi.holders.Embassy;
+import com.limewoodMedia.nsapi.holders.Officer;
 import com.limewoodMedia.nsapi.holders.RegionHappening;
 import com.limewoodMedia.nsapi.holders.RegionData;
 import com.limewoodMedia.nsapi.holders.RMBMessage;
@@ -57,6 +58,7 @@ public class RegionDataParcelable extends RegionData implements Parcelable {
 		this.power = data.power;
 		this.embassies = data.embassies;
 		this.tags = data.tags;
+		this.officers = data.officers;
 	}
 	
 	public static final Parcelable.Creator<RegionDataParcelable> CREATOR
@@ -95,6 +97,22 @@ public class RegionDataParcelable extends RegionData implements Parcelable {
 				}
 				data.tags = new ArrayList<String>();
 				in.readStringList(data.tags);
+				data.officers = new ArrayList<>();
+				int len = in.readInt();
+				Officer officer;
+				for(int i=0; i<len; i++) {
+					officer = new Officer();
+					officer.nation = in.readString();
+					officer.office = in.readString();
+					int l = in.readInt();
+					for(int a=0; a<l; a++) {
+						officer.authority.add(Officer.Authority.getByCode((char)in.readInt()));
+					}
+					officer.appointed = in.readLong();
+					officer.appointer = in.readString();
+					officer.order = in.readInt();
+					data.officers.add(officer);
+				}
 				
 				// Read flag bitmap
 				byte[] bArr = in.createByteArray();
@@ -171,6 +189,18 @@ public class RegionDataParcelable extends RegionData implements Parcelable {
 			dest.writeInt(0);
 		}
 		dest.writeStringList(tags);
+		dest.writeInt(officers.size());
+		for(Officer o : officers) {
+			dest.writeString(o.nation);
+			dest.writeString(o.office);
+			dest.writeInt(o.authority.size());
+			for(Officer.Authority a : o.authority) {
+				dest.writeInt(a.code);
+			}
+			dest.writeLong(o.appointed);
+			dest.writeString(o.appointer);
+			dest.writeInt(o.order);
+		}
 		
 		// Write flag bitmap
 		if(flagBitmap != null) {

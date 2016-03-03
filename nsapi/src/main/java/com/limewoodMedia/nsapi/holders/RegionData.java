@@ -25,9 +25,12 @@ package com.limewoodMedia.nsapi.holders;
 import com.limewoodMedia.nsapi.enums.IArguments;
 import com.limewoodMedia.nsapi.enums.IShards;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.plaf.synth.Region;
 
 /**
  * A data object for region data
@@ -42,7 +45,7 @@ public class RegionData {
 	 * @author Joakim Lindskog
 	 *
 	 */
-	public static enum Shards implements IShards {
+	public enum Shards implements IShards {
 		NAME("name"),
 		FLAG("flag"),
 		DELEGATE("delegate"),
@@ -57,7 +60,8 @@ public class RegionData {
 		SC_VOTES("scvote"),
 		POWER("power"),
 		EMBASSIES("embassies"),
-		TAGS("tags");
+		TAGS("tags"),
+		OFFICERS("officers");
 
 		private String name;
 		private String tag;
@@ -101,7 +105,14 @@ public class RegionData {
 			WA_VOTES_FOR("for"),
 			WA_VOTES_AGAINST("against"),
 			EMBASSIES_EMBASSY("embassy"),
-			TAGS_TAG("tag");
+			TAGS_TAG("tag"),
+			OFFICERS_OFFICER("officer"),
+			OFFICER_NATION("nation"),
+			OFFICER_OFFICE("office"),
+			OFFICER_AUTHORITY("authority"),
+			OFFICER_TIME("time"),
+			OFFICER_BY("by"),
+			OFFICER_ORDER("order");
 
 			private String tag;
 
@@ -158,6 +169,11 @@ public class RegionData {
 	public String power;
 	public List<Embassy> embassies;
 	public List<String> tags;
+	public List<Officer> officers;
+
+	public RegionData() {
+		officers = new ArrayList<>();
+	}
 	
 	@Override
 	public String toString() {

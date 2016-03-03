@@ -496,6 +496,8 @@ public class API {
 				IssueResult issueResult = new IssueResult();
 				if(pMatcher.find()) {
 					issueResult.result = pMatcher.group(1);
+				} else {
+					issueResult.result = "";
 				}
 				Matcher cMatcher = census.matcher(result);
 				CensusChange change;

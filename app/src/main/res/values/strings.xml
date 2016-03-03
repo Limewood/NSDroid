@@ -152,6 +152,11 @@
     <string name="embassy_requested">requested</string>
     <string name="embassy_rejected">rejected</string>
     <string name="embassy_closing">closing</string>
+
+    <!-- Officers -->
+    <string name="officers">officers</string>
+    <string name="officers_title">Officers</string>
+    <string name="loading_officers">Waking cabinet&#8230;</string>
     
     <!-- Dossier -->
     <string name="dossier">Dossier</string>
@@ -242,6 +247,7 @@
     <string name="menu_move_to_region">Move to region</string>
     <string name="menu_add_region_to_dossier">Add to dossier</string>
     <string name="menu_embassies">Embassies</string>
+    <string name="menu_officers">Officers</string>
 
     <!-- WA menu -->
     <string name="menu_vote_for">For</string>

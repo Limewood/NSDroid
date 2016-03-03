@@ -148,12 +148,21 @@ public class Utils {
                     context.startActivity(intent);
                 }
                 break;
-            case R.id.submenu_embassies: // Your region's embassies
+            case R.id.submenu_officers: // Your region's officers
                 if(context instanceof Region) {
                     ((Region)context).showPage(2);
                 } else {
                     intent = new Intent(context, Region.class);
                     intent.putExtra("page", 2);
+                    context.startActivity(intent);
+                }
+                break;
+            case R.id.submenu_embassies: // Your region's embassies
+                if(context instanceof Region) {
+                    ((Region)context).showPage(3);
+                } else {
+                    intent = new Intent(context, Region.class);
+                    intent.putExtra("page", 3);
                     context.startActivity(intent);
                 }
                 break;
