@@ -29,7 +29,9 @@ import com.limewoodmedia.nsdroid.API;
 import com.limewoodmedia.nsdroid.CustomAlertDialogBuilder;
 import com.limewoodmedia.nsdroid.LoadingHelper;
 import com.limewoodmedia.nsdroid.db.IssuesDatabase;
+import com.limewoodmedia.nsdroid.holders.CensusChange;
 import com.limewoodmedia.nsdroid.holders.Issue;
+import com.limewoodmedia.nsdroid.holders.IssueResult;
 import com.limewoodmedia.nsdroid.views.ChoiceView;
 import com.limewoodmedia.nsdroid.views.LoadingView;
 
@@ -52,6 +54,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,8 +69,9 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
 	
 	private View root;
 	private TextView title;
+	private TextView theIssue;
 	private TextView text;
-	private TextView position;
+	private TextView theDebate;
 	private ViewGroup choicesArea;
 	private ScrollView scrollView;
 	private ViewGroup layout;
@@ -99,8 +103,9 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
 							scrollView.getPaddingBottom());
 		    }
 		});
+		theIssue = (TextView) root.findViewById(R.id.the_issue_title);
 		text = (TextView) root.findViewById(R.id.issue_text);
-		position = (TextView) root.findViewById(R.id.issue_position);
+		theDebate = (TextView) root.findViewById(R.id.the_debate_title);
 		choicesArea = (ViewGroup) root.findViewById(R.id.issue_choices_area);
 		scrollView = (ScrollView) root.findViewById(R.id.issue_scroll_view);
 		layout = (ViewGroup) root.findViewById(R.id.layout);
@@ -122,6 +127,8 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
     	final LoadingView loadingView = (LoadingView) root.findViewById(R.id.loading);
     	LoadingHelper.startLoading(loadingView, R.string.loading_issue, getActivity());
         title.setText(R.string.issue_loading);
+		theIssue.setText(R.string.the_issue);
+		theDebate.setText(R.string.the_debate);
 		loadIssue = new AsyncTask<Void, Void, Issue>() {
             private int previous = -1;
 
@@ -147,25 +154,13 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
 					if(result != null) {
 						choicesArea.removeAllViews();
 						title.setText(Html.fromHtml(result.name));
+
 						text.setText(Html.fromHtml(result.text));
 						ChoiceView cText;
 						LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 								LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 						params.setMargins(0, 0, 0, 9);
 						Log.d(TAG, "Selected "+result.selectedChoice);
-                        String posText;
-						if(result.selectedChoice > -1) {
-							posText = getString(R.string.issue_position_choice,
-                                    result.selectedChoice+1);
-						} else if(result.dismissed) {
-							posText = getString(R.string.issue_position_dismiss);
-						} else {
-							posText = getString(R.string.issue_position_undecided);
-						}
-                        if(previous == -2) { // Previously dismissed
-                            posText += "<br/><small><font color='grey'>" + getString(R.string.previously_dismissed) + "</font></small>";
-                        }
-                        position.setText(Html.fromHtml(posText));
 
                         int i=0;
 						for(String choice : result.choices) {
@@ -212,29 +207,29 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
 			.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(final DialogInterface dialog, int which) {
-                    new AsyncTask<Integer, Void, Boolean>() {
+                    new AsyncTask<Integer, Void, IssueResult>() {
                         @Override
-                        protected Boolean doInBackground(Integer... params) {
+                        protected IssueResult doInBackground(Integer... params) {
                             if (API.getInstance(getActivity()).checkLogin(getActivity())) {
                                 try {
-                                    boolean success = API.getInstance(getActivity()).answerIssue(
+                                   IssueResult result = API.getInstance(getActivity()).answerIssue(
                                             issueId, (Integer) params[0]);
-                                    if (success) {
+                                    if (result != null) {
                                         db.setIssueChoice(issueId, -2);
                                     }
-                                    return success;
+                                    return result;
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
                             }
-                            return false;
+                            return null;
                         }
 
-                        protected void onPostExecute(Boolean result) {
+                        protected void onPostExecute(IssueResult result) {
                             Log.d(TAG, "Result: " + result);
-                            // Show as dismissed
-                            showAsDismissed();
+                            // Go back to list
                             dialog.dismiss();
+							getFragmentManager().popBackStack();
                         }
                     }.execute(-1);
                 }
@@ -251,7 +246,7 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onClick(final View v) {
 		if(v.getTag(R.id.choice_type) != null) {
-			Log.d(TAG, "Choice "+v.getTag(R.id.choice_index)+" was clicked");
+			Log.d(TAG, "Choice " + v.getTag(R.id.choice_index) + " was clicked");
 			// Show confirm dialog
 			CustomAlertDialogBuilder builder = new CustomAlertDialogBuilder(getActivity());
 			builder.setTitle(R.string.issue_choose_title)
@@ -260,27 +255,27 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
 				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
-                        new AsyncTask<Integer, Void, Boolean>() {
+                        new AsyncTask<Integer, Void, IssueResult>() {
                             @Override
-                            protected Boolean doInBackground(Integer... params) {
+                            protected IssueResult doInBackground(Integer... params) {
                                 if (API.getInstance(getActivity()).checkLogin(getActivity())) {
                                     try {
-                                        boolean success = API.getInstance(getActivity()).answerIssue(
+                                        IssueResult result = API.getInstance(getActivity()).answerIssue(
                                                 issueId, (Integer) params[0]);
-                                        if (success) {
+                                        if (result != null) {
                                             db.setIssueChoice(issueId, params[0]);
                                         }
-                                        return success;
+                                        return result;
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
                                 }
-                                return false;
+                                return null;
                             }
 
-                            protected void onPostExecute(Boolean result) {
+                            protected void onPostExecute(IssueResult result) {
                                 Log.d(TAG, "Result: " + result);
-                                selectOption(v);
+                                showIssueResult(result);
                                 dialog.dismiss();
                             }
                         }.execute((Integer) v.getTag(R.id.choice_index));
@@ -290,47 +285,42 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                    }
+					}
                 })
 				.show();
 		}
 	}
 	
-	private void selectOption(View v) {
-		int len = choicesArea.getChildCount();
-		ChoiceView child;
-		Log.d(TAG, "Index "+v.getTag(R.id.choice_index));
-		for(int i=0; i<len; i++) {
-			child = (ChoiceView) choicesArea.getChildAt(i);
-			Log.d(TAG, "Child index "+child.getTag(R.id.choice_index));
-			if(child.isDismissed()) {
-				child.setDismissed(false);
-			}
-			if(child.getTag(R.id.choice_index) == v.getTag(R.id.choice_index)) {
-				Log.d(TAG, "Select "+child.getTag(R.id.choice_index));
-				child.setSelected(true);
-			} else {
-				Log.d(TAG, "Unselect "+child.getTag(R.id.choice_index));
-				child.setSelected(false);
-			}
-		}
+	private void showIssueResult(IssueResult result) {
 		if(isAdded()) {
-			position.setText(getResources().getString(R.string.issue_position_choice,
-					((Integer) v.getTag(R.id.choice_index)) + 1));
-		}
-	}
-	
-	private void showAsDismissed() {
-		int len = choicesArea.getChildCount();
-		ChoiceView child;
-		for(int i=0; i<len; i++) {
-			child = (ChoiceView) choicesArea.getChildAt(i);
-			if(child.isSelected()) {
-				child.setSelected(false);
+			choicesArea.removeAllViews();
+			theIssue.setText(R.string.the_talking_point);
+			text.setText(Html.fromHtml(result.result));
+			theDebate.setText(R.string.recent_trends);
+			RelativeLayout cText;
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+			params.setMargins(0, 0, 0, 9);
+			TextView trend;
+			TextView trendName;
+			for(CensusChange change : result.censusChangeList) {
+				cText = (RelativeLayout) getLayoutInflater(null).inflate(R.layout.recent_trend, null);
+				trend = (TextView) cText.findViewById(R.id.trend);
+				trend.setText(change.percent);
+				trendName = (TextView) cText.findViewById(R.id.trend_name);
+				trendName.setText(change.name);
+				if(change.increase) {
+					trend.setTextColor(getResources().getColor(R.color.medium_green));
+					trendName.setTextColor(getResources().getColor(R.color.medium_green));
+				} else {
+					trend.setTextColor(getResources().getColor(R.color.decrease_red));
+					trendName.setTextColor(getResources().getColor(R.color.decrease_red));
+				}
+				((TextView)cText.findViewById(R.id.trend_metric)).setText(change.metric);
+				choicesArea.addView(cText, params);
+				scrollView.scrollTo(0,0);
 			}
-			child.setDismissed(true);
 		}
-		position.setText(R.string.issue_position_dismiss);
 	}
 	
 	@Override

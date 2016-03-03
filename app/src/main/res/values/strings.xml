@@ -130,19 +130,18 @@
     
     <!-- Issue detail -->
     <string name="issue_detail">Issue</string>
-    <string name="the_issue">The issue</string>
-    <string name="the_debate">The debate</string>
+    <string name="the_issue">The Issue</string>
+    <string name="the_debate">The Debate</string>
     <string name="issue_choose_title">Choose option</string>
     <string name="issue_choose_text">Do you want to choose option %1$d?</string>
     <string name="issue_dismiss_title">Dismiss issue</string>
     <string name="issue_dismiss_text">Do you want to dismiss this issue?</string>
-    <string name="issue_position_choice">The government has indicated its intention to follow the recommendations of Option %1$d.</string>
-    <string name="issue_position_dismiss">The government is preparing to dismiss this issue.</string>
-    <string name="issue_position_undecided">The government has yet to formalize a position on this issue.</string>
     <string name="loading_issue">Summoning indecision&#8230;</string>
     <string name="previous_choice">Previous choice</string>
     <string name="previously_dismissed">Previously dismissed</string>
     <string name="issue_loading">Loading&#8230;</string>
+    <string name="the_talking_point">The Talking Point</string>
+    <string name="recent_trends">Recent Trends</string>
     
     <!-- Embassies -->
     <string name="embassies">embassies</string>

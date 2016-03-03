@@ -23,6 +23,7 @@
 			
             <!-- Issue text title -->
 			<TextView
+				android:id="@+id/the_issue_title"
 			    android:layout_width="match_parent"
 			    android:layout_height="wrap_content"
 			    android:textSize="15sp"
@@ -49,6 +50,7 @@
 						
 			<!-- Debate title -->
 			<TextView
+				android:id="@+id/the_debate_title"
 			    android:layout_width="match_parent"
 			    android:layout_height="wrap_content"
 			    android:textSize="15sp"

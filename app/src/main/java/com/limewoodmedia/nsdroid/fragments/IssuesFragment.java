@@ -169,52 +169,52 @@ public class IssuesFragment extends Fragment {
 	/**
 	 * Dismisses all issues
 	 */
-	public void dismissAllIssues() {
-		// Dismiss all
-		if(issues == null || issues.size() == 0) {
-			Toast.makeText(getActivity(), R.string.no_issues, Toast.LENGTH_SHORT).show();
-		}
-		// Show confirm dialog
-		CustomAlertDialogBuilder builder = new CustomAlertDialogBuilder(getActivity());
-		builder.setTitle(R.string.issues_dismiss_all_title)
-			.setMessage(getResources().getString(R.string.issues_dismiss_all_text))
-			.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(final DialogInterface dialog, int which) {
-					new AsyncTask<Integer, Void, Boolean>() {
-						@Override
-						protected Boolean doInBackground(Integer... params) {
-							if(API.getInstance(getActivity()).checkLogin(getActivity())) {
-								try {
-									boolean success = false;
-									for(Issue issue : issues) {
-										success = API.getInstance(getActivity()).answerIssue(
-												issue.id, (Integer)params[0]);
-									}
-									return success;
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							}
-							return false;
-						}
-						
-						protected void onPostExecute(Boolean result) {
-							Log.d(TAG, "Result: "+result);
-							// Reload issues
-							loadIssues();
-							dialog.dismiss();
-						};
-					}.execute(-1);
-				}
-			})
-			.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
-				}
-			})
-			.show();
-	}
+//	public void dismissAllIssues() {
+//		// Dismiss all
+//		if(issues == null || issues.size() == 0) {
+//			Toast.makeText(getActivity(), R.string.no_issues, Toast.LENGTH_SHORT).show();
+//		}
+//		// Show confirm dialog
+//		CustomAlertDialogBuilder builder = new CustomAlertDialogBuilder(getActivity());
+//		builder.setTitle(R.string.issues_dismiss_all_title)
+//			.setMessage(getResources().getString(R.string.issues_dismiss_all_text))
+//			.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+//				@Override
+//				public void onClick(final DialogInterface dialog, int which) {
+//					new AsyncTask<Integer, Void, Boolean>() {
+//						@Override
+//						protected Boolean doInBackground(Integer... params) {
+//							if(API.getInstance(getActivity()).checkLogin(getActivity())) {
+//								try {
+//									boolean success = false;
+//									for(Issue issue : issues) {
+//										success = API.getInstance(getActivity()).answerIssue(
+//												issue.id, (Integer)params[0]);
+//									}
+//									return success;
+//								} catch (IOException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//							}
+//							return false;
+//						}
+//
+//						protected void onPostExecute(Boolean result) {
+//							Log.d(TAG, "Result: "+result);
+//							// Reload issues
+//							loadIssues();
+//							dialog.dismiss();
+//						};
+//					}.execute(-1);
+//				}
+//			})
+//			.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//					dialog.dismiss();
+//				}
+//			})
+//			.show();
+//	}
 }

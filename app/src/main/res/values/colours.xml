@@ -7,6 +7,7 @@
     <color name="active_nation">#CCCD00</color>
     <color name="region_link">#803000</color>
     <color name="background_colour">@android:color/white</color>
+    <color name="decrease_red">#FF0000</color>
 
     <!-- NS Frame -->
     <color name="ns_frame_background">#F9F9F9</color>

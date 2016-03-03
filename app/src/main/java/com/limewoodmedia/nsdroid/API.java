@@ -22,16 +22,20 @@
  */
 package com.limewoodmedia.nsdroid;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -48,6 +52,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.limewoodMedia.nsapi.INSAPI;
@@ -61,8 +66,10 @@ import com.limewoodMedia.nsapi.holders.NationData;
 import com.limewoodMedia.nsapi.holders.RegionData;
 import com.limewoodMedia.nsapi.holders.WAData;
 import com.limewoodmedia.nsdroid.R;
+import com.limewoodmedia.nsdroid.holders.CensusChange;
 import com.limewoodmedia.nsdroid.holders.DossierData;
 import com.limewoodmedia.nsdroid.holders.Issue;
+import com.limewoodmedia.nsdroid.holders.IssueResult;
 import com.limewoodmedia.nsdroid.holders.NationDataParcelable;
 import com.limewoodmedia.nsdroid.holders.RegionDataParcelable;
 import com.limewoodmedia.nsdroid.holders.WADataParcelable;
@@ -322,25 +329,24 @@ public class API {
 			Issue issue;
 			String[] items = dilemmas.split("\\<li\\>");
 			Pattern pattern = Pattern.compile(
-					"\\<a href=\"page=show_dilemma/dilemma=(\\d+)\"\\>(\\<strong\\>)?(.+?)" +
-							"(\\</strong\\>)?\\</a\\>(.+)",
+					"\\<a href=\"page=show_dilemma/dilemma=(\\d+)\"\\>(.+?)" +
+							"\\</a\\>",
 					Pattern.DOTALL);
-			String status;
             Log.d(TAG, "Issues: "+items.length);
+			Matcher matcher;
 			for(String item : items) {
 				if(item.length() == 0) {
 					continue;
 				}
+				matcher = pattern.matcher(item);
 				issue = new Issue();
 				try {
-					issue.id = Integer.parseInt(pattern.matcher(item).replaceAll("$1"));
-					issue.name = pattern.matcher(item).replaceAll("$3");
-					status = pattern.matcher(item).replaceAll("$5").trim()
-							.replace("[", "").replace("]", "");
-					issue.dismissed = status.equalsIgnoreCase("dismissed");
-					issue.pending = status.equalsIgnoreCase("legislation pending");
-					Log.d(TAG, "Issue: "+issue.id+" - "+issue.name);
-					issues.add(issue);
+					if(matcher.find()) {
+						issue.id = Integer.parseInt(matcher.group(1));
+						issue.name = matcher.group(2);
+						Log.d(TAG, "Issue: " + issue.id + " - " + issue.name);
+						issues.add(issue);
+					}
 				} catch(NumberFormatException e) {
                     e.printStackTrace();
 				}
@@ -392,7 +398,7 @@ public class API {
             if(index > -1) { // Unanswered or dismissed issue
                 text = builder.substring(builder.indexOf(prefix) + prefix.length());
                 text = text.substring(0, text.indexOf("</div>"));
-            } else { // Answered issue
+            } else { // Answered issue // TODO Unused
                 prefix = "<p class=\"dtitle\">";
                 text = builder.substring(builder.indexOf(prefix) + prefix.length());
                 text = text.substring(0, text.indexOf("<p class=\"dstatus\">"));
@@ -412,7 +418,7 @@ public class API {
 			
 			String[] items = text.split("\\<li( class=\"chosendiloption\")?\\>");
 			Pattern pattern = Pattern.compile(
-					"\\<p\\>(.+?)\\n?(\\<p\\>)(\\<button type=\"submit\" name=\"choice-(\\d+)\")?(.+)",
+					"\\<p\\>(.+?)\\n?(\\<p class=\"dilemmaaccept\"\\>)(\\<button type=\"submit\" name=\"choice-(\\d+)\")?(.+)",
 					Pattern.DOTALL);
 			List<String> choices = new ArrayList<String>();
 			String choice;
@@ -461,28 +467,56 @@ public class API {
 	 * @return true if successful
 	 * @throws IOException if there was a problem with the connection
 	 */
-	public boolean answerIssue(int issueId, int choice) throws IOException {
+	public IssueResult answerIssue(int issueId, int choice) throws IOException {
 		if(!isLoggedIn()) {
-			return false;
+			return null;
 		}
 		
 		HttpClient client = getClient();
 		// Post
 		try {
-			HttpPost httpPost = new HttpPost("http://www.nationstates.net/page=show_dilemma/dilemma="+issueId);
+			HttpPost httpPost = new HttpPost("http://www.nationstates.net/page=enact_dilemma/dilemma="+issueId);
 
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-	        nameValuePairs.add(new BasicNameValuePair("choice-"+choice, "Accept"));
+	        nameValuePairs.add(new BasicNameValuePair("choice-"+choice, "1"));
 	        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "ISO-8859-1"));
 
-	        client.execute(httpPost, httpContext);
-			return true;
+	        HttpResponse response = client.execute(httpPost, httpContext);
+
+			if(response.getStatusLine().getStatusCode() == 200) {
+				if(choice == -1) { // Dismissed
+					return new IssueResult();
+				}
+				HttpEntity entity = response.getEntity();
+				String result = EntityUtils.toString(entity);
+
+				Pattern pattern = Pattern.compile("\\<div class=\"dilemma\"\\>\\<h5\\>The Talking Point\\<\\/h5\\>\\<p\\>(.+?)\\<\\/div\\>");
+				Pattern census = Pattern.compile("\\<span class=\"wc1 (wcg|wcr)\"\\>(.+?)\\<span class=\"smalltext\"\\>(.+?) \\<span class=\"wc2 (wcg|wcr)\"\\>(.+?)\\<\\/span\\>");
+				Matcher pMatcher = pattern.matcher(result);
+				IssueResult issueResult = new IssueResult();
+				if(pMatcher.find()) {
+					issueResult.result = pMatcher.group(1);
+				}
+				Matcher cMatcher = census.matcher(result);
+				CensusChange change;
+				while(cMatcher.find()) {
+					change = new CensusChange();
+					change.name = cMatcher.group(2);
+					change.metric = cMatcher.group(3);
+					change.percent = cMatcher.group(5);
+					change.increase = cMatcher.group(1).equals("wcg");
+					issueResult.censusChangeList.add(change);
+					Log.d(TAG, "Change: "+change.name+"; "+change.metric+"; "+change.percent+"; "+change.increase);
+				}
+
+				return issueResult;
+			}
 	    } catch (ClientProtocolException e) {
 	        e.printStackTrace();
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
-		return false;
+		return null;
 	}
 	
 	/**

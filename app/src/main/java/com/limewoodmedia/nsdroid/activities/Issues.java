@@ -71,9 +71,6 @@ public class Issues extends AppCompatActivity implements NavigationDrawerFragmen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-	        case R.id.menu_dismiss_all:
-	        	issuesFragment.dismissAllIssues();
-	        	break;
             case R.id.menu_refresh:
             	issuesFragment.loadIssues();
             	break;
