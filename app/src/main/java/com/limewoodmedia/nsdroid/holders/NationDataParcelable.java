@@ -25,6 +25,7 @@ package com.limewoodmedia.nsdroid.holders;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import android.graphics.Bitmap;
@@ -87,6 +88,9 @@ public class NationDataParcelable extends NationData implements Parcelable {
 		this.publicSector = data.publicSector;
 		this.deaths = data.deaths;
 		this.capital = data.capital;
+		this.regionalCensus = data.regionalCensus;
+		this.worldCensus = data.worldCensus;
+		this.censusScore = data.censusScore;
 		this.banners = data.banners;
         this.demonym = data.demonym;
         this.demonym2 = data.demonym2;
@@ -164,6 +168,15 @@ public class NationDataParcelable extends NationData implements Parcelable {
 					data.deaths.put(CauseOfDeath.parse(in.readString()), in.readFloat());
 				}
 				data.capital = in.readString();
+				data.regionalCensus = in.readInt();
+				data.worldCensus = in.readInt();
+				num = in.readInt();
+				data.censusScore = new HashMap<>(num);
+				if(num > 0) {
+					for (int i = 0; i < num; i++) {
+						data.censusScore.put(in.readInt(), in.readFloat());
+					}
+				}
                 data.banners = new String[in.readInt()];
                 for(int i=0; i<data.banners.length; i++) {
                     data.banners[i] = in.readString();
@@ -278,6 +291,13 @@ public class NationDataParcelable extends NationData implements Parcelable {
 			dest.writeInt(0);
 		}
 		dest.writeString(capital);
+		dest.writeInt(regionalCensus);
+		dest.writeInt(worldCensus);
+		dest.writeInt(censusScore.size());
+		for(Map.Entry<Integer, Float> e : censusScore.entrySet()) {
+			dest.writeInt(e.getKey());
+			dest.writeFloat(e.getValue());
+		}
         dest.writeInt(banners.length);
         for(String b : banners) {
             dest.writeString(b);

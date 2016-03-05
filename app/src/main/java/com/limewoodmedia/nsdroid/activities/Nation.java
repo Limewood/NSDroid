@@ -39,6 +39,9 @@ import com.limewoodMedia.nsapi.enums.IndustrySector;
 import com.limewoodMedia.nsapi.enums.WAStatus;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
+import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
+import com.limewoodMedia.nsapi.holders.RegionData;
+import com.limewoodMedia.nsapi.holders.WorldData;
 import com.limewoodmedia.nsdroid.ColorInterpolator;
 import com.limewoodmedia.nsdroid.ColorInterpolator.Color;
 import com.limewoodmedia.nsdroid.R;
@@ -49,7 +52,10 @@ import com.limewoodmedia.nsdroid.TagParser;
 import com.limewoodmedia.nsdroid.Utils;
 import com.limewoodmedia.nsdroid.fragments.NavigationDrawerFragment;
 import com.limewoodmedia.nsdroid.holders.NationDataParcelable;
+import com.limewoodmedia.nsdroid.holders.RegionDataParcelable;
+import com.limewoodmedia.nsdroid.holders.WorldDataParcelable;
 import com.limewoodmedia.nsdroid.views.BannerView;
+import com.limewoodmedia.nsdroid.views.CensusView;
 import com.limewoodmedia.nsdroid.views.FreedomView;
 import com.limewoodmedia.nsdroid.views.LoadingView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -107,6 +113,9 @@ public class Nation extends AppCompatActivity implements NavigationDrawerFragmen
 	private FreedomView politicalFreedoms;
 	private TextView description;
 	private TextView endorsements;
+    private TextView censusTitle;
+    private CensusView worldRank;
+    private CensusView regionRank;
 
     // TODO Set standard colours for government and economy
     /** Colors to be used for the pie slices. */
@@ -162,6 +171,8 @@ public class Nation extends AppCompatActivity implements NavigationDrawerFragmen
 	private boolean endoByYou = false;
 	private boolean myNation = false;
     private ViewPager viewPager;
+    private RegionDataParcelable rData;
+    private WorldDataParcelable wData;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -200,6 +211,9 @@ public class Nation extends AppCompatActivity implements NavigationDrawerFragmen
         politicalFreedoms = (FreedomView) overview.findViewById(R.id.nation_political_freedoms);
         description = (TextView) overview.findViewById(R.id.nation_description);
 		endorsements = (TextView) overview.findViewById(R.id.nation_endorsements);
+        censusTitle = (TextView) overview.findViewById(R.id.census_title);
+        worldRank = (CensusView) overview.findViewById(R.id.world_rank);
+        regionRank = (CensusView) overview.findViewById(R.id.region_rank);
 
         setUpChartRenderer(peopleRenderer);
         setUpChartRenderer(governmentRenderer);
@@ -370,10 +384,15 @@ public class Nation extends AppCompatActivity implements NavigationDrawerFragmen
 	                		ANIMAL, ANIMAL_TRAIT, CUSTOM_RELIGION, CURRENCY,
 	                		REGION, WA_STATUS, INFLUENCE, CUSTOM_CAPITAL,
 							BANNERS, FREEDOM_SCORES, ENDORSEMENTS,
+                            WORLD_CENSUS, REGIONAL_CENSUS,
                             DEATHS, // People
                             GOVERNMENT_BUDGET, DEMONYM, // Government
                             SECTORS, GDP, INCOME, POOREST, RICHEST // Economy
                     );
+
+                    rData = API.getInstance(Nation.this).getRegionInfo(data.region, RegionData.Shards.NUM_NATIONS);
+
+                    wData = API.getInstance(Nation.this).getWorldInfo(WorldData.Shards.NUM_NATIONS, WorldData.Shards.CENSUS);
 	                
 	                return true;
 				} catch (RateLimitReachedException e) {
@@ -391,6 +410,9 @@ public class Nation extends AppCompatActivity implements NavigationDrawerFragmen
                 } catch (IOException e) {
                     e.printStackTrace();
                     errorMessage = getResources().getString(R.string.api_io_exception);
+                } catch (UnknownRegionException e) {
+                    e.printStackTrace();
+                    errorMessage = getString(R.string.unknown_region, e.getRegion());
                 }
 
                 return false;
@@ -460,8 +482,8 @@ public class Nation extends AppCompatActivity implements NavigationDrawerFragmen
 				break;
 			}
 		}
-		if(!myNation && data.worldAssemblyStatus != WAStatus.NON_MEMBER &&
-				data.region.equals(NationInfo.getInstance(this).getRegionId()) &&
+        if(!myNation && data.worldAssemblyStatus != WAStatus.NON_MEMBER &&
+				TagParser.nameToId(data.region).equals(NationInfo.getInstance(this).getRegionId()) &&
 				NationInfo.getInstance(this).getWAStatus() != WAStatus.NON_MEMBER) {
 			endorsed.setText(endoByYou ? R.string.nation_endorsed : R.string.nation_not_endorsed);
 			endorsed.setVisibility(View.VISIBLE);
@@ -475,7 +497,7 @@ public class Nation extends AppCompatActivity implements NavigationDrawerFragmen
 
 		// Set gradients
 		Color[] colors = getGradientFor(data.freedoms.civilRightsValue);
-		Log.d(TAG, "Civil rights: "+colors[0]+"; "+colors[1]);
+		Log.d(TAG, "Civil rights: " + colors[0] + "; " + colors[1]);
 		civilRights.setGradient(colors[0], colors[1]);
 
 		colors = getGradientFor(data.freedoms.economyValue);
@@ -483,6 +505,17 @@ public class Nation extends AppCompatActivity implements NavigationDrawerFragmen
 
 		colors = getGradientFor(data.freedoms.politicalFreedomsValue);
 		politicalFreedoms.setGradient(colors[0], colors[1]);
+
+        // Census ranks
+        censusTitle.setText(wData.census);
+        worldRank.setText(Utils.getOrdinal(data.worldCensus));
+        worldRank.setTotal(wData.numNations);
+        colors = getGradientForCensus(data.worldCensus, wData.numNations);
+        worldRank.setGradient(colors[0], colors[1]);
+        regionRank.setText(Utils.getOrdinal(data.regionalCensus));
+        regionRank.setTotal(rData.numNations);
+        colors = getGradientForCensus(data.regionalCensus, rData.numNations);
+        regionRank.setGradient(colors[0], colors[1]);
 
         description.setText(Html.fromHtml(data.getDescription().replace("\n", "<br/>")));
 
@@ -674,7 +707,7 @@ public class Nation extends AppCompatActivity implements NavigationDrawerFragmen
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// Endorse is the first item
 		if(myNation || (data != null && (data.worldAssemblyStatus == WAStatus.NON_MEMBER ||
-				!data.region.equals(NationInfo.getInstance(this).getRegionId()))) ||
+				!TagParser.nameToId(data.region).equals(NationInfo.getInstance(this).getRegionId()))) ||
 				NationInfo.getInstance(this).getWAStatus() == WAStatus.NON_MEMBER) {
 			menu.findItem(R.id.menu_endorse_nation).setVisible(false);
 		} else {
@@ -743,6 +776,15 @@ public class Nation extends AppCompatActivity implements NavigationDrawerFragmen
 						new ColorInterpolator.Color(.5f, 0, 0, 1), new ColorInterpolator.Color(.13f, .49f, 0, 1), value/100f)
 		};
 	}
+
+    private Color[] getGradientForCensus(int value, int total) {
+        return new Color[]{
+                new ColorInterpolator().interpolateColor(
+                        new ColorInterpolator.Color(1, 0, 0, 1), new ColorInterpolator.Color(.26f, .98f, 0, 1), 1-value/(float)total),
+                new ColorInterpolator().interpolateColor(
+                        new ColorInterpolator.Color(.5f, 0, 0, 1), new ColorInterpolator.Color(.13f, .49f, 0, 1), 1-value/(float)total)
+        };
+    }
 
     @Override
     public void onNavigationDrawerItemSelected(int id) {

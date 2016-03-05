@@ -82,6 +82,9 @@
     <string name="nation_economy_gdppc">%1$s %2$ss per person</string>
     <string name="nation_economy_poorest">Poorest 10%%: %1$s %2$ss per person</string>
     <string name="nation_economy_richest">Richest 10%%: %1$s %2$ss per person</string>
+    <string name="world_rank">World Rank</string>
+    <string name="region_rank">Region Rank</string>
+    <string name="of_num">of %1$s</string>
     
     <!-- Region activity -->
     <string name="wfe">World Factbook Entry</string>

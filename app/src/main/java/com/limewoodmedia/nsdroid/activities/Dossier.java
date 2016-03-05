@@ -98,6 +98,9 @@ public class Dossier extends AppCompatActivity implements NavigationDrawerFragme
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
+				} catch (Exception e) {
+					e.printStackTrace();
+					errorMessage = e.getMessage();
 				}
 				
 				return null;
@@ -132,14 +135,14 @@ public class Dossier extends AppCompatActivity implements NavigationDrawerFragme
 			if(ndp.lastActivity != null) {
 		    	nameView.setText(Html.fromHtml(
 		    			"<a href=\"com.limewoodMedia.nsdroid.nation://"
-		    					+ndp.name+"\">"+ndp.name+"</a>"), TextView.BufferType.SPANNABLE);
+		    					+ndp.name+"\">"+TagParser.idToName(ndp.name)+"</a>"), TextView.BufferType.SPANNABLE);
 		    	nameView.setMovementMethod(LinkMovementMethod.getInstance());
 				((TextView)nView.findViewById(R.id.nation_category)).setText(
 						getString(R.string.category)+": "+ndp.category);
 				regionWAD = (TextView)nView.findViewById(R.id.nation_region);
 				regionWAD.setText(Html.fromHtml(
 						getString(R.string.region)+": <a href=\"com.limewoodMedia.nsdroid.region://"
-		    					+ndp.region+"\">"+ndp.region+"</a>"), TextView.BufferType.SPANNABLE);
+		    					+ndp.region+"\">"+TagParser.idToName(ndp.region)+"</a>"), TextView.BufferType.SPANNABLE);
 				regionWAD.setMovementMethod(LinkMovementMethod.getInstance());
 			} else {
 				nameView.setText(ndp.name);
@@ -212,13 +215,13 @@ public class Dossier extends AppCompatActivity implements NavigationDrawerFragme
 			if(rdp.delegate != null) {
 		    	nameView.setText(Html.fromHtml(
 		    			"<a href=\"com.limewoodMedia.nsdroid.region://"
-		    					+rdp.name+"\">"+rdp.name+"</a>"), TextView.BufferType.SPANNABLE);
+		    					+rdp.name+"\">"+TagParser.idToName(rdp.name)+"</a>"), TextView.BufferType.SPANNABLE);
 		    	nameView.setMovementMethod(LinkMovementMethod.getInstance());
 				((TextView)nView.findViewById(R.id.region_nations)).setText(
 						String.format("%5d", rdp.numNations));
 				regionWAD = (TextView)nView.findViewById(R.id.region_wad);
 				if(rdp.delegate.equals("--None--")) {
-					regionWAD.setText(rdp.delegate);
+					regionWAD.setText(getString(R.string.wad)+" "+rdp.delegate);
 				} else {
 					regionWAD.setText(Html.fromHtml(
 							getString(R.string.wad)+" <a href=\"com.limewoodMedia.nsdroid.nation://"

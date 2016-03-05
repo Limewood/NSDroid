@@ -43,12 +43,12 @@ public class WorldData {
 		NUM_REGIONS("numregions"),
 		CENSUS("census"),
 		CENSUS_ID("censusid"),
-		CENSUS_SIZE("censussize"),
 		CENSUS_SCALE("censusscale"),
-		CENSUS_MEDIAN("censusmedian"),
 		FEATURED_REGION("featuredregion"),
 		NEW_NATIONS("newnations"),
-		REGIONS_BY_TAG("regionsbytag", "regions");
+		REGIONS_BY_TAG("regionsbytag"),
+		NATIONS("nations"),
+		REGIONS("regions");
 		
 		private String name;
 		private String tag;
@@ -103,7 +103,7 @@ public class WorldData {
 		/**
 		 * Adds a tag to the shard
 		 * NOTE: can only be used with the REGIONS_BY_TAG shard
-		 * @param tag the tag to add
+		 * @param tags the tags to add
 		 */
 		public Shards addTags(String...tags) {
 			if(this != REGIONS_BY_TAG) {
@@ -142,12 +142,12 @@ public class WorldData {
 	public int numRegions;
 	public String census;
 	public int censusId;
-	public int censusSize;
 	public String censusScale;
-	public int censusMedian;
 	public String featuredRegion;
 	public String[] newNations;
 	public String[] regionsByTag;
+	public String[] nations;
+	public String[] regions;
 	
 	@Override
 	public String toString() {
@@ -156,9 +156,7 @@ public class WorldData {
 				+"\n\tnumRegions:\t"+numRegions
 				+"\n\tcensus:\t"+census
 				+"\n\tcensusId:\t"+censusId
-				+"\n\tcensusSize:\t"+censusSize
 				+"\n\tcensusScale:\t"+censusScale
-				+"\n\tcensusMedian:\t"+censusMedian
 				+"\n\tfeaturedRegion:\t"+featuredRegion
 				+"\n\tnewNations:";
 		if(newNations != null) {
@@ -169,6 +167,18 @@ public class WorldData {
 		str += "\n\tregionsByTag:";
 		if(regionsByTag != null) {
 			for(String r : regionsByTag) {
+				str += "\n\t\t" + r;
+			}
+		}
+		str += "\n\tnations:";
+		if(nations != null) {
+			for(String r : nations) {
+				str += "\n\t\t" + r;
+			}
+		}
+		str += "\n\tregions:";
+		if(regions != null) {
+			for(String r : regions) {
 				str += "\n\t\t" + r;
 			}
 		}

@@ -209,10 +209,50 @@
                 android:layout_marginEnd="5dp" />
 
             <TextView
+                android:id="@+id/census_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/nation_influence"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:text="census"/>
+
+            <LinearLayout
+                android:id="@+id/census"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/census_title"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
+
+                <com.limewoodmedia.nsdroid.views.CensusView
+                    android:id="@+id/world_rank"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="20dp"
+                    app:censuslabel="@string/world_rank"
+                    app:total="of 152200"/>
+
+                <com.limewoodmedia.nsdroid.views.CensusView
+                    android:id="@+id/region_rank"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    app:censuslabel="@string/region_rank"
+                    app:total="of 201"/>
+
+            </LinearLayout>
+
+            <TextView
                 android:id="@+id/nation_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/nation_influence"
+                android:layout_below="@id/census"
                 android:textSize="16sp"
                 android:layout_margin="7dp" />
 

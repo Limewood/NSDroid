@@ -67,27 +67,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f85e751-c4a6-45a2-a550-b85f400d1712" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/holders/Officer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/OfficersFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/officer.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/officers.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/officers_single.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/views/CensusView.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/WorldDataParcelable.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/values/attrs_census_view.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/census_bubble.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/census_value_bubble.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app-release.apk" afterPath="$PROJECT_DIR$/app/app-release.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/API.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/API.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/com/limewoodmedia/nsdroid/BuildConfig.java" afterPath="$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/com/limewoodmedia/nsdroid/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/IssueDetail.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/IssueDetail.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/IssueDetailFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/IssueDetailFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Dossier.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Dossier.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/NSAPI.java" afterPath="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/NSAPI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/NavigationDrawerFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/NavigationDrawerFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/NSDroid.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/NSDroid.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Nation.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Nation.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/NationDataParcelable.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/NationDataParcelable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/limewoodmedia/nsdroid/R.java" afterPath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/limewoodmedia/nsdroid/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Region.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Region.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/holders/RegionData.java" afterPath="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/holders/RegionData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/RegionDataParcelable.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/RegionDataParcelable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/Utils.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/Utils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/holders/WorldData.java" afterPath="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/holders/WorldData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_navigation_drawer.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_navigation_drawer.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/nation_overview.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/nation_overview.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-land/nation_overview.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-land/nation_overview.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values-es/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values-es/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="NSDroid.iws" />
@@ -119,133 +119,84 @@
       <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28645834">
-              <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.3125">
+              <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Region.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Region.java">
+      <file leaf-file-name="Nation.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Nation.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="261" column="0" selection-start-line="261" selection-start-column="0" selection-end-line="261" selection-end-column="0" />
+              <caret line="514" column="65" selection-start-line="514" selection-start-column="65" selection-end-line="514" selection-end-column="65" />
               <folding>
-                <element signature="e#11091#11092#0" expanded="true" />
-                <element signature="e#11120#11121#0" expanded="true" />
-                <element signature="e#11341#11364#0" expanded="true" />
-                <element signature="e#11628#11676#0" expanded="true" />
-                <element signature="e#12684#12737#0" expanded="true" />
-                <element signature="e#12826#12890#0" expanded="true" />
-                <element signature="e#13106#13170#0" expanded="true" />
-                <element signature="e#13301#13356#0" expanded="true" />
-                <element signature="e#13476#13527#0" expanded="true" />
-                <element signature="e#14269#14307#0" expanded="true" />
-                <element signature="e#14599#14640#0" expanded="true" />
-                <element signature="e#14867#14909#0" expanded="true" />
-                <element signature="e#19149#19181#0" expanded="true" />
-                <element signature="e#20458#20504#0" expanded="true" />
-                <element signature="e#20679#20732#0" expanded="true" />
-                <element signature="e#21756#21785#0" expanded="true" />
-                <element signature="e#21823#21854#0" expanded="true" />
-                <element signature="e#22101#22112#0" expanded="true" />
-                <element signature="e#22499#22514#0" expanded="true" />
-                <element signature="e#24427#24456#0" expanded="true" />
-                <element signature="e#24516#24545#0" expanded="true" />
-                <element signature="e#24610#24644#0" expanded="true" />
-                <element signature="e#24710#24745#0" expanded="true" />
+                <element signature="e#12194#12238#0" expanded="true" />
+                <element signature="e#12948#12992#0" expanded="true" />
+                <element signature="e#13022#13067#0" expanded="true" />
+                <element signature="e#13097#13144#0" expanded="true" />
+                <element signature="e#13174#13220#0" expanded="true" />
+                <element signature="e#14374#14414#0" expanded="true" />
+                <element signature="e#15437#15477#0" expanded="true" />
+                <element signature="e#16464#16504#0" expanded="true" />
+                <element signature="e#16856#16879#0" expanded="true" />
+                <element signature="e#16908#16956#0" expanded="true" />
+                <element signature="e#18256#18309#0" expanded="true" />
+                <element signature="e#18398#18462#0" expanded="true" />
+                <element signature="e#18678#18733#0" expanded="true" />
+                <element signature="e#18853#18904#0" expanded="true" />
+                <element signature="e#19035#19084#0" expanded="true" />
+                <element signature="e#20092#20131#0" expanded="true" />
+                <element signature="e#20494#20538#0" expanded="true" />
+                <element signature="e#20688#20734#0" expanded="true" />
+                <element signature="e#20868#20912#0" expanded="true" />
+                <element signature="e#21478#21502#0" expanded="true" />
+                <element signature="e#21505#21533#0" expanded="true" />
+                <element signature="e#25718#25793#0" expanded="true" />
+                <element signature="e#26029#26153#0" expanded="true" />
+                <element signature="e#26190#26263#0" expanded="true" />
+                <element signature="e#28375#28447#0" expanded="true" />
+                <element signature="e#28520#28617#0" expanded="true" />
+                <element signature="e#28649#28787#0" expanded="true" />
+                <element signature="e#28821#28926#0" expanded="true" />
+                <element signature="e#28960#29065#0" expanded="true" />
+                <element signature="e#31923#31953#0" expanded="true" />
+                <element signature="e#31956#31984#0" expanded="true" />
+                <element signature="e#32725#32757#0" expanded="true" />
+                <element signature="e#33566#33596#0" expanded="true" />
+                <element signature="e#33599#33627#0" expanded="true" />
+                <element signature="e#36515#36557#0" expanded="true" />
+                <element signature="e#36620#36660#0" expanded="true" />
+                <element signature="e#36727#36771#0" expanded="true" />
+                <element signature="e#36835#36876#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Utils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/Utils.java">
+      <file leaf-file-name="nation_overview.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-land/nation_overview.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="161" column="42" selection-start-line="161" selection-start-column="42" selection-end-line="161" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OfficersFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/OfficersFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.689655">
-              <caret line="238" column="39" selection-start-line="238" selection-start-column="39" selection-end-line="238" selection-end-column="39" />
+            <state vertical-scroll-proportion="-12.258064">
+              <caret line="254" column="49" selection-start-line="254" selection-start-column="49" selection-end-line="254" selection-end-column="49" />
               <folding>
-                <element signature="e#5235#5236#0" expanded="true" />
-                <element signature="e#5255#5256#0" expanded="true" />
-                <element signature="e#5736#5761#0" expanded="true" />
-                <element signature="e#6079#6104#0" expanded="true" />
-                <element signature="e#8123#8124#0" expanded="true" />
-                <element signature="e#8158#8159#0" expanded="true" />
+                <element signature="e#930#953#0" expanded="true" />
+                <element signature="e#1200#1221#0" expanded="true" />
+                <element signature="e#1919#1938#0" expanded="true" />
+                <element signature="e#2617#2647#0" expanded="true" />
+                <element signature="e#3125#3151#0" expanded="true" />
+                <element signature="e#3916#3946#0" expanded="true" />
+                <element signature="e#4538#4565#0" expanded="true" />
+                <element signature="e#7203#7225#0" expanded="true" />
+                <element signature="e#7627#7644#0" expanded="true" />
+                <element signature="e#7953#7981#0" expanded="true" />
+                <element signature="e#8361#8384#0" expanded="true" />
+                <element signature="e#8985#9008#0" expanded="true" />
+                <element signature="e#10452#10472#0" expanded="true" />
+                <element signature="e#10868#10889#0" expanded="true" />
+                <element signature="e#11638#11666#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NavigationDrawerFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/NavigationDrawerFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="280" column="28" selection-start-line="280" selection-start-column="28" selection-end-line="280" selection-end-column="28" />
-              <folding>
-                <element signature="e#4795#4812#0" expanded="true" />
-                <element signature="e#4899#4921#0" expanded="true" />
-                <element signature="e#5010#5033#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.586206">
-              <caret line="249" column="41" selection-start-line="249" selection-start-column="41" selection-end-line="249" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RegionData.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/holders/RegionData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.551724">
-              <caret line="47" column="10" selection-start-line="47" selection-start-column="10" selection-end-line="47" selection-end-column="10" />
-              <folding>
-                <element signature="e#4315#4316#0" expanded="true" />
-                <element signature="e#4350#4351#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NSAPI.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/NSAPI.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="747" column="61" selection-start-line="747" selection-start-column="61" selection-end-line="747" selection-end-column="61" />
-              <folding>
-                <element signature="e#20275#20296#0" expanded="true" />
-                <element signature="e#21150#21158#0" expanded="true" />
-                <element signature="e#30400#30409#0" expanded="true" />
-                <element signature="e#31238#31246#0" expanded="true" />
-                <element signature="e#31913#31922#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="officer.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/officer.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.0">
-              <caret line="4" column="45" selection-start-line="4" selection-start-column="45" selection-end-line="4" selection-end-column="45" />
-              <folding />
             </state>
           </provider>
           <provider editor-type-id="android-designer">
@@ -253,11 +204,40 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RegionDataParcelable.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/RegionDataParcelable.java">
+      <file leaf-file-name="nation_overview.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nation_overview.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.586206">
-              <caret line="201" column="35" selection-start-line="201" selection-start-column="35" selection-end-line="201" selection-end-column="35" />
+            <state vertical-scroll-proportion="-0.48387095">
+              <caret line="191" column="49" selection-start-line="191" selection-start-column="49" selection-end-line="231" selection-end-column="27" />
+              <folding>
+                <element signature="e#913#936#0" expanded="true" />
+                <element signature="e#1183#1204#0" expanded="true" />
+                <element signature="e#2014#2033#0" expanded="true" />
+                <element signature="e#2441#2471#0" expanded="true" />
+                <element signature="e#2905#2931#0" expanded="true" />
+                <element signature="e#3378#3408#0" expanded="true" />
+                <element signature="e#3948#3975#0" expanded="true" />
+                <element signature="e#6510#6532#0" expanded="true" />
+                <element signature="e#6847#6864#0" expanded="true" />
+                <element signature="e#7136#7164#0" expanded="true" />
+                <element signature="e#7544#7567#0" expanded="true" />
+                <element signature="e#8168#8193#0" expanded="true" />
+                <element signature="e#9637#9657#0" expanded="true" />
+                <element signature="e#10053#10074#0" expanded="true" />
+                <element signature="e#10823#10851#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-14.551724">
+              <caret line="293" column="14" selection-start-line="293" selection-start-column="14" selection-end-line="293" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -1624,7 +1604,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="5742832581456" />
+        <entry key="$PROJECT_DIR$" value="5742985500198" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2103,19 +2083,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/EmbassiesFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/NationInfo.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/AppCompatPreferenceActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/nations_list.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/NationsList.java" />
-        <option value="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values/values.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Dossier.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Nation.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/RMBFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Welcome.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/WACouncilFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/WorldAssembly.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/NSDroid.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/toolbar.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-v11/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/overview.xml" />
@@ -2136,7 +2104,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/colours.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/recent_trend.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-es/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/API.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/IssueDetail.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/IssueDetailFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/officers.xml" />
@@ -2145,14 +2112,27 @@
         <option value="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/holders/Officer.java" />
         <option value="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/holders/RegionData.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/RegionDataParcelable.java" />
-        <option value="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/NSAPI.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/officer.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/NavigationDrawerFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_navigation_drawer.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/OfficersFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/Utils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Region.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/NSDroid.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Dossier.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/WorldDataParcelable.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/API.java" />
+        <option value="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/holders/WorldData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/attrs_census_view.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/census_bubble.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/NationDataParcelable.java" />
+        <option value="$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/NSAPI.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/nation_overview.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/views/CensusView.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/census_value_bubble.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/Utils.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Nation.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout-land/nation_overview.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
       </list>
     </option>
@@ -2168,9 +2148,9 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="24" />
+    <option name="y" value="-4" />
     <option name="width" value="1680" />
-    <option name="height" value="1026" />
+    <option name="height" value="1054" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -2195,10 +2175,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="ProjectPane" />
-      <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2216,18 +2192,6 @@
               <option name="myItemId" value="NSDroid" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nsapi" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.NonAndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.NonAndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nsapi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -2241,6 +2205,10 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2268,9 +2236,13 @@
       <recent name="com.limewoodMedia.nsapi.holders" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/values" />
       <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.limewoodmedia.nsdroid.holders" />
+      <recent name="com.limewoodmedia.nsdroid.views" />
       <recent name="com.limewoodmedia.nsdroid.fragments" />
     </key>
   </component>
@@ -2475,12 +2447,18 @@
       <option name="project" value="LOCAL" />
       <updated>1457006479365</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fixed bug with instant issues.&#10;Added regional officers.">
+      <created>1457036160896</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1457036160962</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="24" width="1680" height="1026" extended-state="6" />
-    <editor active="false" />
+    <frame x="0" y="-4" width="1680" height="1054" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -2527,10 +2505,12 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <MESSAGE value="Updated version.&#10;Updated build target.&#10;Replaced ActionbarSherlock with AppCompat.&#10;Added GDP, income and economy sectors." />
     <MESSAGE value="Fixed bugs with new design and news section." />
     <MESSAGE value="Implemented changes from new &quot;instant issues&quot;." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented changes from new &quot;instant issues&quot;." />
+    <MESSAGE value="Fixed bug with instant issues.&#10;Added regional officers." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug with instant issues.&#10;Added regional officers." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2546,202 +2526,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/Android/Sdk/extras/android/m2repository/com/android/support/appcompat-v7/23.1.1/appcompat-v7-23.1.1-sources.jar!/android/support/v7/app/ActionBarDrawerToggle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="177" column="11" selection-start-line="177" selection-start-column="11" selection-end-line="177" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/AppCompatPreferenceActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26041666">
-          <caret line="34" column="22" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/LoadingHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="81" column="71" selection-start-line="81" selection-start-column="71" selection-end-line="81" selection-end-column="71" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.546875">
-          <caret line="84" column="45" selection-start-line="84" selection-start-column="45" selection-end-line="84" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Preferences.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8697917">
-          <caret line="74" column="22" selection-start-line="74" selection-start-column="22" selection-end-line="74" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/NSDroid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5590278">
-          <caret line="152" column="42" selection-start-line="152" selection-start-column="42" selection-end-line="154" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16453382">
-          <caret line="6" column="73" selection-start-line="6" selection-start-column="73" selection-end-line="6" selection-end-column="73" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Android/Sdk/sources/android-23/org/xmlpull/v1/XmlPullParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2708334">
-          <caret line="488" column="9" selection-start-line="488" selection-start-column="9" selection-end-line="488" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/News.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="58" column="48" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#8298#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4025#4026#0" expanded="false" />
-            <element signature="e#4083#4084#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/CensusChange.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15625">
-          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/IssueResult.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36458334">
-          <caret line="14" column="50" selection-start-line="14" selection-start-column="50" selection-end-line="14" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#289#290#0" expanded="false" />
-            <element signature="e#346#347#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/menu_issues.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.026041666">
-          <caret line="1" column="56" selection-start-line="1" selection-start-column="56" selection-end-line="1" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/IssuesFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="170" column="7" selection-start-line="170" selection-start-column="7" selection-end-line="170" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/issues_single.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.67742">
-          <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/issue_detail_single.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.419355">
-          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/issue_list_item.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colours.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.234375">
-          <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/recent_trend.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.451612">
-          <caret line="34" column="28" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/issue_detail.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.0">
-          <caret line="52" column="49" selection-start-line="52" selection-start-column="49" selection-end-line="52" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="45" selection-start-line="84" selection-start-column="45" selection-end-line="84" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-es/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.1034484">
-          <caret line="97" column="76" selection-start-line="97" selection-start-column="76" selection-end-line="97" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Issues.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="72" column="35" selection-start-line="72" selection-start-column="35" selection-end-line="72" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/IssueDetailFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-17.655172">
@@ -2764,17 +2548,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/TagParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7916667">
-          <caret line="168" column="25" selection-start-line="168" selection-start-column="25" selection-end-line="168" selection-end-column="25" />
-          <folding>
-            <element signature="e#6633#6634#0" expanded="true" />
-            <element signature="e#6683#6684#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Android/Sdk/sources/android-23/android/text/Html.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.53125">
@@ -2790,7 +2563,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5572917">
           <caret line="46" column="34" selection-start-line="46" selection-start-column="34" selection-end-line="46" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2798,7 +2570,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2851,18 +2622,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/API.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.827586">
-          <caret line="167" column="52" selection-start-line="167" selection-start-column="52" selection-end-line="167" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5287#5288#0" expanded="true" />
-            <element signature="e#5321#5322#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/INSAPI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2906,38 +2665,24 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="44" column="11" selection-start-line="44" selection-start-column="11" selection-end-line="44" selection-end-column="11" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1092#1093#0" expanded="true" />
-            <element signature="e#1142#1143#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#1092#1093#0" expanded="false" />
+            <element signature="e#1142#1143#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/RegionDataParcelable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.586206">
+        <state vertical-scroll-proportion="0.0">
           <caret line="201" column="35" selection-start-line="201" selection-start-column="35" selection-end-line="201" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/NSAPI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="747" column="61" selection-start-line="747" selection-start-column="61" selection-end-line="747" selection-end-column="61" />
-          <folding>
-            <element signature="e#20275#20296#0" expanded="true" />
-            <element signature="e#21150#21158#0" expanded="true" />
-            <element signature="e#30400#30409#0" expanded="true" />
-            <element signature="e#31238#31246#0" expanded="true" />
-            <element signature="e#31913#31922#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/officer.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.0">
+        <state vertical-scroll-proportion="0.0">
           <caret line="4" column="45" selection-start-line="4" selection-start-column="45" selection-end-line="4" selection-end-column="45" />
           <folding />
         </state>
@@ -2959,36 +2704,15 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.586206">
-          <caret line="249" column="41" selection-start-line="249" selection-start-column="41" selection-end-line="249" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/holders/RegionData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.551724">
-          <caret line="47" column="10" selection-start-line="47" selection-start-column="10" selection-end-line="47" selection-end-column="10" />
-          <folding>
-            <element signature="e#4315#4316#0" expanded="true" />
-            <element signature="e#4350#4351#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/fragments/OfficersFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.689655">
+        <state vertical-scroll-proportion="0.0">
           <caret line="238" column="39" selection-start-line="238" selection-start-column="39" selection-end-line="238" selection-end-column="39" />
           <folding>
-            <element signature="e#5235#5236#0" expanded="true" />
-            <element signature="e#5255#5256#0" expanded="true" />
-            <element signature="e#5736#5761#0" expanded="true" />
-            <element signature="e#6079#6104#0" expanded="true" />
-            <element signature="e#8123#8124#0" expanded="true" />
-            <element signature="e#8158#8159#0" expanded="true" />
+            <element signature="e#5235#5236#0" expanded="false" />
+            <element signature="e#5255#5256#0" expanded="false" />
+            <element signature="e#8123#8124#0" expanded="false" />
+            <element signature="e#8158#8159#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3005,18 +2729,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="280" column="28" selection-start-line="280" selection-start-column="28" selection-end-line="280" selection-end-column="28" />
-          <folding>
-            <element signature="e#4795#4812#0" expanded="true" />
-            <element signature="e#4899#4921#0" expanded="true" />
-            <element signature="e#5010#5033#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="161" column="42" selection-start-line="161" selection-start-column="42" selection-end-line="161" selection-end-column="42" />
           <folding />
         </state>
       </provider>
@@ -3029,42 +2741,368 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/NSDroid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.095063984">
+          <caret line="119" column="73" selection-start-line="119" selection-start-column="73" selection-end-line="119" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Region.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="261" column="0" selection-start-line="261" selection-start-column="0" selection-end-line="261" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.30729166">
+          <caret line="387" column="54" selection-start-line="387" selection-start-column="54" selection-end-line="387" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/TagParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.765625">
+          <caret line="169" column="0" selection-start-line="169" selection-start-column="0" selection-end-line="169" selection-end-column="0" />
           <folding>
-            <element signature="e#11091#11092#0" expanded="true" />
-            <element signature="e#11120#11121#0" expanded="true" />
-            <element signature="e#11341#11364#0" expanded="true" />
-            <element signature="e#11628#11676#0" expanded="true" />
-            <element signature="e#12684#12737#0" expanded="true" />
-            <element signature="e#12826#12890#0" expanded="true" />
-            <element signature="e#13106#13170#0" expanded="true" />
-            <element signature="e#13301#13356#0" expanded="true" />
-            <element signature="e#13476#13527#0" expanded="true" />
-            <element signature="e#14269#14307#0" expanded="true" />
-            <element signature="e#14599#14640#0" expanded="true" />
-            <element signature="e#14867#14909#0" expanded="true" />
-            <element signature="e#19149#19181#0" expanded="true" />
-            <element signature="e#20458#20504#0" expanded="true" />
-            <element signature="e#20679#20732#0" expanded="true" />
-            <element signature="e#21756#21785#0" expanded="true" />
-            <element signature="e#21823#21854#0" expanded="true" />
-            <element signature="e#22101#22112#0" expanded="true" />
-            <element signature="e#22499#22514#0" expanded="true" />
-            <element signature="e#24427#24456#0" expanded="true" />
-            <element signature="e#24516#24545#0" expanded="true" />
-            <element signature="e#24610#24644#0" expanded="true" />
-            <element signature="e#24710#24745#0" expanded="true" />
+            <element signature="e#6683#6684#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Dossier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="223" column="66" selection-start-line="223" selection-start-column="66" selection-end-line="223" selection-end-column="66" />
+          <folding>
+            <element signature="e#3270#3294#0" expanded="true" />
+            <element signature="e#3323#3371#0" expanded="true" />
+            <element signature="e#5147#5175#0" expanded="true" />
+            <element signature="e#5305#5331#0" expanded="true" />
+            <element signature="e#5617#5646#0" expanded="true" />
+            <element signature="e#6426#6462#0" expanded="true" />
+            <element signature="e#6489#6548#0" expanded="true" />
+            <element signature="e#6582#6593#0" expanded="true" />
+            <element signature="e#6787#6799#0" expanded="true" />
+            <element signature="e#7413#7449#0" expanded="true" />
+            <element signature="e#8595#8618#0" expanded="true" />
+            <element signature="e#8696#8719#0" expanded="true" />
+            <element signature="e#9317#9353#0" expanded="true" />
+            <element signature="e#9380#9439#0" expanded="true" />
+            <element signature="e#9473#9484#0" expanded="true" />
+            <element signature="e#9678#9690#0" expanded="true" />
+            <element signature="e#10233#10269#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/views/FreedomView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26041666">
+          <caret line="51" column="13" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/freedom_bubble.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.41284403">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/freedom_bubble.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7291667">
+          <caret line="28" column="31" selection-start-line="28" selection-start-column="31" selection-end-line="28" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/attrs_freedom_view.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5989583">
+          <caret line="23" column="36" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/WADataParcelable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/WorldDataParcelable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.09375">
+          <caret line="70" column="17" selection-start-line="70" selection-start-column="17" selection-end-line="70" selection-end-column="17" />
+          <folding>
+            <element signature="e#3137#3138#0" expanded="true" />
+            <element signature="e#3187#3188#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/enums/IShards.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26041666">
+          <caret line="31" column="26" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/holders/RegionData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/holders/WorldData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-28.689655">
+          <caret line="180" column="34" selection-start-line="180" selection-start-column="34" selection-end-line="180" selection-end-column="34" />
+          <folding>
+            <element signature="e#2031#2032#0" expanded="true" />
+            <element signature="e#2062#2063#0" expanded="true" />
+            <element signature="e#2144#2145#0" expanded="true" />
+            <element signature="e#2168#2169#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/API.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.103448">
+          <caret line="232" column="27" selection-start-line="232" selection-start-column="27" selection-end-line="232" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5401#5402#0" expanded="true" />
+            <element signature="e#5435#5436#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/default_white.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values/values.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3510055">
+          <caret line="162" column="0" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/attrs_census_view.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.625">
+          <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/freedom_value_bubble.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/NSAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.24138">
+          <caret line="348" column="81" selection-start-line="348" selection-start-column="81" selection-end-line="348" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/census_value_bubble.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="34" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/census_bubble.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.645162">
+          <caret line="42" column="46" selection-start-line="42" selection-start-column="46" selection-end-line="42" selection-end-column="46" />
+          <folding>
+            <element signature="e#1680#1700#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/views/CensusView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.724138">
+          <caret line="107" column="48" selection-start-line="107" selection-start-column="48" selection-end-line="108" selection-end-column="77" />
+          <folding>
+            <element signature="e#2857#2858#0" expanded="true" />
+            <element signature="e#2886#2887#0" expanded="true" />
+            <element signature="e#2977#3041#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/holders/NationDataParcelable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6764168">
+          <caret line="298" column="42" selection-start-line="298" selection-start-column="42" selection-end-line="298" selection-end-column="42" />
+          <folding>
+            <element signature="e#7985#7986#0" expanded="true" />
+            <element signature="e#8036#8037#0" expanded="true" />
+            <element signature="e#12206#12207#0" expanded="true" />
+            <element signature="e#12221#12222#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nsapi/src/main/java/com/limewoodMedia/nsapi/holders/NationData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.765625">
+          <caret line="290" column="34" selection-start-line="290" selection-start-column="34" selection-end-line="290" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="234" column="30" selection-start-line="234" selection-start-column="30" selection-end-line="234" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.551724">
+          <caret line="293" column="14" selection-start-line="293" selection-start-column="14" selection-end-line="293" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/limewoodmedia/nsdroid/activities/Nation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="514" column="65" selection-start-line="514" selection-start-column="65" selection-end-line="514" selection-end-column="65" />
+          <folding>
+            <element signature="e#12194#12238#0" expanded="true" />
+            <element signature="e#12948#12992#0" expanded="true" />
+            <element signature="e#13022#13067#0" expanded="true" />
+            <element signature="e#13097#13144#0" expanded="true" />
+            <element signature="e#13174#13220#0" expanded="true" />
+            <element signature="e#14374#14414#0" expanded="true" />
+            <element signature="e#15437#15477#0" expanded="true" />
+            <element signature="e#16464#16504#0" expanded="true" />
+            <element signature="e#16856#16879#0" expanded="true" />
+            <element signature="e#16908#16956#0" expanded="true" />
+            <element signature="e#18256#18309#0" expanded="true" />
+            <element signature="e#18398#18462#0" expanded="true" />
+            <element signature="e#18678#18733#0" expanded="true" />
+            <element signature="e#18853#18904#0" expanded="true" />
+            <element signature="e#19035#19084#0" expanded="true" />
+            <element signature="e#20092#20131#0" expanded="true" />
+            <element signature="e#20494#20538#0" expanded="true" />
+            <element signature="e#20688#20734#0" expanded="true" />
+            <element signature="e#20868#20912#0" expanded="true" />
+            <element signature="e#21478#21502#0" expanded="true" />
+            <element signature="e#21505#21533#0" expanded="true" />
+            <element signature="e#25718#25793#0" expanded="true" />
+            <element signature="e#26029#26153#0" expanded="true" />
+            <element signature="e#26190#26263#0" expanded="true" />
+            <element signature="e#28375#28447#0" expanded="true" />
+            <element signature="e#28520#28617#0" expanded="true" />
+            <element signature="e#28649#28787#0" expanded="true" />
+            <element signature="e#28821#28926#0" expanded="true" />
+            <element signature="e#28960#29065#0" expanded="true" />
+            <element signature="e#31923#31953#0" expanded="true" />
+            <element signature="e#31956#31984#0" expanded="true" />
+            <element signature="e#32725#32757#0" expanded="true" />
+            <element signature="e#33566#33596#0" expanded="true" />
+            <element signature="e#33599#33627#0" expanded="true" />
+            <element signature="e#36515#36557#0" expanded="true" />
+            <element signature="e#36620#36660#0" expanded="true" />
+            <element signature="e#36727#36771#0" expanded="true" />
+            <element signature="e#36835#36876#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nation_overview.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.48387095">
+          <caret line="191" column="49" selection-start-line="191" selection-start-column="49" selection-end-line="231" selection-end-column="27" />
+          <folding>
+            <element signature="e#913#936#0" expanded="true" />
+            <element signature="e#1183#1204#0" expanded="true" />
+            <element signature="e#2014#2033#0" expanded="true" />
+            <element signature="e#2441#2471#0" expanded="true" />
+            <element signature="e#2905#2931#0" expanded="true" />
+            <element signature="e#3378#3408#0" expanded="true" />
+            <element signature="e#3948#3975#0" expanded="true" />
+            <element signature="e#6510#6532#0" expanded="true" />
+            <element signature="e#6847#6864#0" expanded="true" />
+            <element signature="e#7136#7164#0" expanded="true" />
+            <element signature="e#7544#7567#0" expanded="true" />
+            <element signature="e#8168#8193#0" expanded="true" />
+            <element signature="e#9637#9657#0" expanded="true" />
+            <element signature="e#10053#10074#0" expanded="true" />
+            <element signature="e#10823#10851#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-land/nation_overview.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.258064">
+          <caret line="254" column="49" selection-start-line="254" selection-start-column="49" selection-end-line="254" selection-end-column="49" />
+          <folding>
+            <element signature="e#930#953#0" expanded="true" />
+            <element signature="e#1200#1221#0" expanded="true" />
+            <element signature="e#1919#1938#0" expanded="true" />
+            <element signature="e#2617#2647#0" expanded="true" />
+            <element signature="e#3125#3151#0" expanded="true" />
+            <element signature="e#3916#3946#0" expanded="true" />
+            <element signature="e#4538#4565#0" expanded="true" />
+            <element signature="e#7203#7225#0" expanded="true" />
+            <element signature="e#7627#7644#0" expanded="true" />
+            <element signature="e#7953#7981#0" expanded="true" />
+            <element signature="e#8361#8384#0" expanded="true" />
+            <element signature="e#8985#9008#0" expanded="true" />
+            <element signature="e#10452#10472#0" expanded="true" />
+            <element signature="e#10868#10889#0" expanded="true" />
+            <element signature="e#11638#11666#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28645834">
-          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.3125">
+          <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
           <folding />
         </state>
       </provider>

@@ -115,8 +115,9 @@ public class NSDroid extends AppCompatActivity implements NavigationDrawerFragme
 				@Override
 				protected Exception doInBackground(Void... params) {
                     try {
-                        NationData nData = API.getInstance(NSDroid.this).getNationInfo(info.getId(), NationData.Shards.WA_STATUS);
+                        NationData nData = API.getInstance(NSDroid.this).getNationInfo(info.getId(), NationData.Shards.WA_STATUS, NationData.Shards.REGION);
                         info.setWAStatus(nData.worldAssemblyStatus);
+						info.setRegionId(TagParser.nameToId(nData.region));
                     } catch (UnknownNationException e) {
                         e.printStackTrace();
                         return e;

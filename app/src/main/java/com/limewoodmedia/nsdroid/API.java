@@ -65,6 +65,7 @@ import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
 import com.limewoodMedia.nsapi.holders.NationData;
 import com.limewoodMedia.nsapi.holders.RegionData;
 import com.limewoodMedia.nsapi.holders.WAData;
+import com.limewoodMedia.nsapi.holders.WorldData;
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.holders.CensusChange;
 import com.limewoodmedia.nsdroid.holders.DossierData;
@@ -73,6 +74,7 @@ import com.limewoodmedia.nsdroid.holders.IssueResult;
 import com.limewoodmedia.nsdroid.holders.NationDataParcelable;
 import com.limewoodmedia.nsdroid.holders.RegionDataParcelable;
 import com.limewoodmedia.nsdroid.holders.WADataParcelable;
+import com.limewoodmedia.nsdroid.holders.WorldDataParcelable;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -130,7 +132,7 @@ public class API {
 	}
 	
 	public void setUserNation(String userNation) {
-		this.nsapi.setUserAgent(USER_AGENT + "; used by nation "+userNation);
+		this.nsapi.setUserAgent(USER_AGENT + "; used by nation " + userNation);
 	}
 	
 	public String getUserAgent() {
@@ -223,6 +225,12 @@ public class API {
 		}
 
         return new RegionDataParcelable(rData);
+	}
+
+	public synchronized WorldDataParcelable getWorldInfo(WorldData.Shards...shards)
+			throws RateLimitReachedException, IOException, XmlPullParserException {
+
+		return new WorldDataParcelable(nsapi.getWorldInfo(shards));
 	}
 	
 	/**
@@ -524,7 +532,7 @@ public class API {
 	/**
 	 * @return the dossier data
 	 */
-	public DossierData getDossier() {
+	public DossierData getDossier() throws Exception {
 		if(!isLoggedIn()) {
 			return null;
 		}
@@ -554,92 +562,67 @@ public class API {
                     if (reader != null) try {
                         reader.close();
                     } catch (IOException logOrIgnore) {
+						throw logOrIgnore;
                     }
                 }
+				// Dossier nations
+				Pattern pNations = Pattern.compile("<tr><td align=\"center\"><input type=\"checkbox\" name=\"remove_nation_(.+?)\"><\\/td><td>(<a class=\"nationrss\" href=\"\\/cgi-bin\\/rss\\.cgi\\?nation=(.+?)\"><img src=\"(.+?)\" alt=\"RSS\" title=\"(.+?)\"><\\/a><a href=\"nation=(.+?)\" class=\"nlink\"><img src=\"(.+?)\" class=\"smallflag\" alt=\"(.*?)\"><span>(.+?)<\\/span><\\/a><\\/td><td align=\"center\">(.+?)<\\/td><td align=\"center\">Active <time datetime=\"(.+?)\" data-epoch=\"(.+?)\">(.+?)<\\/time><br><a href=\"region=(.+?)\">(.+?)<\\/a>|(.+?)<\\/td><\\/tr>)");
+				Matcher mNations = pNations.matcher(builder.toString());
+				NationDataParcelable ndp;
+				while(mNations.find()) {
+					ndp = new NationDataParcelable();
+					ndp.name = mNations.group(1);
+					if(mNations.group(13) != null) {
+						ndp.category = mNations.group(9);
+						ndp.lastActivity = mNations.group(13);
+						ndp.region = mNations.group(14);
+					} else {
+						ndp.lastActivity = null;
+					}
 
-                // Dossier nations
-                String prefix = "<table class=\"shiny\"";
-                String text = builder.substring(builder.indexOf(prefix) + prefix.length());
-                prefix = "<tbody>";
-                text = text.substring(text.indexOf(prefix) + prefix.length());
-                String[] nArr, nInfo, arr;
-                if(!nationsDone) {
-                    String nText = text.substring(0, text.indexOf("</tbody>"));
-                    arr = nText.split("<tr>");
-                    NationDataParcelable ndp;
-                    nFor: for (String s : arr) {
-                        if (s.trim().length() == 0) continue;
-                        ndp = new NationDataParcelable();
-                        if (s.split("<td").length == 3) {
-                            ndp.name = s.substring(s.lastIndexOf("<td>") + 4, s.lastIndexOf("</td>"));
-                        } else {
-                            ndp.name = TagParser.idToName(s.substring(s.indexOf("href=\"nation=") + 13, s.indexOf("\" class=\"nlink")));
-                            nInfo = s.split("<td align=\"center\">");
-                            ndp.category = nInfo[2].substring(0, nInfo[2].indexOf("</td>"));
-                            nArr = nInfo[3].split("<br>");
-                            ndp.lastActivity = nArr[0].replace("Active ", "")
-                                    .replace("minutes", "m")
-                                    .replace("minute", "m")
-                                    .replace("days", "d")
-                                    .replace("day", "d")
-                                    .replace("seconds", "s")
-                                    .replace("hours", "h")
-                                    .replace("hour", "h");
-                            ndp.region = nArr[1].substring(nArr[1].indexOf('>') + 1, nArr[1].indexOf("</a>"));
-                        }
-                        for (NationDataParcelable nd : nations) {
-                            if (nd.name.equals(ndp.name)) {
-                                nationsDone = true;
-                                if(regionsDone) {
-                                    break outer;
-                                }
-                                break nFor;
-                            }
-                        }
-                        nations.add(ndp);
-                    }
-                }
+					for (NationDataParcelable nd : nations) {
+						if (nd.name.equals(ndp.name)) {
+							nationsDone = true;
+							if(regionsDone) {
+								break outer;
+							}
+							break;
+						}
+					}
+					nations.add(ndp);
+				}
 
                 // Dossier regions
-                //			prefix = "<table class=\"shiny\"";
-                //			text = text.substring(text.indexOf(prefix)+prefix.length());
-                prefix = "<tbody>";
-                text = text.substring(text.indexOf(prefix) + prefix.length());
-                if(!regionsDone) {
-                    String rText = text.substring(0, text.indexOf("</tbody>"));
-                    arr = rText.split("<tr>");
-                    RegionDataParcelable rdp;
-                    String[] rArr;
-                    rFor:
-                    for (String s : arr) {
-                        if (s.trim().length() == 0) continue;
-                        rdp = new RegionDataParcelable();
-                        nArr = s.split("<td>");
-                        rArr = nArr[1].split("<td align=\"center\">");
-                        rdp.name = rArr[0].substring(rArr[0].indexOf('>') + 1, rArr[0].indexOf("</a>"));
-                        rdp.numNations = Integer.parseInt(rArr[1].substring(0, rArr[1].indexOf('<')));
-                        if (nArr[2].contains("<a href=")) {
-                            rdp.delegate = nArr[2].substring(nArr[2].indexOf("<a href=\"nation=") + 16,
-                                    nArr[2].indexOf("\" class"));
-                        } else {
-                            rdp.delegate = nArr[2].substring(0, nArr[2].indexOf('<'));
-                        }
-                        for (RegionDataParcelable rd : regions) {
-                            if (rd.name.equals(rdp.name)) {
-                                regionsDone = true;
-                                if(nationsDone) {
-                                    break outer;
-                                }
-                                break rFor;
-                            }
-                        }
-                        regions.add(rdp);
-                    }
-                }
+				Pattern pRegions = Pattern.compile("<tr><td align=\"center\"><input type=\"checkbox\" name=\"remove_region_(.+?)\"><\\/td><td><a href=\"region=(.+?)\" class=\"rlink\">(.+?)<img src=\"(.+?)\" class=\"smallflag\" alt=\"Flag\" title=\"Regional Flag\"><\\/a><\\/td><td align=\"center\">(.+?)<\\/td><td>(<a href=\"nation=(.+?)\" class=\"nlink\"><img src=\"(.+?)\" class=\"smallflag\" alt=\"(.*?)\"><span>(.+?)<\\/span><\\/a>|(.+?))<\\/td><\\/tr>");
+				Matcher mRegions = pRegions.matcher(builder.toString());
+				RegionDataParcelable rdp;
+				while(mRegions.find()) {
+					rdp = new RegionDataParcelable();
+					rdp.name = mRegions.group(1);
+					rdp.numNations = Integer.parseInt(mRegions.group(5));
+					if(mRegions.group(7) != null) {
+						rdp.delegate = mRegions.group(7);
+					} else {
+						rdp.delegate = "--None--";
+					}
+
+					for (RegionDataParcelable rd : regions) {
+						if (rd.name.equals(rdp.name)) {
+							regionsDone = true;
+							if(nationsDone) {
+								break outer;
+							}
+							break;
+						}
+					}
+					regions.add(rdp);
+				}
             } catch (ClientProtocolException e) {
                 e.printStackTrace();
+				throw e;
             } catch (IOException e) {
                 e.printStackTrace();
+				throw e;
             }
         }
         data.nations = nations.toArray(new NationDataParcelable[nations.size()]);

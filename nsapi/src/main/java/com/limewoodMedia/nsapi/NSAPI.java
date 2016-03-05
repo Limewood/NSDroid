@@ -1006,14 +1006,8 @@ public class NSAPI implements INSAPI {
 					else if (tagName.equals(WorldData.Shards.CENSUS_ID.getTag())) {
 						world.censusId = Integer.parseInt(xpp.nextText());
 					}
-					else if (tagName.equals(WorldData.Shards.CENSUS_SIZE.getTag())) {
-						world.censusSize = Integer.parseInt(xpp.nextText());
-					}
 					else if (tagName.equals(WorldData.Shards.CENSUS_SCALE.getTag())) {
 						world.censusScale = xpp.nextText();
-					}
-					else if (tagName.equals(WorldData.Shards.CENSUS_MEDIAN.getTag())) {
-						world.censusMedian = Integer.parseInt(xpp.nextText());
 					}
 					else if (tagName.equals(WorldData.Shards.FEATURED_REGION.getTag())) {
 						world.featuredRegion = xpp.nextText();
@@ -1023,6 +1017,12 @@ public class NSAPI implements INSAPI {
 					}
 					else if (tagName.equals(WorldData.Shards.REGIONS_BY_TAG.getTag())) {
 						world.regionsByTag = xpp.nextText().split(",");
+					}
+					else if (tagName.equals(WorldData.Shards.NATIONS.getTag())) {
+						world.nations = xpp.nextText().split(",");
+					}
+					else if (tagName.equals(WorldData.Shards.REGIONS.getTag())) {
+						world.regions = xpp.nextText().split(",");
 					}
 					else {
 						System.err.println("Unknown world tag: " + tagName);
