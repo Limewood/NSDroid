@@ -99,9 +99,13 @@ public class RegionData {
 			return this;
 		}
 
-		public static enum SubTags {
+		public enum SubTags {
 			HAPPENINGS_EVENT("event"),
 			MESSAGES_POST("post"),
+			MESSAGES_POST_TIMESTAMP("timestamp"),
+			MESSAGES_POST_NATION("nation"),
+			MESSAGES_POST_EMBASSY("embassy"),
+			MESSAGES_POST_MESSAGE("message"),
 			WA_VOTES_FOR("for"),
 			WA_VOTES_AGAINST("against"),
 			EMBASSIES_EMBASSY("embassy"),

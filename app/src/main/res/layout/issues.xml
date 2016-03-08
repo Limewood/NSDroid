@@ -3,26 +3,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--  This is the main content -->
-    <ListView
-        android:id="@+id/issues_list"
+    <TextView
+        android:id="@+id/issues_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="7dp"
+        android:textSize="18sp"
+        android:text="@string/next_issue_in"/>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ns_frame"
-        android:layout_marginTop="15dp" />
+        android:layout_below="@+id/issues_text">
+
+        <ListView
+            android:id="@+id/issues_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ns_frame"
+            android:layout_marginTop="15dp" />
+
+        <!--  This is the title label -->
+        <TextView
+            android:id="@+id/issues_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/HappeningsTitle"
+            android:layout_marginLeft="15dp"
+            android:textColor="@android:color/black" />
+
+    </RelativeLayout>
 
     <include
         layout="@layout/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
-
-    <!--  This is the title label -->
-    <TextView
-        android:id="@+id/issues_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/HappeningsTitle"
-        android:layout_marginLeft="15dp"
-        android:textColor="@android:color/black" />
 </RelativeLayout>

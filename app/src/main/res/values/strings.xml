@@ -9,6 +9,7 @@
     <string name="rate_limit_reached">Rate limit reached! Please wait and try again.</string>
     <string name="general_error">An error has occurred, please contact the developer.</string>
     <string name="io_error">An error occurred - please check your network connection.</string>
+    <string name="unknown_error">An unknown error occurred.</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="yes">Yes</string>
@@ -31,6 +32,13 @@
     <string name="trillion">%1$s trillion</string>
     <string name="billion">%1$s billion</string>
     <string name="million">%1$s million</string>
+    <string name="version">Version %s</string>
+    <string name="logged_out">Logged out, session cleared.</string>
+    <string name="logging_out">Logging out, clearing session. Please wait&#8230;</string>
+    <string name="days_hours">%1$d days %2$d hours</string>
+    <string name="hours_minutes">%1$d hours %2$d minutes</string>
+    <string name="minutes">%d minutes</string>
+    <string name="in_time">in %s</string>
     
     <!-- Welcome activity -->
     <string name="welcome">Welcome to NSDroid!</string>
@@ -130,6 +138,7 @@
     <string name="could_not_get_issues">Couldn\'t fetch issues, please check your network connection and password.</string>
     <string name="no_issues">You have no issues currently</string>
     <string name="loading_issues">Fetching opinionated besser-wissers&#8230;</string>
+    <string name="next_issue_in">Next issue expected %s</string>
     
     <!-- Issue detail -->
     <string name="issue_detail">Issue</string>
@@ -178,6 +187,19 @@
     <string name="dossier_remove_region_message">Are you sure you want to remove %1$s from your dossier?</string>
     <string name="dossier_remove">Remove</string>
 
+    <!-- World -->
+    <string name="world">World</string>
+    <string name="featured_region">Featured region</string>
+    <string name="search_title">Search for a nation or region</string>
+    <string name="search_hint">Nation/region name</string>
+    <string name="search">Search</string>
+    <string name="world_numbers">The world contains %1$d nations and %2$d regions.</string>
+    <string name="searching">Leaving no stone unturned&#8230;</string>
+    <string name="search_region_nations_label">Nations:</string>
+    <string name="search_region_wad_label">WAD:</string>
+    <string name="no_nation_found">No nation found</string>
+    <string name="no_region_found">No region found</string>
+
     <!-- World Assembly -->
     <string name="general_assembly">General Assembly</string>
     <string name="security_council">Security Council</string>
@@ -223,9 +245,11 @@
     <string name="menu_start">Overview</string>
     <string name="menu_nation">Nation</string>
     <string name="menu_region">Region</string>
+    <string name="menu_world">World</string>
     <string name="menu_wa">WA</string>
     <string name="menu_news">News</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_logout">Log out</string>
 
     <!-- Common menu strings -->
     <string name="menu_refresh">Refresh</string>

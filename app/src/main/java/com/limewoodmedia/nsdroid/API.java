@@ -22,39 +22,31 @@
  */
 package com.limewoodmedia.nsdroid;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.HttpCookie;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.client.protocol.ClientContext;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.CoreProtocolPNames;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
 import org.xmlpull.v1.XmlPullParserException;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.RequestFuture;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.limewoodMedia.nsapi.INSAPI;
 import com.limewoodMedia.nsapi.NSAPI;
 import com.limewoodMedia.nsapi.enums.WACouncil;
@@ -66,15 +58,27 @@ import com.limewoodMedia.nsapi.holders.NationData;
 import com.limewoodMedia.nsapi.holders.RegionData;
 import com.limewoodMedia.nsapi.holders.WAData;
 import com.limewoodMedia.nsapi.holders.WorldData;
-import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.holders.CensusChange;
 import com.limewoodmedia.nsdroid.holders.DossierData;
 import com.limewoodmedia.nsdroid.holders.Issue;
 import com.limewoodmedia.nsdroid.holders.IssueResult;
+import com.limewoodmedia.nsdroid.holders.IssuesInfo;
 import com.limewoodmedia.nsdroid.holders.NationDataParcelable;
 import com.limewoodmedia.nsdroid.holders.RegionDataParcelable;
 import com.limewoodmedia.nsdroid.holders.WADataParcelable;
 import com.limewoodmedia.nsdroid.holders.WorldDataParcelable;
+import com.limewoodmedia.nsdroid.requests.AddNationToDossierRequest;
+import com.limewoodmedia.nsdroid.requests.AddRegionToDossierRequest;
+import com.limewoodmedia.nsdroid.requests.AnswerIssueRequest;
+import com.limewoodmedia.nsdroid.requests.EndorseNationRequest;
+import com.limewoodmedia.nsdroid.requests.LoginRequest;
+import com.limewoodmedia.nsdroid.requests.MoveToRegionRequest;
+import com.limewoodmedia.nsdroid.requests.MoveToRegionWithPasswordRequest;
+import com.limewoodmedia.nsdroid.requests.NSStringRequest;
+import com.limewoodmedia.nsdroid.requests.RMBPostRequest;
+import com.limewoodmedia.nsdroid.requests.RemoveNationFromDossierRequest;
+import com.limewoodmedia.nsdroid.requests.RemoveRegionFromDossierRequest;
+import com.limewoodmedia.nsdroid.requests.VoteOnWAProposalRequest;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -82,6 +86,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -98,9 +106,13 @@ import android.widget.Toast;
 public class API {
 	private static final String TAG = API.class.getName();
 	private static final String USER_AGENT = "NSDroid Android app for NationStates " +
-			"(code.google.com/p/nsdroid/), created by Laevendell (joakim@limewoodmedia.com)";
+			"(github.com/Limewood/NSDroid), created by Laevendell (joakim@limewoodmedia.com)";
 	private static final int VERSION = 7;
 	private static API instance;
+	public static final String BASE_URL = "https://www.nationstates.net";
+	private static final String LOGIN_DOMAIN = "nationstates.net";
+	private static final long LOGIN_EXPIRY = 31536000; // One year
+    public static final int SOCKET_TIMEOUT_MS = 60000;
 	
 	public static synchronized API getInstance(Context context) {
 		if(instance == null) {
@@ -110,33 +122,53 @@ public class API {
 	}
 	
 	private Context context;
-	private HttpContext httpContext;
 	private ShowLoginRunnable showLoginRunnable;
 	private RegionPasswordRunnable regionPasswordRunnable;
 	private INSAPI nsapi;
+	private RequestQueue queue;
+	private CookieManager cookieManager;
 	
 	private API(Context context) {
 		this.context = context;
+		cookieManager = new CookieManager();
+		cookieManager.getCookieStore().removeAll();
+		cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+		CookieHandler.setDefault(cookieManager);
+		this.queue = Volley.newRequestQueue(context);
 		this.showLoginRunnable = new ShowLoginRunnable();
 		this.regionPasswordRunnable = new RegionPasswordRunnable();
 		this.nsapi = new NSAPI();
-		this.nsapi.setUserAgent(USER_AGENT);
+		PackageInfo pInfo = null;
+		try {
+			pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+		} catch (PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		this.nsapi.setUserAgent(USER_AGENT + (pInfo != null ? "; "+context.getString(R.string.version, pInfo.versionName) : ""));
 		this.nsapi.setVersion(VERSION);
 	}
 	
-	private HttpClient getClient() {
-		HttpClient client = new DefaultHttpClient();
-		client.getParams().setParameter(CoreProtocolPNames.USER_AGENT, USER_AGENT);
-		client.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
-		return client;
-	}
-	
 	public void setUserNation(String userNation) {
-		this.nsapi.setUserAgent(USER_AGENT + "; used by nation " + userNation);
+		PackageInfo pInfo = null;
+		try {
+			pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+		} catch (PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		this.nsapi.setUserAgent(USER_AGENT + (pInfo != null ? "; "+context.getString(R.string.version, pInfo.versionName) : "") + "; used by nation " + userNation);
+		Log.d(TAG, "User agent: "+nsapi.getUserAgent());
 	}
 	
 	public String getUserAgent() {
 		return nsapi.getUserAgent();
+	}
+
+	private NSStringRequest getStringRequest(int method, String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+		return new NSStringRequest(method, url, listener, errorListener, getUserAgent());
+	}
+
+	private NSStringRequest getStringRequest(String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+		return getStringRequest(Request.Method.GET, url, listener, errorListener);
 	}
 	
 	/**
@@ -241,63 +273,35 @@ public class API {
 	 * @throws IOException if there was a problem with the connection
 	 */
 	public boolean postToRMB(String region, String message) throws IOException {
-		if(!isLoggedIn()) {
-			return false;
-		}
-		
-		HttpClient client = getClient();
-		HttpGet httpGet = new HttpGet("http://www.nationstates.net/region=" + region);
-		
+//		if(!isLoggedIn()) {
+//			return false;
+//		}
+
+		RequestFuture<String> future = RequestFuture.newFuture();
+		StringRequest request = getStringRequest(BASE_URL + "/region=" + region+"/template-overall=none", future, future);
+		queue.add(request);
 		try {
-	        HttpResponse response = client.execute(httpGet, httpContext);
-	        StringBuilder builder = new StringBuilder();
-	        BufferedReader reader = null;
-		    try {
-		        reader = new BufferedReader(new InputStreamReader(response.getEntity()
-		        		.getContent(), "UTF-8"));
-		        for (String line; (line = reader.readLine()) != null;) {
-		            builder.append(line.trim());
-		        }
-		    } finally {
-		        if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-		    }
+			String response = future.get();
 
 			String chkPrefix = "<input type=\"hidden\" name=\"chk\" value=\"";
-			String chk = builder.substring(builder.indexOf(chkPrefix)+chkPrefix.length());
+			String chk = response.substring(response.indexOf(chkPrefix)+chkPrefix.length());
 			chk = chk.substring(0, chk.indexOf("\">"));
-			Log.d(TAG, "Chk: "+chk);
+			Log.d(TAG, "Chk: " + chk);
 			
 			// Post
-			HttpPost httpPost = new HttpPost("http://www.nationstates.net/page=lodgermbpost/region="
-					+region);
+			future = RequestFuture.newFuture();
+			RMBPostRequest postRequest = new RMBPostRequest(region, chk, message, future, future, getUserAgent());
+			queue.add(postRequest);
+			response = future.get();
 
-	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
-	        nameValuePairs.add(new BasicNameValuePair("chk", chk));
-	        nameValuePairs.add(new BasicNameValuePair("message", message));
-	        nameValuePairs.add(new BasicNameValuePair("lodge_message", "+Lodge+Message+"));
-	        nameValuePairs.add(new BasicNameValuePair("preview", "+Preview+"));
-	        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "ISO-8859-1"));
-
-	        response = client.execute(httpPost, httpContext);
-	        builder = new StringBuilder();
-	        reader = null;
-		    try {
-		        reader = new BufferedReader(new InputStreamReader(response.getEntity()
-		        		.getContent(), "UTF-8"));
-		        for (String line; (line = reader.readLine()) != null;) {
-		            builder.append(line.trim());
-		        }
-		    } finally {
-		        if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-		    }
-		    if(builder.toString().contains("<p class=\"info\">Your message has been lodged!")){
+		    if(response.contains("<p class=\"info\">Your message has been lodged!")){
 		    	return true;
 		    }
-	    } catch (ClientProtocolException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+	    } catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 	
@@ -306,65 +310,60 @@ public class API {
 	 * NOTE: Requires login
 	 * @return current issues
 	 */
-	public List<Issue> getIssues() {
-		if(!isLoggedIn()) {
-			return null;
-		}
-		
-		HttpClient client = getClient();
-		HttpGet httpGet = new HttpGet("http://www.nationstates.net/page=dilemmas");
-		
+	public IssuesInfo getIssues() {
+//		if(!isLoggedIn()) {
+//			return null;
+//		}
+
+		RequestFuture<String> future = RequestFuture.newFuture();
+		StringRequest request = getStringRequest(BASE_URL+"/page=dilemmas/template-overall=none", future, future);
+		queue.add(request);
+
 		try {
-	        HttpResponse response = client.execute(httpGet, httpContext);
-	        StringBuilder builder = new StringBuilder();
-	        BufferedReader reader = null;
-		    try {
-		        reader = new BufferedReader(new InputStreamReader(response.getEntity()
-		        		.getContent(), "UTF-8"));
-		        for (String line; (line = reader.readLine()) != null;) {
-		            builder.append(line.trim());
-		        }
-		    } finally {
-		        if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-		    }
+			String response = future.get();
 
 		    List<Issue> issues = new ArrayList<Issue>();
-		    
-			String prefix = "<ul class=\"dilemmalist\">";
-			String dilemmas = builder.substring(builder.indexOf(prefix)+prefix.length());
-			dilemmas = dilemmas.substring(0, dilemmas.indexOf("</ul>"));
-			
+
 			Issue issue;
-			String[] items = dilemmas.split("\\<li\\>");
 			Pattern pattern = Pattern.compile(
 					"\\<a href=\"page=show_dilemma/dilemma=(\\d+)\"\\>(.+?)" +
 							"\\</a\\>",
 					Pattern.DOTALL);
-            Log.d(TAG, "Issues: "+items.length);
-			Matcher matcher;
-			for(String item : items) {
-				if(item.length() == 0) {
-					continue;
-				}
-				matcher = pattern.matcher(item);
+			Matcher matcher = pattern.matcher(response);
+			while(matcher.find()) {
 				issue = new Issue();
 				try {
-					if(matcher.find()) {
-						issue.id = Integer.parseInt(matcher.group(1));
-						issue.name = matcher.group(2);
-						Log.d(TAG, "Issue: " + issue.id + " - " + issue.name);
-						issues.add(issue);
-					}
+                    issue.id = Integer.parseInt(matcher.group(1));
+                    issue.name = matcher.group(2);
+                    Log.d(TAG, "Issue: " + issue.id + " - " + issue.name);
+                    issues.add(issue);
 				} catch(NumberFormatException e) {
                     e.printStackTrace();
 				}
 			}
-			return issues;
-	    } catch (ClientProtocolException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+
+            IssuesInfo info = new IssuesInfo();
+            info.issues = issues;
+
+            pattern = Pattern.compile("<span id=\"deliverytime\">(.+?)<\\/span>");
+            matcher = pattern.matcher(response);
+            if(matcher.find()) {
+                info.nextIssue = matcher.group(1);
+            } else {
+                pattern = Pattern.compile("\\$\\('#nextdilemmacountdown'\\)\\.countdown\\(\\{timestamp:new Date\\((\\d+?)\\)\\}\\);");
+                matcher = pattern.matcher(response);
+                if(matcher.find()) {
+                    String timeString = Utils.getTimeString((long)(Long.parseLong(matcher.group(1))/1000f), context);
+                    info.nextIssue = context.getString(R.string.in_time, timeString);
+                }
+            }
+
+			return info;
+	    } catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
@@ -375,97 +374,58 @@ public class API {
 	 * @return the issue or null if not found
 	 */
 	public Issue getIssue(int id) throws IOException {
-		if(!isLoggedIn()) {
-			return null;
-		}
-		
-		HttpClient client = getClient();
-		HttpGet httpGet = new HttpGet("http://www.nationstates.net/page=show_dilemma/dilemma="+id);
+//		if(!isLoggedIn()) {
+//			return null;
+//		}
+
+		RequestFuture<String> future = RequestFuture.newFuture();
+		StringRequest request = getStringRequest(BASE_URL+"/page=show_dilemma/dilemma="+id+"/template-overall=none", future, future);
+		queue.add(request);
 		
 		try {
-	        HttpResponse response = client.execute(httpGet, httpContext);
-	        StringBuilder builder = new StringBuilder();
-	        BufferedReader reader = null;
-		    try {
-		        reader = new BufferedReader(new InputStreamReader(response.getEntity()
-		        		.getContent(), "UTF-8"));
-		        for (String line; (line = reader.readLine()) != null;) {
-		            builder.append(line.trim());
-		        }
-		    } finally {
-		        if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-		    }
+			String response = future.get();
 
 		    Issue issue = new Issue();
 		    issue.id = id;
 		    
 		    // Issue name
-		    String prefix = "<div class=\"dpaper4\"><p>";
-            int index = builder.indexOf(prefix);
-            String text;
-            if(index > -1) { // Unanswered or dismissed issue
-                text = builder.substring(builder.indexOf(prefix) + prefix.length());
-                text = text.substring(0, text.indexOf("</div>"));
-            } else { // Answered issue // TODO Unused
-                prefix = "<p class=\"dtitle\">";
-                text = builder.substring(builder.indexOf(prefix) + prefix.length());
-                text = text.substring(0, text.indexOf("<p class=\"dstatus\">"));
+            Pattern pTitle = Pattern.compile("<div class=\"dpaper4\"><p>(.+?)<\\/div>");
+            Matcher mTitle = pTitle.matcher(response);
+            if(mTitle.find()) {
+                issue.name = mTitle.group(1);
             }
-			issue.name = text;
 		    
 		    // Issue text
-			prefix = "<h5>The Issue</h5>";
-			text = builder.substring(builder.indexOf(prefix)+prefix.length());
-			text = text.substring(3, text.indexOf("</p>"));
-			issue.text = text;
+            Pattern pText = Pattern.compile("<div class=\"dilemma\"><h5>The Issue<\\/h5>\\n<p>(.+?)<\\/p>");
+            Matcher mText = pText.matcher(response);
+			if(mText.find()) {
+                issue.text = mText.group(1);
+            }
 			
 			// Issue choices
-			prefix = "<ol class=\"diloptions\">";
-			text = builder.substring(builder.indexOf(prefix)+prefix.length());
-			text = text.substring(0, text.indexOf("</ol>"));
-			
-			String[] items = text.split("\\<li( class=\"chosendiloption\")?\\>");
-			Pattern pattern = Pattern.compile(
-					"\\<p\\>(.+?)\\n?(\\<p class=\"dilemmaaccept\"\\>)(\\<button type=\"submit\" name=\"choice-(\\d+)\")?(.+)",
-					Pattern.DOTALL);
+			Pattern pattern = Pattern.compile("<p>(.+?)\\n<p class=\"dilemmaaccept\"><button type=\"submit\" name=\"choice-(\\d+)\"");
+            Matcher matcher = pattern.matcher(response);
 			List<String> choices = new ArrayList<String>();
 			String choice;
-			for(String item : items) {
-				choice = pattern.matcher(item).replaceAll("$1");
+			while(matcher.find()) {
+                choice = matcher.group(1);
 				if(choice.trim().length() > 0) {
 					choices.add(choice);
 				}
 				Log.d(TAG, "Choice: "+choice);
 			}
 			issue.choices = choices;
-			
-			// Selected issue
-			int selected = -1;
-			prefix = "<h5>The Government Position</h5>";
-			text = builder.substring(builder.indexOf(prefix)+prefix.length());
-			text = text.substring(0, text.indexOf('.'));
-			
-			pattern = Pattern.compile("(\n?)\\<p\\>(.+)(\\d+)", Pattern.DOTALL);
-			try {
-				selected = Integer.parseInt(pattern.matcher(text).replaceAll("$3")) -1;
-			} catch(NumberFormatException e) {
-				// No issue selected
-//				e.printStackTrace();
-			}
-			
-			// Check if dismissed
-			prefix = "<button type=\"submit\" name=\"choice--1\"";
-			if(builder.indexOf(prefix) == -1) {
-				issue.dismissed = true;
-			}
-			
-			issue.selectedChoice = selected;
+
 			return issue;
-	    } catch (ClientProtocolException e) {
-	        throw new IOException(e);
 	    } catch (StringIndexOutOfBoundsException e) {
             throw new IOException(e);
-        }
+        } catch (InterruptedException e) {
+			e.printStackTrace();
+			throw new IOException(e);
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+			throw new IOException(e);
+		}
 	}
 	
 	/**
@@ -476,100 +436,81 @@ public class API {
 	 * @throws IOException if there was a problem with the connection
 	 */
 	public IssueResult answerIssue(int issueId, int choice) throws IOException {
-		if(!isLoggedIn()) {
-			return null;
-		}
-		
-		HttpClient client = getClient();
+//		if(!isLoggedIn()) {
+//			return null;
+//		}
+
+		RequestFuture<String> future = RequestFuture.newFuture();
+		AnswerIssueRequest request = new AnswerIssueRequest(issueId, choice, future, future, getUserAgent());
+		queue.add(request);
+
 		// Post
 		try {
-			HttpPost httpPost = new HttpPost("http://www.nationstates.net/page=enact_dilemma/dilemma="+issueId);
+			String response = future.get();
 
-	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-	        nameValuePairs.add(new BasicNameValuePair("choice-"+choice, "1"));
-	        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "ISO-8859-1"));
-
-	        HttpResponse response = client.execute(httpPost, httpContext);
-
-			if(response.getStatusLine().getStatusCode() == 200) {
-				if(choice == -1) { // Dismissed
-					return new IssueResult();
-				}
-				HttpEntity entity = response.getEntity();
-				String result = EntityUtils.toString(entity);
-
-				Pattern pattern = Pattern.compile("\\<div class=\"dilemma\"\\>\\<h5\\>The Talking Point\\<\\/h5\\>\\<p\\>(.+?)\\<\\/div\\>");
-				Pattern census = Pattern.compile("\\<span class=\"wc1 (wcg|wcr)\"\\>(.+?)\\<span class=\"smalltext\"\\>(.+?) \\<span class=\"wc2 (wcg|wcr)\"\\>(.+?)\\<\\/span\\>");
-				Matcher pMatcher = pattern.matcher(result);
-				IssueResult issueResult = new IssueResult();
-				if(pMatcher.find()) {
-					issueResult.result = pMatcher.group(1);
-				} else {
-					issueResult.result = "";
-				}
-				Matcher cMatcher = census.matcher(result);
-				CensusChange change;
-				while(cMatcher.find()) {
-					change = new CensusChange();
-					change.name = cMatcher.group(2);
-					change.metric = cMatcher.group(3);
-					change.percent = cMatcher.group(5);
-					change.increase = cMatcher.group(1).equals("wcg");
-					issueResult.censusChangeList.add(change);
-					Log.d(TAG, "Change: "+change.name+"; "+change.metric+"; "+change.percent+"; "+change.increase);
-				}
-
-				return issueResult;
+			if(choice == -1) { // Dismissed
+				return new IssueResult();
 			}
-	    } catch (ClientProtocolException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+
+			Pattern pattern = Pattern.compile("\\<div class=\"dilemma\"\\>\\<h5\\>The Talking Point\\<\\/h5\\>\\<p\\>(.+?)\\<\\/div\\>");
+			Pattern census = Pattern.compile("\\<span class=\"wc1 (wcg|wcr)\"\\>(.+?)\\<span class=\"smalltext\"\\>(.+?) \\<span class=\"wc2 (wcg|wcr)\"\\>(.+?)\\<\\/span\\>");
+			Matcher pMatcher = pattern.matcher(response);
+			IssueResult issueResult = new IssueResult();
+			if(pMatcher.find()) {
+				issueResult.result = pMatcher.group(1);
+			} else {
+				issueResult.result = "";
+			}
+			Matcher cMatcher = census.matcher(response);
+			CensusChange change;
+			while(cMatcher.find()) {
+				change = new CensusChange();
+				change.name = cMatcher.group(2);
+				change.metric = cMatcher.group(3);
+				change.percent = cMatcher.group(5);
+				change.increase = cMatcher.group(1).equals("wcg");
+				issueResult.censusChangeList.add(change);
+				Log.d(TAG, "Change: "+change.name+"; "+change.metric+"; "+change.percent+"; "+change.increase);
+			}
+
+			return issueResult;
+	    } catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
 	/**
 	 * @return the dossier data
 	 */
-	public DossierData getDossier() throws Exception {
-		if(!isLoggedIn()) {
-			return null;
-		}
-		
+	public DossierData getDossier() throws Exception{
+//		if(!isLoggedIn()) {
+//			return null;
+//		}
+
 		DossierData data = new DossierData();
-		HttpClient client = getClient();
+		RequestFuture<String> future;
+		StringRequest request;
 
         List<NationDataParcelable> nations = new ArrayList<NationDataParcelable>();
         List<RegionDataParcelable> regions = new ArrayList<RegionDataParcelable>();
         boolean nationsDone = false, regionsDone = false;
-        HttpGet httpGet;
         outer: for(int start=0; true; start+=15) {
             // Get first 15, then next page until we find duplicates
-            httpGet = new HttpGet("http://www.nationstates.net/page=dossier?start="+start+"/rstart="+start);
+			future = RequestFuture.newFuture();
+			request = getStringRequest(BASE_URL+"/page=dossier/template-overall=none?start="+start+"/rstart="+start, future, future);
+			queue.add(request);
 
             try {
-                HttpResponse response = client.execute(httpGet, httpContext);
-                StringBuilder builder = new StringBuilder();
-                BufferedReader reader = null;
-                try {
-                    reader = new BufferedReader(new InputStreamReader(response.getEntity()
-                            .getContent(), "UTF-8"));
-                    for (String line; (line = reader.readLine()) != null; ) {
-                        builder.append(line.trim());
-                    }
-                } finally {
-                    if (reader != null) try {
-                        reader.close();
-                    } catch (IOException logOrIgnore) {
-						throw logOrIgnore;
-                    }
-                }
+                String response = future.get();
+
 				// Dossier nations
 				Pattern pNations = Pattern.compile("<tr><td align=\"center\"><input type=\"checkbox\" name=\"remove_nation_(.+?)\"><\\/td><td>(<a class=\"nationrss\" href=\"\\/cgi-bin\\/rss\\.cgi\\?nation=(.+?)\"><img src=\"(.+?)\" alt=\"RSS\" title=\"(.+?)\"><\\/a><a href=\"nation=(.+?)\" class=\"nlink\"><img src=\"(.+?)\" class=\"smallflag\" alt=\"(.*?)\"><span>(.+?)<\\/span><\\/a><\\/td><td align=\"center\">(.+?)<\\/td><td align=\"center\">Active <time datetime=\"(.+?)\" data-epoch=\"(.+?)\">(.+?)<\\/time><br><a href=\"region=(.+?)\">(.+?)<\\/a>|(.+?)<\\/td><\\/tr>)");
-				Matcher mNations = pNations.matcher(builder.toString());
+				Matcher mNations = pNations.matcher(response);
 				NationDataParcelable ndp;
-				while(mNations.find()) {
+				nat: while(mNations.find()) {
 					ndp = new NationDataParcelable();
 					ndp.name = mNations.group(1);
 					if(mNations.group(13) != null) {
@@ -586,7 +527,7 @@ public class API {
 							if(regionsDone) {
 								break outer;
 							}
-							break;
+							break nat;
 						}
 					}
 					nations.add(ndp);
@@ -594,9 +535,9 @@ public class API {
 
                 // Dossier regions
 				Pattern pRegions = Pattern.compile("<tr><td align=\"center\"><input type=\"checkbox\" name=\"remove_region_(.+?)\"><\\/td><td><a href=\"region=(.+?)\" class=\"rlink\">(.+?)<img src=\"(.+?)\" class=\"smallflag\" alt=\"Flag\" title=\"Regional Flag\"><\\/a><\\/td><td align=\"center\">(.+?)<\\/td><td>(<a href=\"nation=(.+?)\" class=\"nlink\"><img src=\"(.+?)\" class=\"smallflag\" alt=\"(.*?)\"><span>(.+?)<\\/span><\\/a>|(.+?))<\\/td><\\/tr>");
-				Matcher mRegions = pRegions.matcher(builder.toString());
+				Matcher mRegions = pRegions.matcher(response);
 				RegionDataParcelable rdp;
-				while(mRegions.find()) {
+				reg: while(mRegions.find()) {
 					rdp = new RegionDataParcelable();
 					rdp.name = mRegions.group(1);
 					rdp.numNations = Integer.parseInt(mRegions.group(5));
@@ -612,22 +553,22 @@ public class API {
 							if(nationsDone) {
 								break outer;
 							}
-							break;
+							break reg;
 						}
 					}
 					regions.add(rdp);
 				}
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
+            } catch (InterruptedException e) {
+				e.printStackTrace();
 				throw e;
-            } catch (IOException e) {
-                e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
 				throw e;
-            }
-        }
+			}
+		}
         data.nations = nations.toArray(new NationDataParcelable[nations.size()]);
         data.regions = regions.toArray(new RegionDataParcelable[regions.size()]);
-		
+
 		return data;
 	}
 
@@ -638,27 +579,23 @@ public class API {
 	 * @throws IOException
 	 */
 	public boolean addNationToDossier(String nation) throws IOException {
-		if(!isLoggedIn()) {
-			return false;
-		}
-		
-		HttpClient client = getClient();
+//		if(!isLoggedIn()) {
+//			return false;
+//		}
+
+		RequestFuture<String> future = RequestFuture.newFuture();
+		AddNationToDossierRequest request = new AddNationToDossierRequest(nation, future, future, getUserAgent());
+		queue.add(request);
+
 		// Post
 		try {
-			HttpPost httpPost = new HttpPost("http://www.nationstates.net/page=dossier");
-
-	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-	        nameValuePairs.add(new BasicNameValuePair("nation", nation));
-	        nameValuePairs.add(new BasicNameValuePair("action", "add"));
-	        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "ISO-8859-1"));
-
-	        client.execute(httpPost, httpContext);
+			future.get();
 	        return true;
-	    } catch (ClientProtocolException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+	    } catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
@@ -669,27 +606,23 @@ public class API {
 	 * @throws IOException
 	 */
 	public boolean removeNationFromDossier(String nation) throws IOException {
-		if(!isLoggedIn()) {
-			return false;
-		}
-		
-		HttpClient client = getClient();
+//		if(!isLoggedIn()) {
+//			return false;
+//		}
+
+		RequestFuture<String> future = RequestFuture.newFuture();
+		RemoveNationFromDossierRequest request = new RemoveNationFromDossierRequest(nation, future, future, getUserAgent());
+		queue.add(request);
+
 		// Post
 		try {
-			HttpPost httpPost = new HttpPost("http://www.nationstates.net/page=dossier");
-
-	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-	        nameValuePairs.add(new BasicNameValuePair("nation", nation));
-	        nameValuePairs.add(new BasicNameValuePair("action", "remove"));
-	        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "ISO-8859-1"));
-
-	        client.execute(httpPost, httpContext);
+			future.get();
 	        return true;
-	    } catch (ClientProtocolException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+	    } catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
@@ -700,22 +633,23 @@ public class API {
 	 * @throws IOException
 	 */
 	public boolean addRegionToDossier(String region) throws IOException {
-		if(!isLoggedIn()) {
-			return false;
-		}
-		
-		HttpClient client = getClient();
+//		if(!isLoggedIn()) {
+//			return false;
+//		}
+
+		RequestFuture<String> future = RequestFuture.newFuture();
+		AddRegionToDossierRequest request = new AddRegionToDossierRequest(region, future, future, getUserAgent());
+		queue.add(request);
+
 		// Post
 		try {
-			HttpPost httpPost = new HttpPost("http://www.nationstates.net/page=dossier/action=add/region="+region);
-
-	        client.execute(httpPost, httpContext);
+			future.get();
 	        return true;
-	    } catch (ClientProtocolException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+	    } catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
@@ -727,38 +661,23 @@ public class API {
 	 */
 	@SuppressLint("DefaultLocale")
 	public boolean removeRegionFromDossier(String region) throws IOException {
-		if(!isLoggedIn()) {
-			return false;
-		}
-		
-		HttpClient client = getClient();
+//		if(!isLoggedIn()) {
+//			return false;
+//		}
+
+		RequestFuture<String> future = RequestFuture.newFuture();
+		RemoveRegionFromDossierRequest request = new RemoveRegionFromDossierRequest(region, future, future, getUserAgent());
+		queue.add(request);
+
 		// Post
 		try {
-			HttpPost httpPost = new HttpPost("http://www.nationstates.net/page=dossier");
-			
-	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-	        nameValuePairs.add(new BasicNameValuePair("remove_region_"+region.replace(' ', '_').toLowerCase(), "true"));
-	        nameValuePairs.add(new BasicNameValuePair("remove_from_region_dossier", "Remove Marked Regions"));
-	        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "ISO-8859-1"));
-	        
-	        HttpResponse response = client.execute(httpPost, httpContext);
-	        
-	        if(response.getStatusLine().getStatusCode() != 200) {
-		        httpPost = new HttpPost("http://www.nationstates.net/page=dossier");
-				
-		        nameValuePairs.clear();
-		        nameValuePairs.add(new BasicNameValuePair("remove_region_"+region, "true"));
-		        nameValuePairs.add(new BasicNameValuePair("remove_from_region_dossier", "Remove Marked Regions"));
-		        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "ISO-8859-1"));
-	        }
-	        
-	        client.execute(httpPost, httpContext);
+			future.get();
 	        return true;
-	    } catch (ClientProtocolException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+	    } catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
@@ -770,67 +689,42 @@ public class API {
      * @throws IOException
      */
     public boolean voteOnWAProposal(WACouncil council, WAVote vote) throws IOException {
-        if(!isLoggedIn()) {
-            return false;
-        }
+//        if(!isLoggedIn()) {
+//            return false;
+//        }
 
-        HttpClient client = getClient();
-        String page = "http://www.nationstates.net/page="+(council == WACouncil.GENERAL_ASSEMBLY ? "ga" : "sc");
-        HttpGet httpGet = new HttpGet(page);
+		RequestFuture<String> future = RequestFuture.newFuture();
+		StringRequest request = getStringRequest(BASE_URL+"/page="+(council == WACouncil.GENERAL_ASSEMBLY ? "ga" : "sc"+"/template-overall=none"), future, future);
+		queue.add(request);
 
         try {
-            HttpResponse response = client.execute(httpGet, httpContext);
-            StringBuilder builder = new StringBuilder();
-            BufferedReader reader = null;
-            try {
-                reader = new BufferedReader(new InputStreamReader(response.getEntity()
-                        .getContent(), "UTF-8"));
-                for (String line; (line = reader.readLine()) != null;) {
-                    builder.append(line.trim());
-                }
-            } finally {
-                if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-            }
+			String response = future.get();
 
             String chkPrefix = "<input type=\"hidden\" name=\"localid\" value=\"";
-            String chk = builder.substring(builder.indexOf(chkPrefix)+chkPrefix.length());
+            String chk = response.substring(response.indexOf(chkPrefix)+chkPrefix.length());
             chk = chk.substring(0, chk.indexOf("\">"));
-            Log.d(TAG, "Localid: "+chk);
+            Log.d(TAG, "Localid: " + chk);
 
             // Post
-            HttpPost httpPost = new HttpPost(page);
+			future = RequestFuture.newFuture();
+			VoteOnWAProposalRequest voteRequest = new VoteOnWAProposalRequest(council, vote, chk, future, future, getUserAgent());
+			queue.add(voteRequest);
+			response = future.get();
 
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
-            nameValuePairs.add(new BasicNameValuePair("localid", chk));
-            nameValuePairs.add(new BasicNameValuePair("vote", (vote == WAVote.FOR ? "Vote For" : vote == WAVote.AGAINST ? "Vote Against" : "Withdraw Vote")));
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "ISO-8859-1"));
-
-            response = client.execute(httpPost, httpContext);
-            builder = new StringBuilder();
-            reader = null;
-            try {
-                reader = new BufferedReader(new InputStreamReader(response.getEntity()
-                        .getContent(), "UTF-8"));
-                for (String line; (line = reader.readLine()) != null;) {
-                    builder.append(line.trim());
-                }
-            } finally {
-                if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-            }
-            int index = builder.indexOf("<" + (council == WACouncil.GENERAL_ASSEMBLY ? "h4" : "p") + " class=\"info\">");
+            int index = response.indexOf("<" + (council == WACouncil.GENERAL_ASSEMBLY ? "h4" : "p") + " class=\"info\">");
             if(index > -1) {
-                String res = builder.substring(index);
+                String res = response.substring(index);
                 res = res.substring(0, res.indexOf("</" + (council == WACouncil.GENERAL_ASSEMBLY ? "h4" : "p") + ">"));
                 if (res.toLowerCase().contains(vote == WAVote.FOR ? "'s vote for \"" : vote == WAVote.AGAINST ? "'s vote against \"" : "\" has been withdrawn.")) {
                     return true;
                 }
             }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+        } catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		return false;
     }
 	
 	/**
@@ -843,92 +737,83 @@ public class API {
 		if(password == null) {
 			return false;
 		}
-		
-	    HttpClient client = getClient();
 
-	    HttpPost httpPost = new HttpPost("http://www.nationstates.net/");
-	    if(httpContext == null) {
-		    httpContext = new BasicHttpContext();
-		    BasicCookieStore cookieStore = new BasicCookieStore();
-		    httpContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
-	    }
+		cookieManager.getCookieStore().removeAll();
 
-	    try {
-	        // Add user name and password
-	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-	        nameValuePairs.add(new BasicNameValuePair("logging_in", "1"));
-	        nameValuePairs.add(new BasicNameValuePair("nation", nation));
-	        nameValuePairs.add(new BasicNameValuePair("password", password));
-	        nameValuePairs.add(new BasicNameValuePair("autologin", "no"));
-	        nameValuePairs.add(new BasicNameValuePair("submit", "Login"));
-	        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "ISO-8859-1"));
-
-	        /* HttpResponse response = */client.execute(httpPost, httpContext);
-//	        StringBuilder builder = new StringBuilder();
-//	        BufferedReader reader = null;
-//		    try {
-//		        reader = new BufferedReader(new InputStreamReader(response.getEntity()
-//		        		.getContent(), "UTF-8"));
-//		        for (String line; (line = reader.readLine()) != null;) {
-//		            builder.append(line.trim());
-//		        }
-//		    } finally {
-//		        if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-//		    }
-//			Log.d(TAG, "\n\n");
-//		    int len = builder.length();
-//		    for(int i=0; i<len; i+=1024) {
-//	            if(i+1024<len)
-//	                Log.d(TAG, builder.substring(i, i+1024));
-//	            else
-//	                Log.d(TAG, builder.substring(i, len));
-//	        }
-		    // <p class="error">Incorrect password. Please try again.<fieldset>
-	        return isLoggedIn();
-	    } catch (ClientProtocolException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	    return false;
+		RequestFuture<String> future = RequestFuture.newFuture();
+		LoginRequest request = new LoginRequest(nation, password, future, future, getUserAgent());
+		queue.add(request);
+		try {
+			future.get();
+			return verifyLogin();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
-	public boolean isLoggedIn() {
-		if(httpContext == null) {
-			return false;
-		}
-        // Check for cookie
-		List<Cookie> cookies = ((BasicCookieStore)httpContext.getAttribute(ClientContext.COOKIE_STORE)).getCookies();
-		for(Cookie cookie : cookies) {
-			if(cookie.getDomain().equals(".nationstates.net") && cookie.getName().equals("pin")
-					&& !cookie.getValue().equals("-1") && !cookie.isExpired(new Date())) {
-                // Check for "loggedin" id of body tag to make sure
-                HttpClient client = getClient();
-                HttpGet httpGet = new HttpGet("http://www.nationstates.net");
+	public boolean verifyLogin() {
+        Log.d(TAG, "Verify login");
+		boolean autologin = false;
+		boolean pin = false;
 
-                try {
-                    HttpResponse response = client.execute(httpGet, httpContext);
-                    StringBuilder builder = new StringBuilder();
-                    BufferedReader reader = null;
-                    try {
-                        reader = new BufferedReader(new InputStreamReader(response.getEntity()
-                                .getContent(), "UTF-8"));
-                        for (String line; (line = reader.readLine()) != null;) {
-                            builder.append(line.trim());
-                        }
-                    } finally {
-                        if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-                    }
-
-                    String prefix = "<body id=\"loggedin\">";
-                    return builder.indexOf(prefix) > -1;
-                } catch (ClientProtocolException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-				return true;
+		List<HttpCookie> cookies = cookieManager.getCookieStore().getCookies();
+		for (HttpCookie c : cookies) {
+			if (c.getName().equals("autologin")) {
+				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+				preferences.edit().putString("autologin", c.getValue()).commit();
+				Log.d(TAG, "autologin: "+c.getValue());
+				autologin =  true;
+				if(pin) break;
+			} else if (c.getName().equals("pin")) {
+				pin =  true;
+				if(autologin) break;
 			}
+		}
+
+        Log.d(TAG, "Autologin: "+autologin+"; pin: "+pin);
+		return autologin && pin;
+	}
+
+	private boolean isLoggedIn() {
+        Log.d(TAG, "Is logged in?");
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+		String autologin = preferences.getString("autologin", null);
+		if(autologin == null) {
+			verifyLogin();
+			autologin = preferences.getString("autologin", null);
+			if(autologin == null) return false;
+		}
+		HttpCookie cookie = new HttpCookie("autologin", autologin);
+		cookie.setPath("/");
+		cookie.setDomain(LOGIN_DOMAIN);
+		cookie.setMaxAge(LOGIN_EXPIRY);
+		cookieManager.getCookieStore().add(URI.create(BASE_URL), cookie);
+
+		RequestFuture<String> future = RequestFuture.newFuture();
+		final String finalAutologin = autologin;
+		NSStringRequest request = new NSStringRequest(BASE_URL, future, future, getUserAgent()) {
+			@Override
+			public Map<String, String> getHeaders() {
+				Map<String,String> params = super.getHeaders();
+				params.put("Cookie", String.format("autologin=%s", finalAutologin));
+				return params;
+			}
+		};
+		queue.add(request);
+		try {
+			future.get(5, TimeUnit.MINUTES);
+
+			return verifyLogin();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+            Log.d(TAG, "Timeout");
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -946,7 +831,7 @@ public class API {
 		// Try to log in
 		Log.d(TAG, "Try to log in");
 		final String pswd = NationInfo.getInstance(context).getPassword();
-		Log.d(TAG, "Password "+pswd+" activity: "+activity);
+		Log.d(TAG, "Password " + pswd + " activity: " + activity);
 		if(pswd != null && login(NationInfo.getInstance(context).getId(), pswd)) {
 			return true;
 		}
@@ -1077,145 +962,109 @@ public class API {
 		}
 	}
 
-	public void logout() {
-		if(!isLoggedIn()) {
-			return;
-		}
-		HttpClient client = getClient();
+	public boolean logout() {
+//		if(!isLoggedIn()) {
+//			return false;
+//		}
 
-	    HttpGet httpGet = new HttpGet("http://www.nationstates.net/?logout=1");
-	    if(httpContext == null) {
-		    httpContext = new BasicHttpContext();
-		    BasicCookieStore cookieStore = new BasicCookieStore();
-		    httpContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
-	    }
+		RequestFuture<String> future = RequestFuture.newFuture();
+		StringRequest request = getStringRequest(BASE_URL+"/?logout=1", future, future);
+		queue.add(request);
 	    
 	    try {
-			client.execute(httpGet, httpContext);
-		} catch (ClientProtocolException e) {
+			future.get();
+
+            // Clear cookies
+            if(cookieManager != null) {
+                java.net.CookieStore store = cookieManager.getCookieStore();
+                if(store != null) {
+                    store.removeAll();
+                }
+            }
+            // Clear autologin
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            if(preferences.contains("autologin")) {
+                preferences.edit().remove("autologin").commit();
+            }
+            // Clear cached password
+            NationInfo.getInstance(context).setPassword("", false);
+
+            return true;
+		} catch (InterruptedException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
+        return false;
 	}
 
 	public boolean endorseNation(String nation, boolean endorse) {
-		if(!isLoggedIn()) {
-			return false;
-		}
+//		if(!isLoggedIn()) {
+//			return false;
+//		}
 
-		HttpClient client = getClient();
-		HttpGet httpGet = new HttpGet("http://www.nationstates.net/nation=" + nation);
+		RequestFuture<String> future = RequestFuture.newFuture();
+		StringRequest request = getStringRequest(BASE_URL+"/nation=" + nation+"/template-overall=none", future, future);
+		queue.add(request);
 
 		try {
-			HttpResponse response = client.execute(httpGet, httpContext);
-			StringBuilder builder = new StringBuilder();
-			BufferedReader reader = null;
-			try {
-				reader = new BufferedReader(new InputStreamReader(response.getEntity()
-						.getContent(), "UTF-8"));
-				for (String line; (line = reader.readLine()) != null;) {
-					builder.append(line.trim());
-				}
-			} finally {
-				if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-			}
+			String response = future.get();
 
 			String chkPrefix = "<input type=\"hidden\" name=\"localid\" value=\"";
-			String chk = builder.substring(builder.indexOf(chkPrefix)+chkPrefix.length());
+			String chk = response.substring(response.indexOf(chkPrefix)+chkPrefix.length());
 			chk = chk.substring(0, chk.indexOf("\">"));
 			Log.d(TAG, "Localid: "+chk);
 
 			// Post
-			HttpPost httpPost = new HttpPost("http://www.nationstates.net/cgi-bin/endorse.cgi");
+			future = RequestFuture.newFuture();
+			EndorseNationRequest endorseRequest = new EndorseNationRequest(nation, chk, endorse, future, future, getUserAgent());
+			queue.add(request);
+			response = future.get();
 
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
-			nameValuePairs.add(new BasicNameValuePair("localid", chk));
-			nameValuePairs.add(new BasicNameValuePair("nation", nation));
-			nameValuePairs.add(new BasicNameValuePair("action", endorse ? "endorse" : "unendorse"));
-			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "ISO-8859-1"));
-
-			response = client.execute(httpPost, httpContext);
-			builder = new StringBuilder();
-			reader = null;
-			try {
-				reader = new BufferedReader(new InputStreamReader(response.getEntity()
-						.getContent(), "UTF-8"));
-				for (String line; (line = reader.readLine()) != null;) {
-					builder.append(line.trim());
-				}
-			} finally {
-				if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-			}
-			if(builder.toString().toLowerCase().contains(endorse ? "withdraw your endorsement" : "endorse "+TagParser.idToName(nation).toLowerCase())){
+			if(response.toLowerCase().contains(endorse ? "withdraw your endorsement" : "endorse "+TagParser.idToName(nation).toLowerCase())){
 				return true;
 			}
-		} catch (ClientProtocolException e) {
+		} catch (InterruptedException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
 
 	public boolean moveToRegion(Activity activity, String region) {
-		if(!isLoggedIn()) {
-			return false;
-		}
+//		if(!isLoggedIn()) {
+//			return false;
+//		}
 
-		HttpClient client = getClient();
-		HttpGet httpGet = new HttpGet("http://www.nationstates.net/region=" + region);
+		RequestFuture<String> future = RequestFuture.newFuture();
+		StringRequest request = getStringRequest(BASE_URL+"/region=" + region+"/template-overall=none", future, future);
+		queue.add(request);
 
 		try {
-			HttpResponse response = client.execute(httpGet, httpContext);
-			StringBuilder builder = new StringBuilder();
-			BufferedReader reader = null;
-			try {
-				reader = new BufferedReader(new InputStreamReader(response.getEntity()
-						.getContent(), "UTF-8"));
-				for (String line; (line = reader.readLine()) != null;) {
-					builder.append(line.trim());
-				}
-			} finally {
-				if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-			}
+			String response = future.get();
 
 			String chkPrefix = "<input type=\"hidden\" name=\"localid\" value=\"";
-			String chk = builder.substring(builder.indexOf(chkPrefix)+chkPrefix.length());
+			String chk = response.substring(response.indexOf(chkPrefix)+chkPrefix.length());
 			chk = chk.substring(0, chk.indexOf("\">"));
 			Log.d(TAG, "Localid: "+chk);
 
 			// Post
-			HttpPost httpPost = new HttpPost("http://www.nationstates.net/page=change_region");
+			future = RequestFuture.newFuture();
+			MoveToRegionRequest moveRequest = new MoveToRegionRequest(region, chk, future, future, getUserAgent());
+			queue.add(moveRequest);
+			response = future.get();
 
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
-			nameValuePairs.add(new BasicNameValuePair("localid", chk));
-			nameValuePairs.add(new BasicNameValuePair("region_name", region));
-			nameValuePairs.add(new BasicNameValuePair("move_region", "Test"));
-			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "ISO-8859-1"));
-
-			response = client.execute(httpPost, httpContext);
-			builder = new StringBuilder();
-			reader = null;
-			try {
-				reader = new BufferedReader(new InputStreamReader(response.getEntity()
-						.getContent(), "UTF-8"));
-				for (String line; (line = reader.readLine()) != null;) {
-					builder.append(line.trim());
-				}
-			} finally {
-				if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-			}
-			if(builder.toString().contains("This region is password-protected")) {
+			if(response.contains("This region is password-protected")) {
 				return enterRegionPassword(activity, region, chk);
-			} else if(builder.toString().contains("<p class=\"info\">Success!")){
+			} else if(response.contains("<p class=\"info\">Success!")) {
 				// Update nation info
 				NationInfo.getInstance(context).setRegionId(region);
 				return true;
 			}
-		} catch (ClientProtocolException e) {
+		} catch (InterruptedException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
 		return false;
@@ -1226,39 +1075,22 @@ public class API {
 			return false;
 		}
 
-		HttpClient client = getClient();
+		RequestFuture<String> future = RequestFuture.newFuture();
+		MoveToRegionWithPasswordRequest request = new MoveToRegionWithPasswordRequest(region, localid, password, future, future, getUserAgent());
+		queue.add(request);
 
 		try {
 			// Post
-			HttpPost httpPost = new HttpPost("http://www.nationstates.net/page=change_region");
+			String response = future.get();
 
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
-			nameValuePairs.add(new BasicNameValuePair("localid", localid));
-			nameValuePairs.add(new BasicNameValuePair("region_name", region));
-			nameValuePairs.add(new BasicNameValuePair("move_region", "1"));
-			nameValuePairs.add(new BasicNameValuePair("password", password));
-			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "ISO-8859-1"));
-
-			HttpResponse response = client.execute(httpPost, httpContext);
-			StringBuilder builder = new StringBuilder();
-			BufferedReader reader = null;
-			try {
-				reader = new BufferedReader(new InputStreamReader(response.getEntity()
-						.getContent(), "UTF-8"));
-				for (String line; (line = reader.readLine()) != null;) {
-					builder.append(line.trim());
-				}
-			} finally {
-				if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-			}
-			if(builder.toString().contains("<p class=\"info\">Success!")){
+			if(response.contains("<p class=\"info\">Success!")){
 				// Update nation info
 				NationInfo.getInstance(context).setRegionId(region);
 				return true;
 			}
-		} catch (ClientProtocolException e) {
+		} catch (InterruptedException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
 		return false;

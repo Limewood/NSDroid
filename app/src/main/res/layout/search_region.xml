@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:layout_margin="7dp"
+    android:layout_marginTop="15dp">
+
+    <!--  This is the main content -->
+    <RelativeLayout
+        android:id="@+id/fieldset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ns_frame"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:id="@+id/region_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentTop="true"
+            android:paddingLeft="9dp"
+            android:text="Region"
+            android:textStyle="bold"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/region_nations_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:paddingLeft="16dp"
+            android:layout_below="@+id/region_name"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:text="@string/search_region_nations_label"/>
+
+        <TextView
+            android:id="@+id/region_nations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_marginLeft="9dp"
+            android:layout_below="@+id/region_name"
+            android:layout_toRightOf="@+id/region_nations_label"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:text="14" />
+
+        <TextView
+            android:id="@+id/region_wad_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/region_nations_label"
+            android:layout_margin="2dp"
+            android:paddingLeft="20dp"
+            android:text="@string/search_region_wad_label"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/region_wad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/region_nations_label"
+            android:layout_toRightOf="@+id/region_wad_label"
+            android:layout_margin="2dp"
+            android:layout_marginLeft="9dp"
+            android:text="Nation"
+            android:textSize="16sp"
+            android:paddingRight="9dp" />
+
+    </RelativeLayout>
+
+    <!--  This is the title label -->
+    <TextView
+        android:id="@+id/wfe_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/region"
+        style="@style/HappeningsTitle"
+        android:layout_marginLeft="15dp"
+        android:textColor="@android:color/black" />
+</RelativeLayout>

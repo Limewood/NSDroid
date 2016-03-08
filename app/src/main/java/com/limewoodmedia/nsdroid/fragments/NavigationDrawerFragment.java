@@ -113,9 +113,11 @@ public class NavigationDrawerFragment extends Fragment {
                 new MenuItemHolder(R.id.submenu_rmb, R.drawable.icon_rmb, R.string.menu_rmb),
                 new MenuItemHolder(R.id.submenu_officers, R.drawable.icon_officers, R.string.menu_officers),
                 new MenuItemHolder(R.id.submenu_embassies, R.drawable.icon_embassies, R.string.menu_embassies),
+                new MenuItemHolder(R.id.menu_world, R.drawable.icon_world, R.string.menu_world),
                 new MenuItemHolder(R.id.menu_wa, R.drawable.icon_wa, R.string.menu_wa),
                 new MenuItemHolder(R.id.menu_news, R.drawable.icon_news, R.string.menu_news),
-				new MenuItemHolder(R.id.menu_settings, R.drawable.icon_settings, R.string.menu_settings)
+				new MenuItemHolder(R.id.menu_settings, R.drawable.icon_settings, R.string.menu_settings),
+                new MenuItemHolder(R.id.menu_logout, R.drawable.icon_logout, R.string.menu_logout)
 		};
 		View view;
 		for(final MenuItemHolder holder : holders) {

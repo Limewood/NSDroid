@@ -20,20 +20,30 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.limewoodmedia.nsdroid.holders;
+package com.limewoodmedia.nsdroid.requests;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.android.volley.Response;
+import com.limewoodmedia.nsdroid.API;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Result of an issue
- * Created by joakim on 2016-03-03.
+ * Request to remove region from dossier
+ * Created by joakim on 2016-03-08.
  */
-public class IssueResult {
-    public String result;
-    public List<CensusChange> censusChangeList;
+public class RemoveRegionFromDossierRequest extends NSStringRequest {
+    private Map<String, String> mParams;
 
-    public IssueResult() {
-        this.censusChangeList = new ArrayList<>();
+    public RemoveRegionFromDossierRequest(String region, Response.Listener<String> listener, Response.ErrorListener errorListener, String userAgent) {
+        super(Method.POST, API.BASE_URL+"/page=dossier", listener, errorListener, userAgent);
+        mParams = new HashMap<String, String>();
+        mParams.put("remove_region_"+region.replace(' ', '_').toLowerCase(), "true");
+        mParams.put("remove_from_region_dossier", "Remove Marked Regions");
+    }
+
+    @Override
+    public Map<String, String> getParams() {
+        return mParams;
     }
 }

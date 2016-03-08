@@ -20,20 +20,29 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.limewoodmedia.nsdroid.holders;
+package com.limewoodmedia.nsdroid.requests;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.android.volley.Response;
+import com.limewoodmedia.nsdroid.API;
 
-/**
- * Result of an issue
- * Created by joakim on 2016-03-03.
- */
-public class IssueResult {
-    public String result;
-    public List<CensusChange> censusChangeList;
+import java.util.HashMap;
+import java.util.Map;
 
-    public IssueResult() {
-        this.censusChangeList = new ArrayList<>();
+public class LoginRequest extends NSStringRequest {
+    private Map<String, String> mParams;
+
+    public LoginRequest(String nation, String password, Response.Listener<String> listener, Response.ErrorListener errorListener, String userAgent) {
+        super(Method.POST, API.BASE_URL, listener, errorListener, userAgent);
+        mParams = new HashMap<String, String>();
+        mParams.put("logging_in", "1");
+        mParams.put("nation", nation);
+        mParams.put("password", password);
+        mParams.put("autologin", "yes");
+        mParams.put("submit", "Login");
+    }
+
+    @Override
+    public Map<String, String> getParams() {
+        return mParams;
     }
 }

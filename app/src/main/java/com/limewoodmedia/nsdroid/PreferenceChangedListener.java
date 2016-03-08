@@ -22,10 +22,8 @@
  */
 package com.limewoodmedia.nsdroid;
 
-import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.activities.NSDroid;
 import com.limewoodmedia.nsdroid.activities.NationsList;
-import com.limewoodmedia.nsdroid.activities.Welcome;
 import com.limewoodmedia.nsdroid.db.NationsDatabase;
 import com.limewoodmedia.nsdroid.receivers.UpdateReceiver;
 

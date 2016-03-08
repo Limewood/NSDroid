@@ -20,20 +20,32 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.limewoodmedia.nsdroid.holders;
+package com.limewoodmedia.nsdroid.requests;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.limewoodmedia.nsdroid.API;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Result of an issue
- * Created by joakim on 2016-03-03.
+ * Request for endorsing another nation
+ * Created by joakim on 2016-03-08.
  */
-public class IssueResult {
-    public String result;
-    public List<CensusChange> censusChangeList;
+public class EndorseNationRequest extends NSStringRequest {
+    private Map<String, String> mParams;
 
-    public IssueResult() {
-        this.censusChangeList = new ArrayList<>();
+    public EndorseNationRequest(String nation, String chk, boolean endorse, Response.Listener<String> listener, Response.ErrorListener errorListener, String userAgent) {
+        super(Method.POST, API.BASE_URL+"/cgi-bin/endorse.cgi", listener, errorListener, userAgent);
+        mParams = new HashMap<String, String>();
+        mParams.put("localid", chk);
+        mParams.put("nation", nation);
+        mParams.put("action", endorse ? "endorse" : "unendorse");
+    }
+
+    @Override
+    protected Map<String, String> getParams() throws AuthFailureError {
+        return mParams;
     }
 }

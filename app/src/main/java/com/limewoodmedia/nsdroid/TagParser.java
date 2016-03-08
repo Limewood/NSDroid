@@ -22,24 +22,17 @@
  */
 package com.limewoodmedia.nsdroid;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.limewoodmedia.nsdroid.R;
-
 import android.content.Context;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.FloatMath;
-import android.util.Log;
-import android.widget.TextView;
 
 @SuppressWarnings("unused")
 public class TagParser {
@@ -148,9 +141,9 @@ public class TagParser {
 			};
 		}
         if(attr.length == 2) {
-            return context.getString(R.string.time_passed, attr[0], attr[1]);
+            return context.getString(R.string.time_passed, (Integer)attr[0], attr[1]);
         } else {
-            return context.getString(R.string.time_passed_days_hours, attr[0], attr[1], attr[2], attr[3]);
+            return context.getString(R.string.time_passed_days_hours, (Integer)attr[0], attr[1], (Integer)attr[2], attr[3]);
         }
 	}
 	

@@ -63,6 +63,12 @@
                 <data android:scheme="com.limewoodMedia.nsdroid.region.embassies"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activities.World"
+            android:label="@string/world"
+            android:exported="false"
+            android:theme="@style/NSAppTheme" />
         
         <activity
  			android:name=".activities.Welcome"

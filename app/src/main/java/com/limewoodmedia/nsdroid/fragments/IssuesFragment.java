@@ -22,20 +22,18 @@
  */
 package com.limewoodmedia.nsdroid.fragments;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.API;
-import com.limewoodmedia.nsdroid.CustomAlertDialogBuilder;
 import com.limewoodmedia.nsdroid.LoadingHelper;
 import com.limewoodmedia.nsdroid.NationInfo;
 import com.limewoodmedia.nsdroid.holders.Issue;
+import com.limewoodmedia.nsdroid.holders.IssuesInfo;
 import com.limewoodmedia.nsdroid.views.LoadingView;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -59,11 +57,12 @@ public class IssuesFragment extends Fragment {
 	private View root;
 	private TextView title;
 	private ListView list;
+    private TextView text;
 	
 	private List<Issue> issues;
 	private ArrayAdapter<Issue> listAdapter;
 	private Context context;
-	private AsyncTask<Void, Void, List<Issue>> loadIssues;
+	private AsyncTask<Void, Void, IssuesInfo> loadIssues;
 
 	public IssuesFragment() {}
 	
@@ -79,7 +78,7 @@ public class IssuesFragment extends Fragment {
 		list = (ListView) root.findViewById(R.id.issues_list);
 		title = (TextView) root.findViewById(R.id.issues_title);
 		title.setText(getResources().getString(R.string.issues_title,
-				NationInfo.getInstance(getActivity()).getName()));
+                NationInfo.getInstance(getActivity()).getName()));
 		ViewTreeObserver observer = title.getViewTreeObserver();
 		observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 		    @Override
@@ -90,6 +89,8 @@ public class IssuesFragment extends Fragment {
 							list.getPaddingBottom());
 		    }
 		});
+        text = (TextView) root.findViewById(R.id.issues_text);
+        text.setVisibility(View.GONE);
 
         issues = new ArrayList<Issue>();
 		listAdapter = new ArrayAdapter<Issue>(context, 0, issues) {
@@ -140,24 +141,32 @@ public class IssuesFragment extends Fragment {
 		issues.clear();
 		final LoadingView loadingView = (LoadingView) root.findViewById(R.id.loading);
     	LoadingHelper.startLoading(loadingView, R.string.loading_issues, getActivity());
-		loadIssues = new AsyncTask<Void, Void, List<Issue>>() {
+		loadIssues = new AsyncTask<Void, Void, IssuesInfo>() {
 			@Override
-			protected List<Issue> doInBackground(Void... params) {
+			protected IssuesInfo doInBackground(Void... params) {
 				if(API.getInstance(context).checkLogin(getActivity())) {
 					return API.getInstance(getActivity()).getIssues();
 				}
 				return null;
 			}
 			
-			protected void onPostExecute(List<Issue> result) {
+			protected void onPostExecute(IssuesInfo result) {
 				if(isAdded()) {
 					LoadingHelper.stopLoading(loadingView);
 					if(result != null) {
-						issues.addAll(result);
-						listAdapter.notifyDataSetChanged();
-						if(result.isEmpty()) {
+						if(result.issues != null) {
+                            issues.addAll(result.issues);
+                            listAdapter.notifyDataSetChanged();
+                        }
+						if(result.issues == null || result.issues.isEmpty()) {
 							Toast.makeText(getActivity(), R.string.no_issues, Toast.LENGTH_SHORT).show();
 						}
+                        if(result.nextIssue != null) {
+                            text.setText(getString(R.string.next_issue_in, result.nextIssue));
+                            text.setVisibility(View.VISIBLE);
+                        } else {
+                            text.setVisibility(View.GONE);
+                        }
 					} else {
 						Toast.makeText(getActivity(), R.string.could_not_get_issues, Toast.LENGTH_SHORT).show();
 					}

@@ -778,11 +778,12 @@ public class Nation extends AppCompatActivity implements NavigationDrawerFragmen
 	}
 
     private Color[] getGradientForCensus(int value, int total) {
+        float num = (value == 1 && total == 1 ? 0 : value/(float)total);
         return new Color[]{
                 new ColorInterpolator().interpolateColor(
-                        new ColorInterpolator.Color(1, 0, 0, 1), new ColorInterpolator.Color(.26f, .98f, 0, 1), 1-value/(float)total),
+                        new ColorInterpolator.Color(1, 0, 0, 1), new ColorInterpolator.Color(.26f, .98f, 0, 1), 1-num),
                 new ColorInterpolator().interpolateColor(
-                        new ColorInterpolator.Color(.5f, 0, 0, 1), new ColorInterpolator.Color(.13f, .49f, 0, 1), 1-value/(float)total)
+                        new ColorInterpolator.Color(.5f, 0, 0, 1), new ColorInterpolator.Color(.13f, .49f, 0, 1), 1-num)
         };
     }
 

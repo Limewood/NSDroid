@@ -128,11 +128,11 @@ public class Welcome extends AppCompatActivity implements OnClickListener {
 				
 	        	protected Boolean doInBackground(String...params) {
 					try {
-						if(NationsDatabase.getInstance(Welcome.this).nationExists(
-								params[0])) {
-							errorMessage = getResources().getString(R.string.nation_already_added);
-							return false;
-						}
+//						if(NationsDatabase.getInstance(Welcome.this).nationExists(
+//								params[0])) {
+//							errorMessage = getResources().getString(R.string.nation_already_added);
+//							return false;
+//						}
 						
 		                data = API.getInstance(Welcome.this).getNationInfo(
 		                		params[0],

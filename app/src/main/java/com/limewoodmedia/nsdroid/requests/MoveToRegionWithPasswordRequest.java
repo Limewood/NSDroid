@@ -20,20 +20,33 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.limewoodmedia.nsdroid.holders;
+package com.limewoodmedia.nsdroid.requests;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.limewoodmedia.nsdroid.API;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Result of an issue
- * Created by joakim on 2016-03-03.
+ * Request for moving to a region
+ * Created by joakim on 2016-03-08.
  */
-public class IssueResult {
-    public String result;
-    public List<CensusChange> censusChangeList;
+public class MoveToRegionWithPasswordRequest extends NSStringRequest {
+    private Map<String, String> mParams;
 
-    public IssueResult() {
-        this.censusChangeList = new ArrayList<>();
+    public MoveToRegionWithPasswordRequest(String region, String chk, String password, Response.Listener<String> listener, Response.ErrorListener errorListener, String userAgent) {
+        super(Method.POST, API.BASE_URL+"/page=change_region", listener, errorListener, userAgent);
+        mParams = new HashMap<String, String>();
+        mParams.put("localid", chk);
+        mParams.put("region_name", region);
+        mParams.put("move_region", "1");
+        mParams.put("password", password);
+    }
+
+    @Override
+    protected Map<String, String> getParams() throws AuthFailureError {
+        return mParams;
     }
 }

@@ -53,7 +53,6 @@ import com.limewoodMedia.nsapi.holders.ZombieNationData;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -802,30 +801,36 @@ public class NSAPI implements INSAPI {
 		long ts = -1L;
 		String nation = null;
 		String text = null;
+		String embassy = null;
 		ArrayList<RMBMessage> messages = new ArrayList<RMBMessage>();
 		loop: while (xpp.next() != XmlPullParser.END_DOCUMENT) {
 			switch (xpp.getEventType()) {
 			case XmlPullParser.START_TAG:
 				tagName = xpp.getName().toLowerCase();
 				if (tagName.equals(RegionData.Shards.SubTags.MESSAGES_POST.getTag())) {
+					embassy = null;
                     // Get id
                     id = Long.parseLong(xpp.getAttributeValue(null, RegionData.Shards.Attributes.RMB_POST_ID.getName()));
-					// Get timestamp
-					xpp.nextTag();
+				} else if(tagName.equals(RegionData.Shards.SubTags.MESSAGES_POST_TIMESTAMP.getTag())) {
 					ts = Long.parseLong(xpp.nextText());
-					// Get nation name
-					xpp.nextTag();
+				} else if(tagName.equals(RegionData.Shards.SubTags.MESSAGES_POST_NATION.getTag())) {
 					nation = xpp.nextText();
-					// Get text
-					xpp.nextTag();
+				} else if(tagName.equals(RegionData.Shards.SubTags.MESSAGES_POST_EMBASSY.getTag())) {
+					embassy = xpp.nextText();
+				} else if(tagName.equals(RegionData.Shards.SubTags.MESSAGES_POST_MESSAGE.getTag())) {
 					text = xpp.nextText();
-					messages.add(new RMBMessage(id, ts, nation, text));
 				}
 				break;
 			case XmlPullParser.END_TAG:
 				tagName = xpp.getName().toLowerCase();
 				if (tagName.equals(RegionData.Shards.MESSAGES.getTag())) {
 					break loop;
+				} else if(tagName.equals(RegionData.Shards.SubTags.MESSAGES_POST.getTag())) {
+					RMBMessage msg = new RMBMessage(id, ts, nation, text);
+					messages.add(msg);
+					if(embassy != null) {
+						msg.embassy = embassy;
+					}
 				}
 			}
 		}

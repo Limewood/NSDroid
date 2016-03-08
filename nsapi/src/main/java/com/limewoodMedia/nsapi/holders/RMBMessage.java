@@ -32,6 +32,7 @@ public class RMBMessage {
 	public long timestamp;
 	public String nation;
 	public String message;
+	public String embassy;
 
 	public RMBMessage(long id, long timestamp, String nation, String message) {
         this.id = id;
@@ -39,7 +40,7 @@ public class RMBMessage {
 		this.nation = nation;
 		this.message = message;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "\t\t("+id+";"+timestamp+") "+nation+": "+message;

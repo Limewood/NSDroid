@@ -38,6 +38,7 @@ import com.limewoodmedia.nsdroid.db.NationsDatabase;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -127,7 +128,7 @@ public class NationInfo {
 	 * @throws InterruptedException 
 	 */
 	public Bitmap getFlagBitmap(final Activity activity) throws InterruptedException, ExecutionException {
-		Log.d(TAG, "Flag bitmap: "+flagBitmap);
+		Log.d(TAG, "Flag bitmap: " + flagBitmap);
 		if(flagBitmap == null) {
 			String uri = getFlag();
 			if(uri == null) {
@@ -209,4 +210,18 @@ public class NationInfo {
 	private String getString(String key) {
 		return PreferenceManager.getDefaultSharedPreferences(context).getString(key, null);
 	}
+
+	public void clear() {
+        this.name = null;
+        this.flag = null;
+        this.flagBitmap = null;
+        this.password = null;
+        this.regionId = null;
+        this.waStatus = null;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().remove("nation_name")
+                .remove("nation_password")
+                .remove("nation_flag")
+                .commit();
+    }
 }

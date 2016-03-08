@@ -165,6 +165,10 @@ public class RMBFragment extends Fragment implements OnClickListener {
         			String time = TagParser.parseTimestamp(getContext(), timestamp);
         			String poster = "<a href=\"com.limewoodMedia.nsdroid.nation://" + post.nation + "\">" +
         							TagParser.idToName(post.nation) + "</a><br />" + time;
+					if(post.embassy != null) {
+						poster += " from<br /><a href=\"com.limewoodMedia.nsdroid.region://" + TagParser.nameToId(post.embassy) + "\">" +
+								post.embassy + "</a>";
+					}
     				nation.setText(Html.fromHtml(poster));
             		msg.setText(TagParser.parseTagsFromHtml(post.message, true));
     			}

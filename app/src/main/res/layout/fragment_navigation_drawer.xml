@@ -62,8 +62,8 @@
         <include layout="@layout/nav_submenu_item"
             android:id="@+id/submenu_embassies" />
 
-        <!--<include layout="@layout/nav_menu_item"
-                 android:id="@+id/menu_world" />-->
+        <include layout="@layout/nav_menu_item"
+                 android:id="@+id/menu_world" />
 
         <include layout="@layout/nav_menu_item"
                  android:id="@+id/menu_wa" />
@@ -73,6 +73,9 @@
 
         <include layout="@layout/nav_menu_item"
             android:id="@+id/menu_settings" />
+
+        <include layout="@layout/nav_menu_item"
+            android:id="@+id/menu_logout" />
 
         </LinearLayout>
 

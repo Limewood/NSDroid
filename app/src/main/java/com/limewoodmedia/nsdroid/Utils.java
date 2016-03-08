@@ -24,11 +24,13 @@ package com.limewoodmedia.nsdroid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.widget.Toast;
 
 import com.limewoodmedia.nsdroid.activities.Dossier;
 import com.limewoodmedia.nsdroid.activities.Issues;
@@ -37,7 +39,10 @@ import com.limewoodmedia.nsdroid.activities.Nation;
 import com.limewoodmedia.nsdroid.activities.News;
 import com.limewoodmedia.nsdroid.activities.Preferences;
 import com.limewoodmedia.nsdroid.activities.Region;
+import com.limewoodmedia.nsdroid.activities.Welcome;
+import com.limewoodmedia.nsdroid.activities.World;
 import com.limewoodmedia.nsdroid.activities.WorldAssembly;
+import com.limewoodmedia.nsdroid.db.NationsDatabase;
 import com.limewoodmedia.nsdroid.fragments.NavigationDrawerFragment;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -116,7 +121,7 @@ public class Utils {
         return navigationDrawerFragment;
     }
 
-    public static void onNavigationDrawerItemSelected(Context context, int id) {
+    public static void onNavigationDrawerItemSelected(final Context context, int id) {
         Intent intent;
         switch(id) {
             case R.id.menu_start:
@@ -166,6 +171,10 @@ public class Utils {
                     context.startActivity(intent);
                 }
                 break;
+            case R.id.menu_world: // World
+                intent = new Intent(context, World.class);
+                context.startActivity(intent);
+                break;
             case R.id.menu_wa: // World Assembly
                 intent = new Intent(context, WorldAssembly.class);
                 context.startActivity(intent);
@@ -178,6 +187,23 @@ public class Utils {
                 intent = new Intent(context, Preferences.class);
                 context.startActivity(intent);
                 break;
+            case R.id.menu_logout: // Log out
+                Toast.makeText(context, R.string.logging_out, Toast.LENGTH_LONG).show();
+                new AsyncTask<Void, Void, Boolean>() {
+                    @Override
+                    protected Boolean doInBackground(Void... params) {
+                        return API.getInstance(context).logout();
+                    }
+
+                    @Override
+                    protected void onPostExecute(Boolean result) {
+                        if(result) {
+                            Toast.makeText(context, R.string.logged_out, Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(context, R.string.unknown_error, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }.execute();
         }
     }
 
@@ -197,6 +223,27 @@ public class Utils {
         int days = (int) Math.floor(hours / 24f);
         hours = hours - days*24;
         return new int[]{days, hours};
+    }
+
+    /**
+     * Converts a timestamp (seconds) to a time string
+     * @param timestamp the timestamp to convert
+     * @return a time string
+     */
+    public static String getTimeString(long timestamp, Context context) {
+        long seconds = (long) Math.floor((timestamp - System.currentTimeMillis() / 1000f));
+        int minutes = (int) Math.floor(seconds / 60f);
+        int hours = (int) Math.floor(seconds / 3600f);
+        int days = (int) Math.floor(hours / 24f);
+        minutes = minutes - hours*60;
+        hours = hours - days*24;
+        if(days > 0) {
+            return context.getString(R.string.days_hours, days, hours);
+        } else if(hours > 0) {
+            return context.getString(R.string.hours_minutes, hours, minutes);
+        } else {
+            return context.getString(R.string.minutes, minutes);
+        }
     }
 
     public static int[] getWADaysHoursLeft(int hoursPassed) {
