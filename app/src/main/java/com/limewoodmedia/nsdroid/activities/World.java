@@ -266,7 +266,7 @@ public class World extends AppCompatActivity implements NavigationDrawerFragment
 		String wadTitle = getResources().getString(R.string.wad);
 		String wad = TagParser.idToName(rData.delegate);
 		if(!wad.equals("0")) {
-    		wad = wadTitle+" <a href=\"com.limewoodMedia.nsdroid.nation://"+wad+"\">"+wad+"</a>";
+    		wad = wadTitle+": <a href=\"com.limewoodMedia.nsdroid.nation://"+wad+"\">"+wad+"</a>";
     		delegate.setText(Html.fromHtml(wad), TextView.BufferType.SPANNABLE);
 		} else {
 			delegate.setText(wadTitle + " " + getResources().getString(R.string.no_wad));
@@ -276,7 +276,7 @@ public class World extends AppCompatActivity implements NavigationDrawerFragment
 		String found = TagParser.idToName(rData.founder);
 		if(!found.equals("0")) {
     		String fTitle = getResources().getString(R.string.founder);
-    		found = fTitle+" <a href=\"com.limewoodMedia.nsdroid.nation://"+found+"\">"+found+"</a>";
+    		found = fTitle+": <a href=\"com.limewoodMedia.nsdroid.nation://"+found+"\">"+found+"</a>";
     		founder.setText(Html.fromHtml(found), TextView.BufferType.SPANNABLE);
     		((Spannable)founder.getText()).setSpan(bold, 0, fTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     		founder.setVisibility(View.VISIBLE);

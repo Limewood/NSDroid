@@ -97,8 +97,8 @@
     <!-- Region activity -->
     <string name="wfe">World Factbook Entry</string>
     <string name="region">Region</string>
-    <string name="wad">WA Delegate:</string>
-    <string name="founder">Founder:</string>
+    <string name="wad">WA Delegate</string>
+    <string name="founder">Founder</string>
     <string name="no_wad">None</string>
     <string name="loading_region">Travelling the world&#8230;</string>
     <string name="moved_to_region">Moved to region %s</string>

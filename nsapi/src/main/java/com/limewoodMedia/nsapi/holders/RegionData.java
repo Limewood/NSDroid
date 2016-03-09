@@ -56,6 +56,8 @@ public class RegionData {
 		NUM_NATIONS("numnations"),
 		NATIONS("nations"),
 		DELEGATE_VOTES("delegatevotes"),
+		DELEGATE_AUTH("delegateauth"),
+        FOUNDER_AUTH("founderauth"),
 		GA_VOTES("gavote"),
 		SC_VOTES("scvote"),
 		POWER("power"),
@@ -67,12 +69,12 @@ public class RegionData {
 		private String tag;
 		private Map<IArguments, String> arguments;
 
-		private Shards(String name, String tag) {
+		Shards(String name, String tag) {
 			this.name = name;
 			this.tag = tag;
 		}
 
-		private Shards(String nameTag) {
+		Shards(String nameTag) {
 			this(nameTag, nameTag);
 		}
 
@@ -120,7 +122,7 @@ public class RegionData {
 
 			private String tag;
 
-			private SubTags(String tag) {
+			SubTags(String tag) {
 				this.tag = tag;
 			}
 
@@ -129,12 +131,12 @@ public class RegionData {
 			}
 		}
 		
-		public static enum Arguments implements IArguments {
+		public enum Arguments implements IArguments {
 			MESSAGES_OFFSET("offset");
 			
 			private String name;
 
-			private Arguments(String name) {
+			Arguments(String name) {
 				this.name = name;
 			}
 
@@ -143,12 +145,12 @@ public class RegionData {
 			}
 		}
 
-        public static enum Attributes {
+        public enum Attributes {
             RMB_POST_ID("id");
 
             private String name;
 
-            private Attributes(String name) {
+            Attributes(String name) {
                 this.name = name;
             }
 
@@ -168,6 +170,8 @@ public class RegionData {
 	public int numNations;
 	public String[] nations;
 	public int delegateVotes;
+    public List<Officer.Authority> delegateAuth;
+    public List<Officer.Authority> founderAuth;
 	public WAVotes generalAssemblyVotes;
 	public WAVotes securityCouncilVotes;
 	public String power;
@@ -176,6 +180,8 @@ public class RegionData {
 	public List<Officer> officers;
 
 	public RegionData() {
+        delegateAuth = new ArrayList<>();
+        founderAuth = new ArrayList<>();
 		officers = new ArrayList<>();
 	}
 	

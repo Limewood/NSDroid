@@ -54,8 +54,8 @@
     <!-- Region activity -->
     <string name="wfe">World Factbook Entry</string>
     <string name="region">Región</string>
-    <string name="wad">Delegado WA:</string>
-    <string name="founder">Fundador:</string>
+    <string name="wad">Delegado WA</string>
+    <string name="founder">Fundador</string>
     <string name="no_wad">Ninguno</string>
     <string name="loading_region">Viajando por el mundo&#8230;</string>
     

@@ -221,10 +221,10 @@ public class Dossier extends AppCompatActivity implements NavigationDrawerFragme
 						String.format("%5d", rdp.numNations));
 				regionWAD = (TextView)nView.findViewById(R.id.region_wad);
 				if(rdp.delegate.equals("--None--")) {
-					regionWAD.setText(getString(R.string.wad)+" "+rdp.delegate);
+					regionWAD.setText(getString(R.string.wad)+": "+rdp.delegate);
 				} else {
 					regionWAD.setText(Html.fromHtml(
-							getString(R.string.wad)+" <a href=\"com.limewoodMedia.nsdroid.nation://"
+							getString(R.string.wad)+": <a href=\"com.limewoodMedia.nsdroid.nation://"
 			    					+rdp.delegate+"\">"+TagParser.idToName(rdp.delegate)+"</a>"), TextView.BufferType.SPANNABLE);
 					regionWAD.setMovementMethod(LinkMovementMethod.getInstance());
 				}

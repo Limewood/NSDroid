@@ -53,6 +53,8 @@ public class RegionDataParcelable extends RegionData implements Parcelable {
 		this.numNations = data.numNations;
 		this.nations = data.nations;
 		this.delegateVotes = data.delegateVotes;
+		this.delegateAuth = data.delegateAuth;
+        this.founderAuth = data.founderAuth;
 		this.generalAssemblyVotes = data.generalAssemblyVotes;
 		this.securityCouncilVotes = data.securityCouncilVotes;
 		this.power = data.power;
@@ -87,6 +89,14 @@ public class RegionDataParcelable extends RegionData implements Parcelable {
 					in.readStringArray(data.nations);
 				}
 				data.delegateVotes = in.readInt();
+                int l = in.readInt();
+                for(int a=0; a<l; a++) {
+                    data.delegateAuth.add(Officer.Authority.getByCode((char)in.readInt()));
+                }
+                l = in.readInt();
+                for(int a=0; a<l; a++) {
+                    data.founderAuth.add(Officer.Authority.getByCode((char) in.readInt()));
+                }
 				data.generalAssemblyVotes = new WAVotes(in.readInt(), in.readInt());
 				data.securityCouncilVotes = new WAVotes(in.readInt(), in.readInt());
 				data.power = in.readString();
@@ -104,7 +114,7 @@ public class RegionDataParcelable extends RegionData implements Parcelable {
 					officer = new Officer();
 					officer.nation = in.readString();
 					officer.office = in.readString();
-					int l = in.readInt();
+					l = in.readInt();
 					for(int a=0; a<l; a++) {
 						officer.authority.add(Officer.Authority.getByCode((char)in.readInt()));
 					}
@@ -170,6 +180,14 @@ public class RegionDataParcelable extends RegionData implements Parcelable {
 			dest.writeInt(0);
 		}
 		dest.writeInt(delegateVotes);
+        dest.writeInt(delegateAuth.size());
+        for(Officer.Authority auth : delegateAuth) {
+            dest.writeInt(auth.code);
+        }
+        dest.writeInt(founderAuth.size());
+        for(Officer.Authority auth : founderAuth) {
+            dest.writeInt(auth.code);
+        }
 		dest.writeInt(generalAssemblyVotes != null ? generalAssemblyVotes.forVotes : 0);
 		dest.writeInt(generalAssemblyVotes != null ? generalAssemblyVotes.againstVotes : 0);
 		dest.writeInt(securityCouncilVotes != null ? securityCouncilVotes.forVotes : 0);

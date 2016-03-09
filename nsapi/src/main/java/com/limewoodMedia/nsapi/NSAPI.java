@@ -728,6 +728,24 @@ public class NSAPI implements INSAPI {
 					else if (tagName.equals(RegionData.Shards.DELEGATE_VOTES.getTag())) {
 						region.delegateVotes = Integer.parseInt(xpp.nextText());
 					}
+					else if (tagName.equals(RegionData.Shards.DELEGATE_AUTH.getTag())) {
+                        char[] auths = xpp.nextText().toCharArray();
+                        Officer.Authority a;
+                        for(char c : auths) {
+                            if((a = Officer.Authority.getByCode(c)) != null) {
+                                region.delegateAuth.add(a);
+                            }
+                        }
+                    }
+                    else if (tagName.equals(RegionData.Shards.FOUNDER_AUTH.getTag())) {
+                        char[] auths = xpp.nextText().toCharArray();
+                        Officer.Authority a;
+                        for(char c : auths) {
+                            if((a = Officer.Authority.getByCode(c)) != null) {
+                                region.founderAuth.add(a);
+                            }
+                        }
+                    }
 					else if (tagName.equals(RegionData.Shards.GA_VOTES.getTag())) {
 						region.generalAssemblyVotes = parseWAVotes(xpp, RegionData.Shards.GA_VOTES.getTag());
 					}

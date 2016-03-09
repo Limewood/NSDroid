@@ -24,13 +24,16 @@ package com.limewoodmedia.nsdroid.activities;
 
 import static com.limewoodMedia.nsapi.holders.RegionData.Shards.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
 import com.limewoodMedia.nsapi.holders.Embassy;
+import com.limewoodMedia.nsapi.holders.Officer;
 import com.limewoodMedia.nsapi.holders.RegionData;
 import com.limewoodmedia.nsdroid.AlphabeticComparator;
 import com.limewoodmedia.nsdroid.NationInfo;
@@ -289,7 +292,7 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
 				try {
 					RegionData.Shards[] shards = new RegionData.Shards[]{
 							NAME, FACTBOOK, DELEGATE, FOUNDER, FLAG,
-                            EMBASSIES, OFFICERS,
+                            EMBASSIES, OFFICERS, DELEGATE_AUTH, FOUNDER_AUTH,
                             NATIONS, MESSAGES // Messages last, because it has ;offset=0
 					};
 					if(homeRegion) {
@@ -354,7 +357,7 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
 		String wadTitle = getResources().getString(R.string.wad);
 		String wad = TagParser.idToName(data.delegate);
 		if(!wad.equals("0")) {
-    		wad = wadTitle+" <a href=\"com.limewoodMedia.nsdroid.nation://"+wad+"\">"+wad+"</a>";
+    		wad = wadTitle+": <a href=\"com.limewoodMedia.nsdroid.nation://"+wad+"\">"+wad+"</a>";
     		delegate.setText(Html.fromHtml(wad), TextView.BufferType.SPANNABLE);
 		} else {
 			delegate.setText(wadTitle + " " + getResources().getString(R.string.no_wad));
@@ -364,7 +367,7 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
 		String found = TagParser.idToName(data.founder);
 		if(!found.equals("0")) {
     		String fTitle = getResources().getString(R.string.founder);
-    		found = fTitle+" <a href=\"com.limewoodMedia.nsdroid.nation://"+found+"\">"+found+"</a>";
+    		found = fTitle+": <a href=\"com.limewoodMedia.nsdroid.nation://"+found+"\">"+found+"</a>";
     		founder.setText(Html.fromHtml(found), TextView.BufferType.SPANNABLE);
     		((Spannable)founder.getText()).setSpan(bold, 0, fTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     		founder.setVisibility(View.VISIBLE);
@@ -408,7 +411,20 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
         // Region name
         officersTitle.setText(data.name);
 
-        officersInner.setOfficers(data.officers);
+        // Officers, including founder and WAD
+        List<Officer> officers = data.officers;
+        Officer wad = new Officer();
+        wad.nation = data.delegate;
+        wad.office = getString(R.string.wa_delegate);
+        wad.authority = data.delegateAuth;
+        officers.add(0, wad);
+        Officer founder = new Officer();
+        founder.nation = data.founder;
+        founder.office = getString(R.string.founder);
+        founder.authority = data.founderAuth;
+        officers.add(0, founder);
+
+        officersInner.setOfficers(officers);
     }
 
     private void doEmbassiesSetup() {
