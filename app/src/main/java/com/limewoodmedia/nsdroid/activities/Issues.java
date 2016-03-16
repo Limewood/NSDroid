@@ -37,7 +37,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class Issues extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-	public static final String TAG = Issues.class.getName();
+	private static final String TAG = Issues.class.getName();
+    public static final String OPTION_POLL_ISSUES = "option_poll_issues";
 
 	private TextView issuesHeader;
 	private IssuesFragment issuesFragment;

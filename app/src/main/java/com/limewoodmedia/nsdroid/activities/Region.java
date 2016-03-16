@@ -251,7 +251,7 @@ public class Region extends AppCompatActivity implements NavigationDrawerFragmen
 
         // Start timer if it's not started and it should be
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if(prefs.getString("rmb_update_interval", "-1").compareTo("-1") != 0) {
+        if(!prefs.getString("rmb_update_interval", "-1").equals("-1")) {
             NotificationsHelper.setAlarmForRMB(this,
                     Integer.parseInt(prefs.getString("rmb_update_interval", "-1")));
         }

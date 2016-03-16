@@ -25,17 +25,22 @@ package com.limewoodmedia.nsdroid.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.limewoodmedia.nsdroid.NotificationsHelper;
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.API;
 import com.limewoodmedia.nsdroid.LoadingHelper;
 import com.limewoodmedia.nsdroid.NationInfo;
+import com.limewoodmedia.nsdroid.Utils;
+import com.limewoodmedia.nsdroid.activities.Issues;
 import com.limewoodmedia.nsdroid.holders.Issue;
 import com.limewoodmedia.nsdroid.holders.IssuesInfo;
 import com.limewoodmedia.nsdroid.views.LoadingView;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -164,6 +169,11 @@ public class IssuesFragment extends Fragment {
                         if(result.nextIssue != null) {
                             text.setText(getString(R.string.next_issue_in, result.nextIssue));
                             text.setVisibility(View.VISIBLE);
+							// Set timer, if the option is on
+                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                            if(prefs.getBoolean(Issues.OPTION_POLL_ISSUES, true)) {
+                                NotificationsHelper.setIssuesTimer(context, result.nextIssue);
+                            }
                         } else {
                             text.setVisibility(View.GONE);
                         }

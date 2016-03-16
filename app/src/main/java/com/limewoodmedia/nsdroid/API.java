@@ -321,6 +321,7 @@ public class API {
 
 		try {
 			String response = future.get();
+			Log.d(TAG, "Response: "+response);
 
 		    List<Issue> issues = new ArrayList<Issue>();
 

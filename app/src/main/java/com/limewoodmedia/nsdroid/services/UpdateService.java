@@ -23,9 +23,7 @@
 package com.limewoodmedia.nsdroid.services;
 
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
-import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
-import com.limewoodMedia.nsapi.holders.NationData;
 import com.limewoodMedia.nsapi.holders.RMBMessage;
 import com.limewoodMedia.nsapi.holders.RegionData;
 import com.limewoodmedia.nsdroid.R;
@@ -34,6 +32,8 @@ import com.limewoodmedia.nsdroid.NationInfo;
 import com.limewoodmedia.nsdroid.NotificationsHelper;
 import com.limewoodmedia.nsdroid.activities.NSDroid;
 import com.limewoodmedia.nsdroid.activities.Region;
+import com.limewoodmedia.nsdroid.holders.Issue;
+import com.limewoodmedia.nsdroid.holders.IssuesInfo;
 import com.limewoodmedia.nsdroid.holders.RMBMessageParcelable;
 
 import android.app.IntentService;
@@ -45,6 +45,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -52,6 +53,7 @@ import android.util.Log;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.util.List;
 
 public class UpdateService extends IntentService {
 	private static final String TAG = UpdateService.class.getName();
@@ -140,7 +142,22 @@ public class UpdateService extends IntentService {
 	        		}
 	        	}
         	}
-        }
+        } else if(intent.getStringExtra("API").equalsIgnoreCase("issues")) {
+			// Issues
+            IssuesInfo issues = API.getInstance(this).getIssues();
+            Log.d(TAG, "Issues: "+issues);
+            if(issues != null) {
+                if(issues.issues != null) {
+                    Log.d(TAG, "Issues: "+issues.issues.size());
+                    intent.putExtra("notification_number", issues.issues.size());
+                    showNotification = true;
+                }
+                if(issues.nextIssue != null) {
+                    Log.d(TAG, "Issues: "+issues.nextIssue);
+                    NotificationsHelper.setIssuesTimer(this, issues.nextIssue);
+                }
+            }
+		}
     	
         if(showNotification) {
 	    	// Show notification icon
@@ -148,7 +165,9 @@ public class UpdateService extends IntentService {
 			try {
                 // Start activity with class name
 				i = new Intent(this, Class.forName(intent.getStringExtra("class")));
-                i.putExtra("page", 1); // RMB page
+                if(intent.hasExtra("page")) {
+                    i.putExtra("page", intent.getIntExtra("page", 0));
+                }
 	            Log.d(TAG, "Build notification to update "+intent.getStringExtra("class"));
 		    	i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		    	PendingIntent pi = PendingIntent.getActivity(this, intent.getIntExtra("notification_id", NOTIFICATION_ID), i, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -164,6 +183,9 @@ public class UpdateService extends IntentService {
 		    			&& intent.hasExtra("notification_sound")) {
 		    		notifyBuilder.setSound(Uri.parse("android.resource://"+getPackageName()+"/" + intent.getIntExtra("notification_sound", -1)));
 		    	}
+                if(intent.hasExtra("notification_number")) {
+                    notifyBuilder.setNumber(intent.getIntExtra("notification_number", 0)).setShowWhen(false);
+                }
 	            Log.d(TAG, "Show notification");
 		    	notificationManager.notify(intent.getIntExtra("notification_id", NOTIFICATION_ID), notifyBuilder.getNotification());
 			} catch (ClassNotFoundException e) {

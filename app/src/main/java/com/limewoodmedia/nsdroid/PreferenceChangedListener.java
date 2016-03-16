@@ -124,7 +124,7 @@ public class PreferenceChangedListener implements OnPreferenceChangeListener, On
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		Log.d(TAG, "Preference change: "+preference.getKey()+" value: "+newValue);
-		if (preference.getKey().compareTo(context.getString(R.string.preference_rmb_update_interval)) == 0) {
+		if (preference.getKey().equals(context.getString(R.string.preference_rmb_update_interval))) {
 			// RMB update interval
 			setRMBIntervalSummary((String)newValue);
 			int value = Integer.parseInt((String)newValue);
@@ -138,8 +138,7 @@ public class PreferenceChangedListener implements OnPreferenceChangeListener, On
 				Log.d(TAG, "Setting timer for RMB update");
 		        NotificationsHelper.setAlarmForRMB(context, value);
 			}
-			return true;
-		} else if (preference.getKey().compareTo(context.getString(R.string.preference_locale)) == 0) {
+		} else if (preference.getKey().equals(context.getString(R.string.preference_locale))) {
 			// Interface language
 			setLocaleSummary((String) newValue);
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -161,9 +160,8 @@ public class PreferenceChangedListener implements OnPreferenceChangeListener, On
 				}
 			});
 			builder.show();
-			return true;
 		}
-		return false;
+		return true;
 	}
 
 	@Override

@@ -235,6 +235,8 @@
     <string name="notification_text">Data has been updated, please see the relevant activity in NSDroid.</string>
     <string name="notification_title_rmb">New RMB posts</string>
     <string name="notification_text_rmb">Your region\'s RMB has new posts!</string>
+    <string name="notification_title_issues">New issues</string>
+    <string name="notification_text_issues">You have new issues</string>
     
     <!-- Log in -->
     <string name="enter_password_title">Password required</string>
@@ -295,6 +297,8 @@
     <string name="restart">Restart</string>
     <string name="nations">Nations (%1$s)</string>
     <string name="nations_current">Current: %1$s</string>
+    <string name="update_issues_title">Check for new issues</string>
+    <string name="update_issues_text">Notify when you get new issues</string>
     
     <plurals name="days">
         <item quantity="one">day</item>

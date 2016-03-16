@@ -1,12 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" >
-
-    <item
-        jar="/home/joakim/android-studio/NSDroid/nsapi/build/libs/nsapi.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="716e0d8588dfbc26392f77ac1b726077ef440e09">
-        <dex dex="/home/joakim/android-studio/NSDroid/app/build/intermediates/pre-dexed/debug/nsapi_66ad685b14a97f8091466b83f34959d5713bf825.jar" />
-    </item>
-
-</items>
+<items version="2" />

@@ -9,6 +9,12 @@
 		android:summary="@string/rmb_update_interval_summary_never"
 		android:defaultValue="-1"
 		android:title="@string/rmb_update_interval_title"/>
+
+	<CheckBoxPreference
+        android:title="@string/update_issues_title"
+        android:summary="@string/update_issues_text"
+        android:key="@string/preference_update_issues"
+        android:defaultValue="true" />
 	
 	<ListPreference
 	    android:dialogTitle="@string/locale_choice"

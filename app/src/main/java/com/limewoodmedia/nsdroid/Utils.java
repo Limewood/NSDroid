@@ -28,7 +28,6 @@ import android.os.AsyncTask;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
@@ -39,10 +38,8 @@ import com.limewoodmedia.nsdroid.activities.Nation;
 import com.limewoodmedia.nsdroid.activities.News;
 import com.limewoodmedia.nsdroid.activities.Preferences;
 import com.limewoodmedia.nsdroid.activities.Region;
-import com.limewoodmedia.nsdroid.activities.Welcome;
 import com.limewoodmedia.nsdroid.activities.World;
 import com.limewoodmedia.nsdroid.activities.WorldAssembly;
-import com.limewoodmedia.nsdroid.db.NationsDatabase;
 import com.limewoodmedia.nsdroid.fragments.NavigationDrawerFragment;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -51,7 +48,10 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
-import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Joakim Lindskog
@@ -281,5 +281,44 @@ public class Utils {
             default:
                 return num+"th";
         }
+    }
+
+    /**
+     * Parse a date from an NS date string
+     * @param nsDate NS date string (in x hours y minutes)
+     * @param margin margin in minutes
+     * @return a Date
+     */
+    public static Date dateFromString(String nsDate, int margin) {
+        Calendar cal = Calendar.getInstance();
+        Pattern pattern;
+        Matcher matcher;
+        if(nsDate.contains("minutes")) {
+            // Hours and minutes or just minutes
+            pattern = Pattern.compile("((\\d+?) hours)?( )?((\\d+?) minutes)");
+            matcher = pattern.matcher(nsDate);
+            if(matcher.find()) {
+                if (matcher.group(2) != null) {
+                    cal.add(Calendar.HOUR_OF_DAY, Integer.parseInt(matcher.group(2)));
+                }
+                if (matcher.group(5) != null) {
+                    cal.add(Calendar.MINUTE, Integer.parseInt(matcher.group(5)));
+                }
+            }
+        } else {
+            // Just hours
+            pattern = Pattern.compile("((\\d+?) hours)");
+            matcher = pattern.matcher(nsDate);
+            if(matcher.find()) {
+                if(matcher.group(2) != null) {
+                    cal.add(Calendar.HOUR_OF_DAY, Integer.parseInt(matcher.group(2)));
+                }
+            }
+        }
+        if(margin > 0) {
+            // Add margin
+            cal.add(Calendar.MINUTE, margin);
+        }
+        return cal.getTime();
     }
 }
