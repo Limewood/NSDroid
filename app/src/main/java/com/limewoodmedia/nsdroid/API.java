@@ -735,7 +735,7 @@ public class API {
 	 * @return true if successful
 	 */
 	public boolean login(String nation, String password) {
-		if(password == null) {
+		if(password == null || password.isEmpty()) {
 			return false;
 		}
 
@@ -988,7 +988,7 @@ public class API {
                 preferences.edit().remove("autologin").commit();
             }
             // Clear cached password
-            NationInfo.getInstance(context).setPassword("", false);
+            NationInfo.getInstance(context).setPassword(null, false);
 
             return true;
 		} catch (InterruptedException e) {

@@ -115,8 +115,7 @@ public class IssuesFragment extends Fragment {
         		}
     			Issue issue = getItem(position);
     			String txt = "&#8226; <a href=\"com.limewoodMedia.nsdroid.issue://" + issue.id + "\">" +
-    					issue.name + "</a> " + (issue.pending ? getResources().getString(R.string.issue_pending)
-    							: (issue.dismissed ? getResources().getString(R.string.issue_dismissed) : ""));
+    					issue.name + "</a> ";
     			text.setText(Html.fromHtml(txt));
         		
         		return view;

@@ -147,7 +147,7 @@ public class UpdateService extends IntentService {
             IssuesInfo issues = API.getInstance(this).getIssues();
             Log.d(TAG, "Issues: "+issues);
             if(issues != null) {
-                if(issues.issues != null) {
+                if(issues.issues != null && issues.issues.size() > 0) {
                     Log.d(TAG, "Issues: "+issues.issues.size());
                     intent.putExtra("notification_number", issues.issues.size());
                     showNotification = true;
