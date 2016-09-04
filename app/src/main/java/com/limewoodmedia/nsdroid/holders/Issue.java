@@ -28,7 +28,7 @@ public class Issue {
 	public int id;
 	public String name;
 	public String text;
-	public List<String> choices;
+	public List<ChoiceHolder> choices;
 	public boolean pending;
 	public boolean dismissed;
 	public int selectedChoice = -1;

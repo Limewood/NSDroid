@@ -59,6 +59,7 @@ import com.limewoodMedia.nsapi.holders.RegionData;
 import com.limewoodMedia.nsapi.holders.WAData;
 import com.limewoodMedia.nsapi.holders.WorldData;
 import com.limewoodmedia.nsdroid.holders.CensusChange;
+import com.limewoodmedia.nsdroid.holders.ChoiceHolder;
 import com.limewoodmedia.nsdroid.holders.DossierData;
 import com.limewoodmedia.nsdroid.holders.Issue;
 import com.limewoodmedia.nsdroid.holders.IssueResult;
@@ -406,14 +407,14 @@ public class API {
 			// Issue choices
 			Pattern pattern = Pattern.compile("<p>(.+?)\\n<p class=\"dilemmaaccept\"><button type=\"submit\" name=\"choice-(\\d+)\"");
             Matcher matcher = pattern.matcher(response);
-			List<String> choices = new ArrayList<String>();
-			String choice;
+			List<ChoiceHolder> choices = new ArrayList<ChoiceHolder>();
+			ChoiceHolder choice;
 			while(matcher.find()) {
-                choice = matcher.group(1);
-				if(choice.trim().length() > 0) {
+                choice = new ChoiceHolder(matcher.group(1), Integer.parseInt(matcher.group(2)));
+				if(choice.choiceText.trim().length() > 0) {
 					choices.add(choice);
 				}
-				Log.d(TAG, "Choice: "+choice);
+				Log.d(TAG, "Choice: "+choice.choiceText+"; index: "+choice.index);
 			}
 			issue.choices = choices;
 

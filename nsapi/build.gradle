@@ -5,4 +5,7 @@ dependencies {
     compile 'kxml2:kxml2:2.3.0'
     compile 'httpcomponents-httpcore:httpcore:4.0-alpha6'
     compile 'org.apache.httpcomponents:httpclient:4.4-beta1'
+
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
 }

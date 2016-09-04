@@ -30,6 +30,7 @@ import com.limewoodmedia.nsdroid.CustomAlertDialogBuilder;
 import com.limewoodmedia.nsdroid.LoadingHelper;
 import com.limewoodmedia.nsdroid.db.IssuesDatabase;
 import com.limewoodmedia.nsdroid.holders.CensusChange;
+import com.limewoodmedia.nsdroid.holders.ChoiceHolder;
 import com.limewoodmedia.nsdroid.holders.Issue;
 import com.limewoodmedia.nsdroid.holders.IssueResult;
 import com.limewoodmedia.nsdroid.views.ChoiceView;
@@ -162,15 +163,16 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
 						params.setMargins(0, 0, 0, 9);
 						Log.d(TAG, "Selected "+result.selectedChoice);
 
-                        int i=0;
-						for(String choice : result.choices) {
+						String choice;
+						for(ChoiceHolder ch : result.choices) {
+							choice = ch.choiceText;
 							cText = (ChoiceView) getLayoutInflater(null).inflate(R.layout.issue_choice, null);
 							cText.setTextColor(getResources().getColor(android.R.color.black));
-							cText.setTag(R.id.choice_index, i);
+							cText.setTag(R.id.choice_index, ch.index);
 							cText.setTag(R.id.choice_type, true);
 							cText.setOnClickListener(IssueDetailFragment.this);
                             // Indicate previous choice
-                            if(previous == i) {
+                            if(previous == ch.index) {
                                 cText.setBackgroundResource(R.drawable.choice_background_previous);
                                 choice += "<br/><small><font color='grey'>" + getString(R.string.previous_choice) + "</font></small>";
                             } else {
@@ -178,7 +180,7 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
                             }
                             cText.setText(Html.fromHtml(choice));
 							if(!result.dismissed) {
-								cText.setSelected(result.selectedChoice == i);
+								cText.setSelected(result.selectedChoice == ch.index);
 								cText.setDismissed(false);
 							} else {
 								cText.setDismissed(true);
@@ -186,7 +188,6 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
 							cText.setFocusable(true);
 							cText.setClickable(true);
 							choicesArea.addView(cText, params);
-							i++;
 						}
 					} else {
                         Toast.makeText(getActivity(), R.string.api_io_exception, Toast.LENGTH_SHORT).show();
@@ -253,7 +254,7 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
 			CustomAlertDialogBuilder builder = new CustomAlertDialogBuilder(getActivity());
 			builder.setTitle(R.string.issue_choose_title)
 				.setMessage(getResources().getString(R.string.issue_choose_text,
-						((Integer)v.getTag(R.id.choice_index))+1))
+						((Integer)v.getTag(R.id.choice_index))))
 				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
@@ -263,7 +264,7 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
                                 if (API.getInstance(getActivity()).checkLogin(getActivity())) {
                                     try {
                                         IssueResult result = API.getInstance(getActivity()).answerIssue(
-                                                issueId, (Integer) params[0]);
+                                                issueId, params[0]);
                                         if (result != null) {
                                             db.setIssueChoice(issueId, params[0]);
                                         }
