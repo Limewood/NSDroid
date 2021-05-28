@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/NSDroid.iml" filepath="$PROJECT_DIR$/NSDroid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/nsapi/nsapi.iml" filepath="$PROJECT_DIR$/nsapi/nsapi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NSDroid.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NSDroid.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/nsapi/NSDroid.nsapi.iml" filepath="$PROJECT_DIR$/.idea/modules/nsapi/NSDroid.nsapi.iml" />
     </modules>
   </component>
 </project>

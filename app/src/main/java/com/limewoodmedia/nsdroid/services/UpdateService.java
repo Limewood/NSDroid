@@ -22,20 +22,6 @@
  */
 package com.limewoodmedia.nsdroid.services;
 
-import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
-import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
-import com.limewoodMedia.nsapi.holders.RMBMessage;
-import com.limewoodMedia.nsapi.holders.RegionData;
-import com.limewoodmedia.nsdroid.R;
-import com.limewoodmedia.nsdroid.API;
-import com.limewoodmedia.nsdroid.NationInfo;
-import com.limewoodmedia.nsdroid.NotificationsHelper;
-import com.limewoodmedia.nsdroid.activities.NSDroid;
-import com.limewoodmedia.nsdroid.activities.Region;
-import com.limewoodmedia.nsdroid.holders.Issue;
-import com.limewoodmedia.nsdroid.holders.IssuesInfo;
-import com.limewoodmedia.nsdroid.holders.RMBMessageParcelable;
-
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -45,15 +31,27 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
+
+import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
+import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
+import com.limewoodMedia.nsapi.holders.RMBMessage;
+import com.limewoodMedia.nsapi.holders.RegionData;
+import com.limewoodmedia.nsdroid.API;
+import com.limewoodmedia.nsdroid.NationInfo;
+import com.limewoodmedia.nsdroid.NotificationsHelper;
+import com.limewoodmedia.nsdroid.R;
+import com.limewoodmedia.nsdroid.activities.NSDroid;
+import com.limewoodmedia.nsdroid.activities.Region;
+import com.limewoodmedia.nsdroid.holders.IssuesInfo;
+import com.limewoodmedia.nsdroid.holders.RMBMessageParcelable;
 
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.util.List;
 
 public class UpdateService extends IntentService {
 	private static final String TAG = UpdateService.class.getName();

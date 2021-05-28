@@ -27,11 +27,12 @@ import com.limewoodmedia.nsdroid.LoadingHelper;
 import com.limewoodmedia.nsdroid.fragments.IssueDetailFragment;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class IssueDetail extends AppCompatActivity {
 	public static final String TAG = IssueDetail.class.getName();

@@ -24,11 +24,9 @@ package com.limewoodmedia.nsdroid.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -36,18 +34,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
-import com.limewoodMedia.nsapi.holders.Embassy;
-import com.limewoodMedia.nsapi.holders.Embassy.EmbassyStatus;
 import com.limewoodMedia.nsapi.holders.Officer;
 import com.limewoodMedia.nsapi.holders.RegionData;
 import com.limewoodmedia.nsdroid.API;
@@ -55,7 +50,6 @@ import com.limewoodmedia.nsdroid.LoadingHelper;
 import com.limewoodmedia.nsdroid.R;
 import com.limewoodmedia.nsdroid.TagParser;
 import com.limewoodmedia.nsdroid.activities.Nation;
-import com.limewoodmedia.nsdroid.activities.Region;
 import com.limewoodmedia.nsdroid.views.LoadingView;
 
 import org.xmlpull.v1.XmlPullParserException;

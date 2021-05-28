@@ -37,10 +37,6 @@ import android.os.Build;
 public abstract class ParallelTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
 	@SuppressLint("NewApi")
 	public AsyncTask<Params, Progress, Result> run(Params...params) {
-		if(Build.VERSION.SDK_INT >= 11) { // Honeycomb+ uses a serial executor by default - we want parallel
-        	return executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
-        } else { // Versions below Honeycomb (Donut+) use parallel execution by default
-        	return super.execute(params);
-        }
+		return executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
 	}
 }

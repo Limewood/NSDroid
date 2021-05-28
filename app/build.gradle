@@ -1,16 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 30
     useLibrary  'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.limewoodmedia.nsdroid"
-        minSdkVersion 10
-        targetSdkVersion 24
-        versionCode 39
-        versionName "1.10.3"
+        minSdkVersion 23
+        targetSdkVersion 30
+        versionCode 40
+        versionName "1.11.0"
     }
 
     buildTypes {
@@ -19,13 +18,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:24.2.0'
-    compile "com.android.support:appcompat-v7:24.2.0"
-    compile project(':nsapi')
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
-    compile 'org.achartengine:achartengine:1.2.0'
-    compile 'com.mcxiaoke.volley:library:1.0.19'
+    implementation project(':nsapi')
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+    implementation 'com.mcxiaoke.volley:library:1.0.19'
+    implementation 'androidx.appcompat:appcompat:1.4.0-alpha01'
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
 }

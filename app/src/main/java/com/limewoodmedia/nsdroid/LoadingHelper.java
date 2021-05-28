@@ -24,7 +24,6 @@ package com.limewoodmedia.nsdroid;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -39,10 +38,8 @@ import com.limewoodmedia.nsdroid.views.LoadingView;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LoadingHelper {
 	public static void startLoading(final LoadingView view, String text) {

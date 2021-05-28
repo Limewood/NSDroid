@@ -328,15 +328,15 @@ public class API {
 
 			Issue issue;
 			Pattern pattern = Pattern.compile(
-					"\\<a href=\"page=show_dilemma/dilemma=(\\d+)\"\\>(.+?)" +
-							"\\</a\\>",
+					"<a href=\"/page=show_dilemma/dilemma=(\\d+)\"(.+?)>(.+?)<div class=\"dpaper4\"><p><p>(.+?)</div>",
 					Pattern.DOTALL);
 			Matcher matcher = pattern.matcher(response);
 			while(matcher.find()) {
+				Log.e(TAG, "Found match");
 				issue = new Issue();
 				try {
                     issue.id = Integer.parseInt(matcher.group(1));
-                    issue.name = matcher.group(2);
+                    issue.name = matcher.group(4);
                     Log.d(TAG, "Issue: " + issue.id + " - " + issue.name);
                     issues.add(issue);
 				} catch(NumberFormatException e) {

@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     package="com.limewoodmedia.nsdroid"
     android:versionCode="19"
     android:versionName="1.5.2">
-
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="21" />
     
     <supports-screens
 		android:smallScreens="true"
@@ -24,7 +19,10 @@
         android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:theme="@style/NSAppTheme"
+        android:usesCleartextTraffic="true"
         android:allowBackup="true" >
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         
         <!-- Activities -->
         <activity
@@ -41,7 +39,7 @@
         <activity
             android:name=".activities.Nation"
             android:label="@string/nation"
-            android:exported="false"
+            android:exported="true"
         	android:theme="@style/NSAppTheme" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -53,7 +51,7 @@
         <activity
  			android:name=".activities.Region"
             android:label="@string/region"
-            android:exported="false"
+            android:exported="true"
         	android:theme="@style/NSAppTheme" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -87,7 +85,7 @@
         <activity
  			android:name=".activities.IssueDetail"
             android:label="@string/issue_detail"
-            android:exported="false"
+            android:exported="true"
         	android:theme="@style/NSAppTheme">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />

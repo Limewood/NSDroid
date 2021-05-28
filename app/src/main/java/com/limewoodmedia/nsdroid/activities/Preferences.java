@@ -22,19 +22,14 @@
  */
 package com.limewoodmedia.nsdroid.activities;
 
-import com.limewoodmedia.nsdroid.R;
-import com.limewoodmedia.nsdroid.PreferenceChangedListener;
-import com.limewoodmedia.nsdroid.Utils;
-import com.limewoodmedia.nsdroid.fragments.NavigationDrawerFragment;
-import com.limewoodmedia.nsdroid.fragments.PreferencesFragment;
-
-import android.annotation.TargetApi;
 import android.content.pm.ActivityInfo;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.ActionBar;
+
+import com.limewoodmedia.nsdroid.PreferenceChangedListener;
+import com.limewoodmedia.nsdroid.R;
 
 public class Preferences extends AppCompatPreferenceActivity {
 	@SuppressWarnings("deprecation")
@@ -44,35 +39,20 @@ public class Preferences extends AppCompatPreferenceActivity {
 
         // Portrait orientation only
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        
-        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.HONEYCOMB) {
-        	addPreferencesFromResource(R.xml.preferences);
-    		PreferenceChangedListener listener = new PreferenceChangedListener(this);
-    		listener.doSetup(this);
-        } else {
-        	addPreferencesFragment();
-        }
+
+		addPreferencesFromResource(R.xml.preferences);
+		PreferenceChangedListener listener = new PreferenceChangedListener(this);
+		listener.doSetup(this);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
-	
-	@TargetApi(11)
-	private void addPreferencesFragment() {
-		Bundle bundle = new Bundle();
-		bundle.putString("resource", "preferences");
-		PreferencesFragment pref = new PreferencesFragment();
-		pref.setArguments(bundle);
-		getFragmentManager().beginTransaction().replace(android.R.id.content, pref).commit();
-	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case android.R.id.home:
-				finish();
-				break;
+		if (item.getItemId() == android.R.id.home) {
+			finish();
 		}
 		return super.onOptionsItemSelected(item);
 	}

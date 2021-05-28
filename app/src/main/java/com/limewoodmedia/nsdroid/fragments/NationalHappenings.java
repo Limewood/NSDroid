@@ -32,7 +32,6 @@ import com.limewoodmedia.nsdroid.TagParser;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
@@ -44,6 +43,8 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 public class NationalHappenings extends Fragment {
 	@SuppressWarnings("unused")
