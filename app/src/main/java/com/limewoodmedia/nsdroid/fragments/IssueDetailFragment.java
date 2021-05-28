@@ -40,10 +40,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
@@ -60,7 +56,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.xml.sax.XMLReader;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 /**
  * Fragment for showing a specific issue
@@ -308,9 +306,9 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
 			TextView trendName;
 			for(CensusChange change : result.censusChangeList) {
 				cText = (RelativeLayout) getLayoutInflater(null).inflate(R.layout.recent_trend, null);
-				trend = (TextView) cText.findViewById(R.id.trend);
+				trend = cText.findViewById(R.id.trend);
 				trend.setText(change.percent);
-				trendName = (TextView) cText.findViewById(R.id.trend_name);
+				trendName = cText.findViewById(R.id.trend_name);
 				trendName.setText(change.name);
 				if(change.increase) {
 					trend.setTextColor(getResources().getColor(R.color.medium_green));
@@ -319,7 +317,7 @@ public class IssueDetailFragment extends Fragment implements OnClickListener {
 					trend.setTextColor(getResources().getColor(R.color.decrease_red));
 					trendName.setTextColor(getResources().getColor(R.color.decrease_red));
 				}
-				((TextView)cText.findViewById(R.id.trend_metric)).setText(change.metric);
+				((TextView)cText.findViewById(R.id.trend_metric)).setText(Html.fromHtml(change.metric));
 				choicesArea.addView(cText, params);
 				scrollView.scrollTo(0,0);
 			}

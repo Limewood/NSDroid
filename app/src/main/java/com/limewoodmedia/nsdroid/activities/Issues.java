@@ -30,11 +30,12 @@ import com.limewoodmedia.nsdroid.fragments.IssuesFragment;
 import com.limewoodmedia.nsdroid.fragments.NavigationDrawerFragment;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Issues extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 	private static final String TAG = Issues.class.getName();

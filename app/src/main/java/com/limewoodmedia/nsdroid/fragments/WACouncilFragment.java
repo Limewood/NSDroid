@@ -28,7 +28,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -40,6 +39,8 @@ import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.limewoodMedia.nsapi.enums.WACouncil;
 import com.limewoodMedia.nsapi.holders.WAData;

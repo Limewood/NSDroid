@@ -22,26 +22,11 @@
  */
 package com.limewoodmedia.nsdroid.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.limewoodmedia.nsdroid.NotificationsHelper;
-import com.limewoodmedia.nsdroid.R;
-import com.limewoodmedia.nsdroid.API;
-import com.limewoodmedia.nsdroid.LoadingHelper;
-import com.limewoodmedia.nsdroid.NationInfo;
-import com.limewoodmedia.nsdroid.Utils;
-import com.limewoodmedia.nsdroid.activities.Issues;
-import com.limewoodmedia.nsdroid.holders.Issue;
-import com.limewoodmedia.nsdroid.holders.IssuesInfo;
-import com.limewoodmedia.nsdroid.views.LoadingView;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -55,6 +40,21 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+
+import com.limewoodmedia.nsdroid.API;
+import com.limewoodmedia.nsdroid.LoadingHelper;
+import com.limewoodmedia.nsdroid.NationInfo;
+import com.limewoodmedia.nsdroid.NotificationsHelper;
+import com.limewoodmedia.nsdroid.R;
+import com.limewoodmedia.nsdroid.activities.Issues;
+import com.limewoodmedia.nsdroid.holders.Issue;
+import com.limewoodmedia.nsdroid.holders.IssuesInfo;
+import com.limewoodmedia.nsdroid.views.LoadingView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class IssuesFragment extends Fragment {
 	private static final String TAG = IssuesFragment.class.getName();
