@@ -51,6 +51,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.limewoodMedia.nsapi.exceptions.RateLimitReachedException;
 import com.limewoodMedia.nsapi.exceptions.UnknownNationException;
 import com.limewoodMedia.nsapi.exceptions.UnknownRegionException;
@@ -67,8 +70,6 @@ import com.limewoodmedia.nsdroid.holders.NationDataParcelable;
 import com.limewoodmedia.nsdroid.holders.RegionDataParcelable;
 import com.limewoodmedia.nsdroid.holders.WorldDataParcelable;
 import com.limewoodmedia.nsdroid.views.LoadingView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -106,8 +107,6 @@ public class World extends AppCompatActivity implements NavigationDrawerFragment
     private NationDataParcelable nData;
 	private String errorMessage;
     private ViewPager viewPager;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -118,8 +117,6 @@ public class World extends AppCompatActivity implements NavigationDrawerFragment
 
         // Fetch flag
         LoadingHelper.loadHomeFlag(this);
-        imageLoader = Utils.getImageLoader(this);
-        this.options = Utils.getImageLoaderDisplayOptions();
         
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
@@ -258,7 +255,13 @@ public class World extends AppCompatActivity implements NavigationDrawerFragment
 		regionName.setText(rData.name);
 		// Flag
 		if(rData.flagURL != null) {
-			imageLoader.displayImage(rData.flagURL, flag, options);
+            GlideUrl url = new GlideUrl(
+                    rData.flagURL,
+                    new LazyHeaders.Builder()
+                            .addHeader("User-Agent", API.USER_AGENT)
+                            .build()
+            );
+            Glide.with(this).load(url).into(flag);
 		} else {
 			flag.setVisibility(View.GONE);
 		}

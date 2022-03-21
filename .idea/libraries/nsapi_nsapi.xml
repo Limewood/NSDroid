@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="nsapi.nsapi">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/nsapi/build/libs/nsapi.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

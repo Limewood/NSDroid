@@ -45,6 +45,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -58,6 +59,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.xmlpull.v1.XmlPullParserException;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class Welcome extends AppCompatActivity implements OnClickListener {
 	@SuppressWarnings("unused")
@@ -140,7 +143,14 @@ public class Welcome extends AppCompatActivity implements OnClickListener {
 		                		NAME, FULL_NAME, FLAG, MOTTO, REGION, WA_STATUS);
 		                
 		                URL imageURL = new URL(data.flagURL);
-                		flagBitmap = BitmapFactory.decodeStream(imageURL.openStream());
+		                HttpsURLConnection connection = (HttpsURLConnection) imageURL.openConnection();
+		                connection.setRequestProperty("User-Agent", API.USER_AGENT);
+		                int code = connection.getResponseCode();
+		                Log.e(TAG, "Code: "+code);
+						String response = connection.getResponseMessage();
+						Log.e(TAG, "Response: "+response);
+		                connection.connect();
+                		flagBitmap = BitmapFactory.decodeStream(connection.getInputStream());
 		                
 		                return true;
 					} catch (RateLimitReachedException e) {

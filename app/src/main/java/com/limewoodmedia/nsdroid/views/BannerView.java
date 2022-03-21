@@ -42,11 +42,4 @@ public class BannerView extends ImageView {
 	public BannerView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
-
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		int width = MeasureSpec.getSize(widthMeasureSpec);
-		int height = width * getDrawable().getIntrinsicHeight() / getDrawable().getIntrinsicWidth();
-		setMeasuredDimension(width, height);
-	}
 }

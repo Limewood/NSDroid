@@ -42,12 +42,6 @@ import com.limewoodmedia.nsdroid.activities.Region;
 import com.limewoodmedia.nsdroid.activities.World;
 import com.limewoodmedia.nsdroid.activities.WorldAssembly;
 import com.limewoodmedia.nsdroid.fragments.NavigationDrawerFragment;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -60,38 +54,6 @@ import java.util.regex.Pattern;
  */
 public class Utils {
     public static String NUMBER_FORMAT = "%,d";
-
-	public static ImageLoaderConfiguration getImageLoaderConfig(Context context) {
-		return new ImageLoaderConfiguration.Builder(context)
-				.threadPriority(Thread.NORM_PRIORITY - 2)
-				.denyCacheImageMultipleSizesInMemory()
-				.threadPoolSize(2)
-				.diskCacheFileNameGenerator(new Md5FileNameGenerator())
-				.diskCacheSize(200 * 1024 * 1024) // 200 Mb
-				.memoryCacheSize(20 * 1024 * 1024) // 20 Mb
-				.tasksProcessingOrder(QueueProcessingType.LIFO)
-				.build();
-	}
-
-	public static ImageLoader getImageLoader(Context context) {
-		ImageLoader imageLoader = ImageLoader.getInstance();
-		if(!imageLoader.isInited()) {
-			imageLoader.init(getImageLoaderConfig(context));
-		}
-		return imageLoader;
-	}
-
-	public static DisplayImageOptions getImageLoaderDisplayOptions() {
-		return new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.default_white)
-				.showImageForEmptyUri(R.drawable.default_white)
-				.showImageOnFail(R.drawable.default_white)
-				.cacheInMemory(true)
-				.cacheOnDisk(true)
-				.considerExifParams(true)
-				.imageScaleType(ImageScaleType.EXACTLY)
-				.build();
-	}
 
 	public static int dpToPx(int dp, Context context) {
 		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();

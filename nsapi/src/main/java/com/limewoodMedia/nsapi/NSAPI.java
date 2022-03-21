@@ -79,7 +79,7 @@ import org.xmlpull.v1.XmlPullParserException;
  */
 public class NSAPI implements INSAPI {
 	public static final String API = "http://www.nationstates.net/cgi-bin/api.cgi";
-	public static final String API_USER_AGENT = "Java NSAPI library by Laevendell (code.google.com/p/ns-api/); ";
+	public static final String API_USER_AGENT = "NSDroid by Laevendell (https://github.com/Limewood/NSDroid); ";
 	public static final int DEFAULT_RATE_LIMIT = 49; // One lower to be on the safe side
 	
 	private Queue<Date> calls = new ConcurrentLinkedQueue<Date>();

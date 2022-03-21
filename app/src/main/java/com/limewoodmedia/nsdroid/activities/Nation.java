@@ -31,6 +31,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
+import com.bumptech.glide.request.RequestOptions;
 import com.limewoodMedia.nsapi.DescriptionMapEntry;
 import com.limewoodMedia.nsapi.enums.CauseOfDeath;
 import com.limewoodMedia.nsapi.enums.Department;
@@ -58,8 +62,6 @@ import com.limewoodmedia.nsdroid.views.BannerView;
 import com.limewoodmedia.nsdroid.views.CensusView;
 import com.limewoodmedia.nsdroid.views.FreedomView;
 import com.limewoodmedia.nsdroid.views.LoadingView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.content.res.Resources;
 import android.graphics.Typeface;
@@ -167,8 +169,6 @@ public class Nation extends AppCompatActivity implements NavigationDrawerFragmen
 	private String nation;
 	private NationDataParcelable data;
 	private String errorMessage;
-	private ImageLoader imageLoader;
-	private DisplayImageOptions options;
 	private boolean endoByYou = false;
 	private boolean myNation = false;
     private ViewPager viewPager;
@@ -180,8 +180,6 @@ public class Nation extends AppCompatActivity implements NavigationDrawerFragmen
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.nation);
-		imageLoader = Utils.getImageLoader(this);
-		this.options = Utils.getImageLoaderDisplayOptions();
 
         // Fetch flag
         LoadingHelper.loadHomeFlag(this);
@@ -442,12 +440,24 @@ public class Nation extends AppCompatActivity implements NavigationDrawerFragmen
 		// Set banner
 		if(data.banners != null && data.banners.length > 0) {
 			String bannerURL = data.getBannerURL(data.banners[0]);
-			imageLoader.displayImage(bannerURL, banner, options);
+            GlideUrl url = new GlideUrl(
+                    bannerURL,
+                    new LazyHeaders.Builder()
+                        .addHeader("User-Agent", API.USER_AGENT)
+                        .build()
+            );
+			Glide.with(this).load(url).into(banner);
 		} else {
 			banner.setImageResource(R.drawable.default_white);
 		}
         if(data.flagURL != null) {
-            imageLoader.displayImage(data.flagURL, flag, options);
+            GlideUrl url = new GlideUrl(
+                    data.flagURL,
+                    new LazyHeaders.Builder()
+                            .addHeader("User-Agent", API.USER_AGENT)
+                            .build()
+            );
+            Glide.with(this).load(url).into(flag);
         }
 		pretitle.setText(getString(R.string.pretitle, data.type));
 		name.setText(data.name);
