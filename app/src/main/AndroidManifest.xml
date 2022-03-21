@@ -29,7 +29,8 @@
             android:name=".activities.NSDroid"
             android:label="@string/title_activity_nsdroid"
         	android:theme="@style/NSAppTheme"
-        	android:configChanges="locale" >
+        	android:configChanges="locale"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -106,8 +106,8 @@ import android.widget.Toast;
  */
 public class API {
 	private static final String TAG = API.class.getName();
-	private static final String USER_AGENT = "NSDroid Android app for NationStates " +
-			"(github.com/Limewood/NSDroid), created by Laevendell (joakim@limewoodmedia.com)";
+	public static final String USER_AGENT = "NSDroid Android app for NationStates " +
+			"(github.com/Limewood/NSDroid), created by Laevendell (android@limewoodmedia.com)";
 	private static final int VERSION = 7;
 	private static API instance;
 	public static final String BASE_URL = "https://www.nationstates.net";

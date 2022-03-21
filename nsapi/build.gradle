@@ -4,7 +4,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'kxml2:kxml2:2.3.0'
     implementation 'org.apache.httpcomponents:httpclient:4.5.6'
-
-    sourceCompatibility = 1.7
-    targetCompatibility = 1.7
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
